@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Existing Students - GHSS Singhpur</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+body{font-family:Arial;background:#f4f6f9;margin:0;}
+.header{background:#002147;color:white;text-align:center;padding:15px;}
+.container{padding:20px;}
+input{padding:8px;width:300px;margin-bottom:10px;}
+table{border-collapse:collapse;width:100%;}
+th,td{border:1px solid black;padding:8px;}
+button{padding:5px 10px;background:#002147;color:white;border:none;}
+button:hover{background:#00509e;}
+.receipt{border:2px solid black;padding:20px;margin-top:20px;}
+.photo{float:right;width:100px;height:130px;object-fit:cover;border:1px solid black;}
+</style>
+</head>
+<body>
+
+<div class="header"><h2>Existing Student Records</h2></div>
+
+<div class="container">
+
+<input type="text" id="searchBox" placeholder="Search by Name..." onkeyup="searchStudent()">
+
+<table id="studentTable">
+<tr>
+<th>Name</th>
+<th>Class</th>
+<th>Receipt</th>
+</tr>
+</table>
+
+<div id="receiptArea"></div>
+
+</div>
+
+<script>
+let students=[];
+fetch("https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4ChLc2CJjEJtrKNVKmbqrgu6lGfjG3bk3-KMv77cVV19ACm/exec")
+.then(res=>res.json())
+.then(data=>{
+students=data;
+loadTable(data);
+});
+
+function loadTable(data){
+let table=document.getElementById("studentTable");
+table.innerHTML="<tr><th>Name</th><th>Class</th><th>Receipt</th></tr>";
+data.forEach(student=>{
+let row=table.insertRow();
+row.insertCell(0).innerHTML=student.name;
+row.insertCell(1).innerHTML=student.class;
+row.insertCell(2).innerHTML=`<button onclick='generateReceipt(${JSON.stringify(student)})'>Generate</button>`;
+});
+}
+
+function searchStudent(){
+let val=document.getElementById("searchBox").value.toLowerCase();
+let filtered=students.filter(s=>s.name.toLowerCase().includes(val));
+loadTable(filtered);
+}
+
+function generateReceipt(student){
+let receiptNo="GHSS-"+Date.now();
+document.getElementById("receiptArea").innerHTML=`
+<div class="receipt" id="receiptContent">
+<h3 align="center">Student Receipt</h3>
+<p><b>Receipt No:</b> ${receiptNo}</p>
+<p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
+<img src="${student.photo}" class="photo">
+<p><b>Name:</b> ${student.name}</p>
+<p><b>Father:</b> ${student.father}</p>
+<p><b>Class:</b> ${student.class}</p>
+<hr>
+<p><b>This is computer generated receipt.</b></p>
+</div>
+<button onclick="html2pdf().from(document.getElementById('receiptContent')).save()">Download PDF</button>
+`;
+}
+</script>
+
+</body>
+</html>
