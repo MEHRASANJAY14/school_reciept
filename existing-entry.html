@@ -1,59 +1,107 @@
-function doPost(e) {
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Admission Form</title>
 
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = e.parameter;
+<style>
+body{font-family:Arial;background:#f4f6f9;margin:0}
+.container{max-width:1000px;margin:30px auto;background:white;padding:20px;border-radius:10px}
+h2{text-align:center}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+input,select{padding:8px;width:100%}
+button{grid-column:span 2;padding:10px;background:#002147;color:white;border:none;font-size:16px}
+@media(max-width:768px){.form-grid{grid-template-columns:1fr}button{grid-column:span 1}}
+</style>
+</head>
+<body>
 
-  // ===== PARENT FOLDER (YOUR NEW PATH) =====
-  var parentFolder = DriveApp.getFolderById("1QFqOHH6FOuk0HGUIkFy4r30-Cr3_WK7i");
+<div class="container">
+<h2>Government Higher Secondary School</h2>
+<h3 align="center">Student Admission Form</h3>
 
-  // ===== CREATE / USE STUDENT FOLDER INSIDE IT =====
-  var folderName = "Student_Photos";
-  var folders = parentFolder.getFoldersByName(folderName);
-  var studentFolder = folders.hasNext() ? folders.next() : parentFolder.createFolder(folderName);
+<form id="mainForm" class="form-grid">
 
-  var photoUrl = "";
+<input type="text" id="name" placeholder="Student Name" required>
+<input type="text" id="father" placeholder="Father Name">
 
-  if (data.photo && data.photo !== "") {
+<input type="text" id="mother" placeholder="Mother Name">
+<input type="date" id="dob">
 
-    try {
+<input type="text" id="class" placeholder="Class">
+<input type="text" id="category" placeholder="Category">
 
-      var base64Data = data.photo.split(",")[1];
-      var contentType = data.photo.split(";")[0].split(":")[1];
+<input type="text" id="caste" placeholder="Caste">
+<input type="text" id="mobile" placeholder="Mobile">
 
-      var blob = Utilities.newBlob(
-        Utilities.base64Decode(base64Data),
-        contentType,
-        data.name + "_" + new Date().getTime() + ".jpg"
-      );
+<input type="text" id="address" placeholder="Address">
+<input type="text" id="apar" placeholder="APAAR ID">
 
-      var file = studentFolder.createFile(blob);
-      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+<input type="text" id="aadhar" placeholder="Aadhar No">
+<input type="text" id="samagra" placeholder="Samagra ID">
 
-      photoUrl = file.getUrl();
+<input type="text" id="bank" placeholder="Bank Name">
+<input type="text" id="account" placeholder="Account No">
 
-    } catch (err) {
-      photoUrl = "PHOTO_UPLOAD_FAILED";
-    }
-  }
+<input type="text" id="ifsc" placeholder="IFSC Code">
+<input type="file" id="photo" accept="image/*">
 
-  sheet.appendRow([
-    sheet.getLastRow(),
-    data.name,
-    photoUrl,
-    new Date()
-  ]);
+<button type="submit">Save & Generate Receipt</button>
 
-  return HtmlService.createHtmlOutput(
-    "<script>window.location.href='" +
-    data.redirect +
-    "?name=" + encodeURIComponent(data.name) +
-    "&photo=" + encodeURIComponent(photoUrl) +
-    "';</script>"
-  );
+</form>
+</div>
+
+<script>
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
+
+document.getElementById("mainForm").addEventListener("submit", function(e){
+e.preventDefault();
+let file=document.getElementById("photo").files[0];
+if(file){
+let reader=new FileReader();
+reader.onload=function(){submitData(reader.result);}
+reader.readAsDataURL(file);
+}else{submitData("");}
+});
+
+function submitData(photoData){
+let form=document.createElement("form");
+form.method="POST";
+form.action=scriptURL;
+
+let fields={
+name:name.value,
+father:father.value,
+mother:mother.value,
+dob:dob.value,
+class:class.value,
+category:category.value,
+caste:caste.value,
+address:address.value,
+apar:apar.value,
+aadhar:aadhar.value,
+samagra:samagra.value,
+bank:bank.value,
+account:account.value,
+ifsc:ifsc.value,
+mobile:mobile.value,
+photo:photoData,
+redirect:"https://YOUR_USERNAME.github.io/print-receipt.html"
+};
+
+for(let key in fields){
+let input=document.createElement("input");
+input.type="hidden";
+input.name=key;
+input.value=fields[key];
+form.appendChild(input);
 }
 
-function doGet() {
-  return ContentService
-    .createTextOutput("OK")
-    .setMimeType(ContentService.MimeType.TEXT);
+document.body.appendChild(form);
+form.submit();
 }
+</script>
+
+</body>
+</html>
