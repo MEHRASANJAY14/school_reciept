@@ -6,7 +6,6 @@
 <title>New Student Entry - GHSS Singhpur</title>
 
 <style>
-
 body {
   font-family: Arial;
   background: #f4f6f9;
@@ -76,15 +75,6 @@ button:hover {
   }
 }
 
-.success-msg {
-  margin-top: 15px;
-  padding: 10px;
-  background: #d4edda;
-  color: #155724;
-  border-radius: 5px;
-  display: none;
-}
-
 </style>
 </head>
 
@@ -103,13 +93,13 @@ button:hover {
 <div class="form-grid">
 
 <label>Student Name</label>
-<input type="text" id="name" required oninput="this.value=this.value.toUpperCase()">
+<input type="text" id="name" required>
 
 <label>Father Name</label>
-<input type="text" id="father" required oninput="this.value=this.value.toUpperCase()">
+<input type="text" id="father" required>
 
 <label>Mother Name</label>
-<input type="text" id="mother" required oninput="this.value=this.value.toUpperCase()">
+<input type="text" id="mother" required>
 
 <label>Date of Birth</label>
 <input type="date" id="dob" required>
@@ -155,7 +145,7 @@ button:hover {
 <input type="text" id="apar">
 
 <label>Aadhar ID</label>
-<input type="text" id="aadhar" maxlength="12" pattern="\d{12}" required>
+<input type="text" id="aadhar" maxlength="12" required>
 
 <label>Samagra ID</label>
 <input type="text" id="samagra">
@@ -172,7 +162,7 @@ button:hover {
 <input type="text" id="account">
 
 <label>IFSC Code</label>
-<input type="text" id="ifsc" oninput="this.value=this.value.toUpperCase()">
+<input type="text" id="ifsc">
 
 </div>
 
@@ -180,20 +170,16 @@ button:hover {
 <div class="form-grid">
 
 <label>Mobile</label>
-<input type="text" id="mobile" maxlength="10" pattern="\d{10}" required>
+<input type="text" id="mobile" maxlength="10" required>
 
 <label>Student Photo</label>
-<input type="file" id="photo" accept="image/*" required>
+<input type="file" id="photo" accept="image/*">
 
 </div>
 
 <button type="submit">Save Student Data</button>
 
 </form>
-
-<div class="success-msg" id="successMsg">
-Student data saved successfully!
-</div>
 
 </div>
 
@@ -205,70 +191,58 @@ document.getElementById("studentForm").addEventListener("submit", function(e){
 
   e.preventDefault();
 
-  if(!aadhar.checkValidity()){
-    alert("Invalid Aadhar");
-    return;
-  }
+  let formData = new FormData();
 
-  if(!mobile.checkValidity()){
-    alert("Invalid Mobile");
-    return;
-  }
+  formData.append("name", name.value);
+  formData.append("father", father.value);
+  formData.append("mother", mother.value);
+  formData.append("dob", dob.value);
+  formData.append("class", class.value);
+  formData.append("address", address.value);
+  formData.append("caste", caste.value);
+  formData.append("category", category.value);
+  formData.append("subject", subject.value);
+  formData.append("apar", apar.value);
+  formData.append("aadhar", aadhar.value);
+  formData.append("samagra", samagra.value);
+  formData.append("account", account.value);
+  formData.append("ifsc", ifsc.value);
+  formData.append("bank", bank.value);
+  formData.append("mobile", mobile.value);
 
-  let fileInput = document.getElementById("photo");
-  let file = fileInput.files[0];
+  let file = document.getElementById("photo").files[0];
 
-  if(!file){
-    alert("Please upload photo");
-    return;
-  }
-
-  let reader = new FileReader();
-
-  reader.onloadend = function(){
-
-    let data = {
-      name: name.value,
-      father: father.value,
-      mother: mother.value,
-      dob: dob.value,
-      class: class.value,
-      address: address.value,
-      caste: caste.value,
-      category: category.value,
-      subject: subject.value,
-      apar: apar.value,
-      aadhar: aadhar.value,
-      samagra: samagra.value,
-      account: account.value,
-      ifsc: ifsc.value,
-      bank: bank.value,
-      mobile: mobile.value,
-      photo: reader.result
+  if(file){
+    let reader = new FileReader();
+    reader.onload = function(){
+      formData.append("photo", reader.result);
+      sendData(formData);
     };
-
-    fetch(scriptURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.text())
-    .then(result => {
-      alert("Student Data Saved Successfully ✅");
-      document.getElementById("studentForm").reset();
-    })
-    .catch(error => {
-      alert("Error Saving Data ❌");
-      console.error(error);
-    });
-
-  };
-
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  } else {
+    formData.append("photo", "");
+    sendData(formData);
+  }
 
 });
+
+function sendData(formData){
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(response => {
+    alert("Student Data Saved Successfully ✅");
+    document.getElementById("studentForm").reset();
+  })
+  .catch(error => {
+    alert("Error Saving Data ❌");
+    console.error(error);
+  });
+
+}
 
 </script>
 
