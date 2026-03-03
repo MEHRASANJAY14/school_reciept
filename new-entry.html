@@ -18,13 +18,13 @@ body{
 }
 
 .container{
-  max-width:1000px;
+  max-width:1100px;
   margin:20px auto;
   background:white;
   padding:30px;
   border-radius:15px;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 @keyframes fadeIn{
@@ -44,22 +44,17 @@ label{
   color:#002147;
 }
 
-input, select{
+input,select{
   padding:10px;
   border-radius:8px;
   border:1px solid #ccc;
-  text-transform:uppercase;
   transition:0.3s;
 }
 
-input:focus, select:focus{
+input:focus,select:focus{
   border-color:#4e73df;
   box-shadow:0 0 8px rgba(78,115,223,0.4);
   outline:none;
-}
-
-input[type="date"]{
-  text-transform:none;
 }
 
 button{
@@ -74,13 +69,8 @@ button{
   transition:0.3s;
 }
 
-button:hover{
-  transform:scale(1.02);
-}
-
-button:disabled{
-  background:gray;
-}
+button:hover{transform:scale(1.02);}
+button:disabled{background:gray;}
 
 .message{
   margin-top:15px;
@@ -142,11 +132,6 @@ button:disabled{
 </div>
 
 <div class="form-row">
-<label>Caste</label>
-<input type="text" name="caste" placeholder="Enter Caste" required>
-</div>
-
-<div class="form-row">
 <label>Village</label>
 <input type="text" name="village">
 </div>
@@ -154,6 +139,24 @@ button:disabled{
 <div class="form-row">
 <label>Address</label>
 <input type="text" name="address">
+</div>
+
+<div class="form-row">
+<label>Caste</label>
+<input type="text" name="caste" required>
+</div>
+
+<div class="form-row">
+<label>Category</label>
+<select name="category" required>
+<option value="" disabled selected>-- SELECT CATEGORY --</option>
+<option value="GENERAL">GENERAL</option>
+<option value="EWS">EWS</option>
+<option value="SC">SC</option>
+<option value="ST">ST</option>
+<option value="OBC">OBC</option>
+<option value="OTHER">OTHER</option>
+</select>
 </div>
 
 <div class="form-row">
