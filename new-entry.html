@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Test</title>
+</head>
 <body>
 
-<h2>Test Page</h2>
+<h2>Simple Test Form</h2>
 
-<button onclick="alert('Working')">Click Me</button>
+<form id="testForm">
+  <input type="text" id="name" placeholder="Enter Name" required>
+  <button type="submit">Submit</button>
+</form>
+
+<p id="msg"></p>
+
+<script>
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
+
+document.getElementById("testForm").addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  document.getElementById("msg").innerText = "Submitting...";
+
+  var form = document.createElement("form");
+  form.method = "POST";
+  form.action = scriptURL;
+
+  var input = document.createElement("input");
+  input.type = "hidden";
+  input.name = "name";
+  input.value = document.getElementById("name").value;
+
+  form.appendChild(input);
+  document.body.appendChild(form);
+
+  form.submit();
+});
+
+</script>
 
 </body>
 </html>
