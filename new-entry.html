@@ -7,306 +7,175 @@
 
 <style>
 body{
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#0f2c59,#3f66c4);
   margin:0;
-  padding:20px;
+  font-family:Segoe UI;
+  background:linear-gradient(160deg,#0f2c59,#3f66c4);
 }
 
 .container{
-  max-width:850px;
-  margin:auto;
+  max-width:650px;
+  margin:15px auto;
   background:white;
-  padding:25px;
+  padding:20px;
   border-radius:15px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
 h2{
   text-align:center;
-  margin-bottom:20px;
   color:#0f2c59;
 }
 
 .form-group{
-  display:flex;
-  flex-direction:column;
   margin-bottom:12px;
 }
 
 label{
   font-size:13px;
-  margin-bottom:3px;
   font-weight:600;
+  color:#0f2c59;
 }
 
-input, select{
+input, select, textarea{
+  width:100%;
   padding:8px;
-  border:1px solid #ccc;
   border-radius:6px;
+  border:1px solid #ccc;
+  margin-top:4px;
   font-size:13px;
-}
-
-.row{
-  display:flex;
-  gap:10px;
-}
-
-.row .form-group{
-  flex:1;
-}
-
-.buttons{
-  margin-top:15px;
-  display:flex;
-  justify-content:space-between;
 }
 
 button{
-  padding:8px 15px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-  font-size:13px;
-}
-
-.submit-btn{
+  width:100%;
+  padding:10px;
   background:#0f2c59;
   color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  margin-top:10px;
+}
+
+.preview{
+  margin-top:8px;
+  text-align:center;
+}
+
+.preview img{
+  max-width:100px;
+  border-radius:8px;
 }
 
 .back-btn{
-  background:#ccc;
+  background:#999;
+  margin-bottom:10px;
 }
-
-.success-panel{
-  margin-top:20px;
-  padding:15px;
-  background:#e6ffe6;
-  border-radius:10px;
-  text-align:center;
-  display:none;
-}
-
-.success-panel button{
-  margin:5px;
-}
-
 .message{
-  margin-top:10px;
-  font-size:13px;
   text-align:center;
+  margin-top:10px;
   font-weight:600;
-}
-
-@media(max-width:768px){
-  .row{
-    flex-direction:column;
-  }
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
+
+<button class="back-btn" onclick="location.href='index.html'">⬅ Back</button>
 
 <h2>New Student Entry</h2>
 
 <form id="studentForm">
 
-<div class="row">
 <div class="form-group">
-<label>Student Name</label>
+<label>Student Name *</label>
 <input type="text" name="name" required>
 </div>
 
 <div class="form-group">
-<label>Father Name</label>
-<input type="text" name="father" required>
-</div>
-</div>
-
-<div class="row">
-<div class="form-group">
-<label>Mother Name</label>
-<input type="text" name="mother" required>
-</div>
-
-<div class="form-group">
-<label>DOB</label>
-<input type="date" name="dob" required>
-</div>
-</div>
-
-<div class="row">
-<div class="form-group">
-<label>Class</label>
+<label>Class *</label>
 <select name="class" required>
-<option value="9">9</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
+<option value="">-- Select Class --</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
 </select>
 </div>
 
 <div class="form-group">
-<label>Village</label>
-<input type="text" name="village">
-</div>
-</div>
-
-<div class="form-group">
-<label>Address</label>
-<input type="text" name="address">
-</div>
-
-<div class="row">
-<div class="form-group">
-<label>Caste</label>
-<input type="text" name="caste">
-</div>
-
-<div class="form-group">
-<label>Category</label>
+<label>Category *</label>
 <select name="category" required>
 <option value="">-- Select Category --</option>
-<option value="GENERAL">GENERAL</option>
-<option value="EWS">EWS</option>
-<option value="SC">SC</option>
-<option value="ST">ST</option>
-<option value="OBC">OBC</option>
-<option value="OTHER">OTHER</option>
+<option>GENERAL</option>
+<option>OBC</option>
+<option>SC</option>
+<option>ST</option>
+<option>EWS</option>
+<option>OTHER</option>
 </select>
 </div>
-</div>
 
 <div class="form-group">
-<label>Subject</label>
-<input type="text" name="subject">
+<label>Photo Upload</label>
+<input type="file" id="photo" accept="image/*">
+<div class="preview" id="preview"></div>
 </div>
 
-<div class="row">
-<div class="form-group">
-<label>APAAR ID</label>
-<input type="text" name="apar">
-</div>
-
-<div class="form-group">
-<label>Aadhaar (12 digit)</label>
-<input type="text" name="aadhar" maxlength="12">
-</div>
-</div>
-
-<div class="row">
-<div class="form-group">
-<label>Samagra ID</label>
-<input type="text" name="samagra">
-</div>
-
-<div class="form-group">
-<label>Mobile (10 digit)</label>
-<input type="text" name="mobile" maxlength="10">
-</div>
-</div>
-
-<div class="row">
-<div class="form-group">
-<label>Bank Name</label>
-<input type="text" name="bank">
-</div>
-
-<div class="form-group">
-<label>Account No</label>
-<input type="text" name="account">
-</div>
-</div>
-
-<div class="form-group">
-<label>IFSC Code</label>
-<input type="text" name="ifsc">
-</div>
-
-<div class="buttons">
-<button type="button" class="back-btn" onclick="goBack()">⬅ Back</button>
-<button type="submit" class="submit-btn">Submit</button>
-</div>
+<button type="submit">Submit</button>
 
 <div class="message" id="msg"></div>
 
 </form>
-
-<!-- SUCCESS PANEL -->
-<div class="success-panel" id="successPanel">
-<h3>✅ Student Added Successfully</h3>
-<p id="studentIdText"></p>
-
-<button onclick="printReceipt()">🖨 Print</button>
-<button onclick="addNew()">➕ New Entry</button>
-<button onclick="goBack()">🏠 Dashboard</button>
-</div>
-
 </div>
 
 <script>
 
-const SCRIPT_URL = "YOUR_WEB_APP_URL"; // 🔴 Replace with your Web App URL
-let savedStudentId = "";
+const scriptURL="YOUR_SCRIPT_URL_HERE";
+const form=document.getElementById("studentForm");
+const msg=document.getElementById("msg");
+const photoInput=document.getElementById("photo");
+const preview=document.getElementById("preview");
 
-const form = document.getElementById("studentForm");
-const msg = document.getElementById("msg");
-const successPanel = document.getElementById("successPanel");
+photoInput.addEventListener("change",function(){
+  const file=this.files[0];
+  if(file){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      preview.innerHTML='<img src="'+e.target.result+'">';
+    }
+    reader.readAsDataURL(file);
+  }
+});
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit",e=>{
   e.preventDefault();
 
-  msg.innerText = "Submitting... Please wait ⏳";
+  msg.style.color="blue";
+  msg.innerText="Submitting...";
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: new FormData(form)
+  const formData=new FormData(form);
+
+  fetch(scriptURL,{method:"POST",body:formData})
+  .then(res=>res.text())
+  .then(data=>{
+    if(data.includes("SUCCESS")){
+      msg.style.color="green";
+      msg.innerText="Data Submitted Successfully!";
+      form.reset();
+      preview.innerHTML="";
+    }else{
+      msg.style.color="red";
+      msg.innerText="Server Error: "+data;
+    }
   })
-  .then(res => res.json())
-  .then(data => {
-
-    if(data.status === "SUCCESS"){
-      savedStudentId = data.studentId;
-
-      form.style.display = "none";
-      successPanel.style.display = "block";
-
-      document.getElementById("studentIdText").innerText =
-        "Student ID: " + savedStudentId;
-
-      msg.innerText = "";
-    }
-    else if(data.status === "DUPLICATE"){
-      msg.innerText = "⚠ " + data.message +
-                      " (Existing ID: " + data.studentId + ")";
-    }
-    else{
-      msg.innerText = "❌ " + data.message;
-    }
-
-  })
-  .catch(()=>{
-    msg.innerText = "Server Error!";
+  .catch(err=>{
+    msg.style.color="red";
+    msg.innerText="Submission Failed: "+err;
   });
 
 });
-
-function printReceipt(){
-  window.open("print.html?studentId=" + savedStudentId, "_blank");
-}
-
-function addNew(){
-  window.location.reload();
-}
-
-function goBack(){
-  window.location.href = "index.html";
-}
 
 </script>
 
