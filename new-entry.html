@@ -13,7 +13,7 @@ body{
 }
 
 .container{
-  max-width:800px;
+  max-width:850px;
   margin:20px auto;
   background:white;
   padding:20px;
@@ -281,23 +281,23 @@ form.addEventListener("submit",e=>{
   const formData=new FormData(form);
 
   fetch(scriptURL,{method:"POST",body:formData})
-  .then(res=>res.text())
+  .then(res=>res.json())
   .then(data=>{
 
-    if(data==="DUPLICATE"){
+    if(data.status==="DUPLICATE"){
       msg.style.color="red";
       msg.innerText="Duplicate Aadhaar Found!";
       return;
     }
 
-    if(data.startsWith("SUCCESS")){
-      studentId=data.split("|")[1];
+    if(data.status==="SUCCESS"){
+      studentId=data.id;
       form.style.display="none";
       successBox.style.display="block";
       successText.innerText="Data Submitted Successfully! Student ID: "+studentId;
     }else{
       msg.style.color="red";
-      msg.innerText="Server Error: "+data;
+      msg.innerText="Unexpected Server Error";
     }
 
   })
