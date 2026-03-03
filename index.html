@@ -19,14 +19,12 @@ body{
   height:100vh;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
-  overflow:hidden;
 }
 
 /* HEADER */
 .header{
   text-align:center;
-  padding:15px 10px 5px;
+  padding:15px 10px;
 }
 
 .header h1{
@@ -39,27 +37,20 @@ body{
   font-size:12px;
 }
 
-.date{
-  margin-top:5px;
-}
-
 #greeting{
   font-size:13px;
-  font-weight:500;
 }
 
 .digital-clock{
   font-size:14px;
   font-weight:600;
-  letter-spacing:1px;
 }
 
 .quote{
-  margin-top:4px;
   font-size:12px;
-  font-style:italic;
+  margin-top:4px;
   opacity:0;
-  transition:opacity 1s ease-in-out;
+  transition:opacity 1s;
 }
 
 /* MAIN */
@@ -69,53 +60,54 @@ body{
   align-items:center;
   justify-content:center;
   gap:18px;
-  padding:0 15px;
+  padding:10px;
 }
 
 .card{
   background:white;
-  border-radius:12px;
+  border-radius:10px;
   padding:18px 12px;
-  width:190px;
+  width:180px;
   text-align:center;
   box-shadow:0 6px 15px rgba(0,0,0,0.25);
-  transition:0.3s;
   cursor:pointer;
   color:#002147;
+  transition:0.3s;
 }
 
 .card:hover{
   transform:translateY(-5px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.35);
 }
 
 .icon{
-  font-size:26px;
-  margin-bottom:6px;
+  font-size:24px;
+  margin-bottom:5px;
 }
 
 .card h3{
-  margin:5px 0;
   font-size:13px;
+  margin:5px 0;
 }
 
-/* FOOTER */
+/* FIXED FOOTER */
 .footer{
-  background:rgba(0,0,0,0.25);
-  padding:8px;
-  text-align:center;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:rgba(0,0,0,0.3);
   display:flex;
   justify-content:center;
   align-items:center;
   gap:15px;
+  padding:8px;
   font-size:12px;
 }
 
 .footer button{
   background:white;
   border:none;
-  padding:6px 12px;
-  border-radius:6px;
+  padding:5px 10px;
+  border-radius:5px;
   cursor:pointer;
   font-size:12px;
   color:#002147;
@@ -126,6 +118,7 @@ body{
   background:#f0f0f0;
 }
 
+/* Mobile */
 @media(max-width:768px){
   .container{
     flex-direction:column;
@@ -146,11 +139,9 @@ body{
 <p>Block: Jabera | District: Damoh (M.P.)</p>
 <p>Established: 1985</p>
 
-<div class="date">
-  <div id="greeting"></div>
-  <div id="clock" class="digital-clock"></div>
-  <div id="quote" class="quote"></div>
-</div>
+<div id="greeting"></div>
+<div id="clock" class="digital-clock"></div>
+<div id="quote" class="quote"></div>
 
 </div>
 
@@ -174,87 +165,64 @@ body{
 </div>
 
 <div class="footer">
-<button onclick="goHome()">🏠 Home</button>
-<button onclick="refreshPage()">🔄 Refresh</button>
-<span>© 2026 GHSS Singhpur | Digital Admission System</span>
+<button onclick="location.href='index.html'">🏠 Home</button>
+<button onclick="location.reload()">🔄 Refresh</button>
+<span>© 2026 GHSS Singhpur</span>
 </div>
 
 <script>
 
-// Home Button
-function goHome(){
-  window.location.href="index.html";
-}
-
-// Refresh Button
-function refreshPage(){
-  location.reload();
-}
-
-// Date + Time + Greeting
+// Date + Greeting
 function updateDateTime(){
 
   const now = new Date();
+  const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const monthNames=["January","February","March","April","May","June",
+                    "July","August","September","October","November","December"];
 
-  const day = String(now.getDate()).padStart(2,'0');
+  const day=String(now.getDate()).padStart(2,'0');
+  const month=monthNames[now.getMonth()];
+  const year=now.getFullYear();
+  const dayName=dayNames[now.getDay()];
 
-  const monthNames = ["January","February","March","April","May","June",
-                      "July","August","September","October","November","December"];
+  let hours=now.getHours();
+  const minutes=String(now.getMinutes()).padStart(2,'0');
+  const seconds=String(now.getSeconds()).padStart(2,'0');
 
-  const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  let greeting="";
+  if(hours<12) greeting="🌅 Good Morning";
+  else if(hours<17) greeting="☀ Good Afternoon";
+  else greeting="🌙 Good Evening";
 
-  const month = monthNames[now.getMonth()];
-  const year = now.getFullYear();
-  const dayName = dayNames[now.getDay()];
+  const ampm=hours>=12?"PM":"AM";
+  hours=hours%12||12;
 
-  let hours = now.getHours();
-  const minutes = String(now.getMinutes()).padStart(2,'0');
-  const seconds = String(now.getSeconds()).padStart(2,'0');
-
-  let greetingText = "";
-  if(hours < 12){
-    greetingText = "🌅 Good Morning";
-  } else if(hours < 17){
-    greetingText = "☀ Good Afternoon";
-  } else {
-    greetingText = "🌙 Good Evening";
-  }
-
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  hours = String(hours).padStart(2,'0');
-
-  const formatted = dayName + ", " + day + "-" + month + "-" + year +
-                    " | " + hours + ":" + minutes + ":" + seconds + " " + ampm;
-
-  document.getElementById("clock").innerText = formatted;
-  document.getElementById("greeting").innerText = greetingText;
+  document.getElementById("greeting").innerText=greeting;
+  document.getElementById("clock").innerText=
+    dayName+", "+day+"-"+month+"-"+year+
+    " | "+String(hours).padStart(2,'0')+":"+minutes+":"+seconds+" "+ampm;
 }
 
 setInterval(updateDateTime,1000);
 updateDateTime();
 
-// Motivational Quotes
-const quotes = [
-  "📘 Education is the most powerful weapon to change the world.",
-  "🎓 Learning never exhausts the mind.",
-  "🌟 Success is the sum of small efforts repeated daily.",
-  "📖 Knowledge gives confidence.",
-  "🚀 Dream big. Work hard. Stay focused.",
-  "🏆 Discipline is the bridge between goals and achievement."
+// Quotes
+const quotes=[
+"📘 Education is the most powerful weapon to change the world.",
+"🎓 Learning never exhausts the mind.",
+"🌟 Success is the sum of small efforts repeated daily.",
+"📖 Knowledge gives confidence."
 ];
 
-let quoteIndex = 0;
-const quoteElement = document.getElementById("quote");
+let i=0;
+const q=document.getElementById("quote");
 
 function rotateQuotes(){
-  quoteElement.style.opacity = 0;
-
+  q.style.opacity=0;
   setTimeout(()=>{
-    quoteElement.innerText = quotes[quoteIndex];
-    quoteElement.style.opacity = 1;
-    quoteIndex = (quoteIndex + 1) % quotes.length;
+    q.innerText=quotes[i];
+    q.style.opacity=1;
+    i=(i+1)%quotes.length;
   },500);
 }
 
