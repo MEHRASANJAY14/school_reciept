@@ -9,14 +9,19 @@
 
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html, body{
+  height:100%;
+  overflow:hidden; /* 🚫 No Scroll */
+  font-family:'Segoe UI',sans-serif;
 }
 
 body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
   background:linear-gradient(135deg,#002147,#4e73df);
   color:white;
-  height:100vh;
   display:flex;
   flex-direction:column;
 }
@@ -24,130 +29,109 @@ body{
 /* HEADER */
 .header{
   text-align:center;
-  padding:10px 10px 5px;
+  padding:8px 10px;
 }
 
 .header h1{
-  margin:4px 0;
-  font-size:18px;
+  font-size:17px;
+  margin:2px 0;
 }
 
 .header p{
-  margin:2px 0;
-  font-size:12px;
-}
-
-.date{
-  margin-top:5px;
+  font-size:11px;
+  margin:1px 0;
 }
 
 #greeting{
-  font-size:13px;
-  font-weight:500;
+  font-size:12px;
+  margin-top:3px;
 }
 
 .digital-clock{
-  font-size:14px;
+  font-size:13px;
   font-weight:600;
 }
 
 .quote{
-  margin-top:4px;
-  font-size:12px;
-  font-style:italic;
+  font-size:11px;
+  margin-top:3px;
   opacity:0;
   transition:opacity 1s;
 }
 
-/* MAIN */
+/* MAIN CARDS */
 .container{
+  flex:1;
   display:flex;
   justify-content:center;
-  gap:18px;
-  padding:10px;
-  margin-top:10px;
-  flex-wrap:wrap;
+  align-items:center;
+  gap:15px;
+  padding:5px;
 }
 
 .card{
   background:white;
-  border-radius:12px;
-  padding:18px 12px;
-  width:190px;
+  border-radius:10px;
+  padding:15px 10px;
+  width:170px;
   text-align:center;
-  box-shadow:0 6px 15px rgba(0,0,0,0.25);
+  box-shadow:0 5px 12px rgba(0,0,0,0.25);
   cursor:pointer;
   color:#002147;
   transition:0.3s;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.35);
+  transform:translateY(-4px);
 }
 
 .icon{
-  font-size:26px;
-  margin-bottom:6px;
+  font-size:22px;
+  margin-bottom:5px;
 }
 
 .card h3{
-  margin:5px 0;
-  font-size:13px;
+  font-size:12px;
 }
 
 /* FOOTER */
 .footer{
-  margin-top:auto;
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(8px);
+  background:rgba(0,0,0,0.3);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:8px 20px;
-  font-size:12px;
-  border-top:1px solid rgba(255,255,255,0.3);
+  padding:6px 15px;
+  font-size:11px;
 }
 
 .footer-left{
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 
 .footer button{
   background:white;
   border:none;
-  padding:5px 12px;
-  border-radius:20px;
+  padding:4px 10px;
+  border-radius:15px;
   cursor:pointer;
-  font-size:12px;
+  font-size:11px;
   color:#002147;
   font-weight:600;
-  transition:0.3s;
 }
 
 .footer button:hover{
   background:#f0f0f0;
-  transform:translateY(-2px);
 }
 
-.footer-center{
-  text-align:center;
-  flex:1;
-}
-
+/* Mobile strict fit */
 @media(max-width:768px){
   .container{
     flex-direction:column;
-    align-items:center;
+    gap:10px;
   }
   .card{
-    width:85%;
-  }
-  .footer{
-    flex-direction:column;
-    gap:6px;
-    text-align:center;
+    width:80%;
   }
 }
 
@@ -162,11 +146,9 @@ body{
 <p>Block: Jabera | District: Damoh (M.P.)</p>
 <p>Established: 1985</p>
 
-<div class="date">
-  <div id="greeting"></div>
-  <div id="clock" class="digital-clock"></div>
-  <div id="quote" class="quote"></div>
-</div>
+<div id="greeting"></div>
+<div id="clock" class="digital-clock"></div>
+<div id="quote" class="quote"></div>
 
 </div>
 
@@ -174,17 +156,17 @@ body{
 
 <div class="card" onclick="location.href='new-entry.html'">
 <div class="icon">📝</div>
-<h3>New Student Entry</h3>
+<h3>New Entry</h3>
 </div>
 
 <div class="card" onclick="location.href='existing-records.html'">
 <div class="icon">📋</div>
-<h3>Existing Records</h3>
+<h3>Records</h3>
 </div>
 
 <div class="card" onclick="location.href='search-print.html'">
 <div class="icon">🔎</div>
-<h3>Search & Print</h3>
+<h3>Search</h3>
 </div>
 
 </div>
@@ -194,18 +176,14 @@ body{
     <button onclick="location.href='index.html'">🏠 Home</button>
     <button onclick="location.reload()">🔄 Refresh</button>
   </div>
-
-  <div class="footer-center">
-    © 2026 Govt Higher Secondary School Singhpur | Digital Admission System
-  </div>
+  <div>© 2026 GHSS Singhpur</div>
 </div>
 
 <script>
 
-// Date + Time + Greeting
 function updateDateTime(){
 
-  const now = new Date();
+  const now=new Date();
   const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const monthNames=["January","February","March","April","May","June",
                     "July","August","September","October","November","December"];
@@ -236,13 +214,10 @@ function updateDateTime(){
 setInterval(updateDateTime,1000);
 updateDateTime();
 
-// Motivational Quotes
 const quotes=[
 "📘 Education is the most powerful weapon to change the world.",
 "🎓 Learning never exhausts the mind.",
-"🌟 Success is the sum of small efforts repeated daily.",
-"📖 Knowledge gives confidence.",
-"🚀 Dream big. Work hard. Stay focused."
+"🌟 Success is the sum of small efforts repeated daily."
 ];
 
 let i=0;
