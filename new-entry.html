@@ -203,49 +203,70 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4
 
 document.getElementById("studentForm").addEventListener("submit", function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
-if(!aadhar.checkValidity()){alert("Invalid Aadhar"); return;}
-if(!mobile.checkValidity()){alert("Invalid Mobile"); return;}
+  if(!aadhar.checkValidity()){
+    alert("Invalid Aadhar");
+    return;
+  }
 
-let reader = new FileReader();
-let file = document.getElementById("photo").files[0];
+  if(!mobile.checkValidity()){
+    alert("Invalid Mobile");
+    return;
+  }
 
-reader.onloadend = function(){
+  let fileInput = document.getElementById("photo");
+  let file = fileInput.files[0];
 
-let data = {
-name: name.value,
-father: father.value,
-mother: mother.value,
-dob: dob.value,
-class: class.value,
-address: address.value,
-caste: caste.value,
-category: category.value,
-subject: subject.value,
-apar: apar.value,
-aadhar: aadhar.value,
-samagra: samagra.value,
-account: account.value,
-ifsc: ifsc.value,
-bank: bank.value,
-mobile: mobile.value,
-photo: reader.result
-};
+  if(!file){
+    alert("Please upload photo");
+    return;
+  }
 
-fetch(scriptURL, {
-method: "POST",
-body: JSON.stringify(data)
-})
-.then(res => res.json())
-.then(response => {
-document.getElementById("successMsg").style.display = "block";
-document.getElementById("studentForm").reset();
-});
+  let reader = new FileReader();
 
-};
+  reader.onloadend = function(){
 
-reader.readAsDataURL(file);
+    let data = {
+      name: name.value,
+      father: father.value,
+      mother: mother.value,
+      dob: dob.value,
+      class: class.value,
+      address: address.value,
+      caste: caste.value,
+      category: category.value,
+      subject: subject.value,
+      apar: apar.value,
+      aadhar: aadhar.value,
+      samagra: samagra.value,
+      account: account.value,
+      ifsc: ifsc.value,
+      bank: bank.value,
+      mobile: mobile.value,
+      photo: reader.result
+    };
+
+    fetch(scriptURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(result => {
+      alert("Student Data Saved Successfully ✅");
+      document.getElementById("studentForm").reset();
+    })
+    .catch(error => {
+      alert("Error Saving Data ❌");
+      console.error(error);
+    });
+
+  };
+
+  reader.readAsDataURL(file);
 
 });
 
