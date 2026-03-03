@@ -9,64 +9,116 @@
 
 body {
   margin:0;
-  font-family: Arial, sans-serif;
-  background:#f2f5f9;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
 }
 
+/* HEADER */
 .header {
-  background:#003366;
+  background: linear-gradient(135deg, #002147, #00509e);
   color:white;
   text-align:center;
-  padding:20px;
+  padding:30px 20px;
+  position:relative;
 }
 
-.container {
-  max-width:900px;
-  margin:30px auto;
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap:20px;
-  padding:20px;
+.header h2 {
+  margin:5px 0;
+  font-size:26px;
 }
 
-.card {
+.header p {
+  margin:5px 0;
+  font-size:15px;
+  opacity:0.9;
+}
+
+/* LOGO CIRCLE */
+.logo-circle {
+  width:90px;
+  height:90px;
+  border-radius:50%;
   background:white;
-  padding:30px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  color:#002147;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:18px;
+  margin:0 auto 15px auto;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* DASHBOARD CONTAINER */
+.container {
+  max-width:1000px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:30px;
+  padding:20px;
+}
+
+/* CARD STYLE */
+.card {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  padding:35px 25px;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
   text-align:center;
-  transition:0.3s;
+  transition: all 0.3s ease;
+  border:1px solid rgba(255,255,255,0.4);
 }
 
 .card:hover {
-  transform:translateY(-5px);
+  transform: translateY(-10px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.25);
+}
+
+.card-icon {
+  font-size:40px;
+  margin-bottom:15px;
 }
 
 .card h3 {
+  color:#002147;
   margin-bottom:15px;
-  color:#003366;
 }
 
+.card p {
+  font-size:14px;
+  margin-bottom:20px;
+  color:#444;
+}
+
+/* BUTTON */
 .btn {
   display:inline-block;
-  padding:10px 20px;
-  background:#003366;
+  padding:12px 22px;
+  background: linear-gradient(135deg, #002147, #00509e);
   color:white;
   text-decoration:none;
-  border-radius:6px;
+  border-radius:8px;
   font-weight:bold;
+  transition:0.3s;
 }
 
 .btn:hover {
-  background:#0055aa;
+  background: linear-gradient(135deg, #00509e, #002147);
 }
 
+/* FOOTER */
 .footer {
   text-align:center;
-  margin-top:40px;
+  margin-top:50px;
   padding:15px;
   font-size:14px;
   color:#555;
+}
+
+@media(max-width:600px){
+  .header h2 { font-size:20px; }
 }
 
 </style>
@@ -75,28 +127,31 @@ body {
 <body>
 
 <div class="header">
+  <div class="logo-circle">GHSS</div>
   <h2>Government Higher Secondary School</h2>
-  <h3>Singhpur | Tehsil Jabera | District Damoh (M.P.)</h3>
+  <p>Singhpur | Tehsil Jabera | District Damoh (M.P.)</p>
 </div>
 
 <div class="container">
 
   <div class="card">
-    <h3>➕ New Student Entry</h3>
-    <p>Add new student details and generate receipt.</p>
+    <div class="card-icon">➕</div>
+    <h3>New Student Entry</h3>
+    <p>Add new student details and generate computerised receipt instantly.</p>
     <a href="new-entry.html" class="btn">Open Entry Form</a>
   </div>
 
   <div class="card">
-    <h3>📋 Existing Student Records</h3>
-    <p>Search, view and print student receipts.</p>
+    <div class="card-icon">📋</div>
+    <h3>Existing Student Records</h3>
+    <p>Search, view and print previously saved student records.</p>
     <a href="existing-entry.html" class="btn">View Records</a>
   </div>
 
 </div>
 
 <div class="footer">
-  © 2026 GHSS Singhpur | Computer Generated System
+  © 2026 GHSS Singhpur | Digital School Management System
 </div>
 
 </body>
