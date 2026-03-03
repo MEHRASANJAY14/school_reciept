@@ -2,64 +2,114 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Entry</title>
+<title>Student Admission Form</title>
+
+<style>
+body{font-family:Arial;background:#f4f6f9;margin:0}
+.container{max-width:1000px;margin:30px auto;background:white;padding:20px;border-radius:10px}
+h2{text-align:center}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+input,select{padding:8px;width:100%}
+button{grid-column:span 2;padding:12px;background:#002147;color:white;border:none}
+@media(max-width:768px){.form-grid{grid-template-columns:1fr}button{grid-column:span 1}}
+.success{color:green;font-weight:bold;margin-top:15px}
+</style>
 </head>
 <body>
 
-<h2>Student Test (Name + Photo)</h2>
+<div class="container">
 
-<form id="testForm">
-  <input type="text" id="name" placeholder="Enter Name" required><br><br>
-  <input type="file" id="photo" accept="image/*"><br><br>
-  <button type="submit">Submit</button>
+<h2>Government Higher Secondary School</h2>
+<h3 align="center">Student Admission Form</h3>
+
+<form id="mainForm" class="form-grid">
+
+<input type="text" id="name" placeholder="Student Name" required>
+<input type="text" id="father" placeholder="Father Name">
+<input type="text" id="mother" placeholder="Mother Name">
+<input type="date" id="dob">
+<input type="text" id="class" placeholder="Class">
+<input type="text" id="category" placeholder="Category">
+<input type="text" id="caste" placeholder="Caste">
+<input type="text" id="mobile" placeholder="Mobile">
+<input type="text" id="address" placeholder="Address">
+<input type="text" id="apar" placeholder="APAAR ID">
+<input type="text" id="aadhar" placeholder="Aadhar No">
+<input type="text" id="samagra" placeholder="Samagra ID">
+<input type="text" id="bank" placeholder="Bank Name">
+<input type="text" id="account" placeholder="Account No">
+<input type="text" id="ifsc" placeholder="IFSC Code">
+<input type="file" id="photo" accept="image/*">
+
+<button type="submit">Save Student</button>
+
 </form>
 
-<p id="msg"></p>
+<div id="msg" class="success"></div>
+
+</div>
 
 <script>
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
 
-document.getElementById("testForm").addEventListener("submit", function(e){
+document.getElementById("mainForm").addEventListener("submit", function(e){
 
-  e.preventDefault();
-  document.getElementById("msg").innerText = "Submitting...";
+e.preventDefault();
+document.getElementById("msg").innerText="Saving...";
 
-  let file = document.getElementById("photo").files[0];
+let file=document.getElementById("photo").files[0];
 
-  if(file){
-    let reader = new FileReader();
-    reader.onload = function(){
-      sendData(reader.result);
-    };
-    reader.readAsDataURL(file);
-  } else {
-    sendData("");
-  }
+if(file){
+let reader=new FileReader();
+reader.onload=function(){submitData(reader.result);}
+reader.readAsDataURL(file);
+}else{
+submitData("");
+}
 
 });
 
-function sendData(photoData){
+function submitData(photoData){
 
-  var form = document.createElement("form");
-  form.method = "POST";
-  form.action = scriptURL;
+var form=document.createElement("form");
+form.method="POST";
+form.action=scriptURL;
 
-  var nameInput = document.createElement("input");
-  nameInput.type = "hidden";
-  nameInput.name = "name";
-  nameInput.value = document.getElementById("name").value;
+let fields={
+name:name.value,
+father:father.value,
+mother:mother.value,
+dob:dob.value,
+class:class.value,
+category:category.value,
+caste:caste.value,
+address:address.value,
+apar:apar.value,
+aadhar:aadhar.value,
+samagra:samagra.value,
+bank:bank.value,
+account:account.value,
+ifsc:ifsc.value,
+mobile:mobile.value,
+photo:photoData
+};
 
-  var photoInput = document.createElement("input");
-  photoInput.type = "hidden";
-  photoInput.name = "photo";
-  photoInput.value = photoData;
+for(let key in fields){
+let input=document.createElement("input");
+input.type="hidden";
+input.name=key;
+input.value=fields[key];
+form.appendChild(input);
+}
 
-  form.appendChild(nameInput);
-  form.appendChild(photoInput);
+document.body.appendChild(form);
+form.submit();
 
-  document.body.appendChild(form);
-  form.submit();
+document.getElementById("msg").innerText="Student Saved Successfully ✅";
+
+setTimeout(()=>{document.getElementById("mainForm").reset();},2000);
+
 }
 
 </script>
