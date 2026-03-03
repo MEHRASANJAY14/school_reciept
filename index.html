@@ -2,117 +2,100 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>GHSS Singhpur - Student Portal</title>
+<title>GHSS Singhpur Student Portal</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
 body { font-family: Arial; padding:20px; }
-
-h2,h3 { text-align:center; }
-
-input {
-  padding:8px;
-  width:300px;
-  margin-bottom:10px;
-}
-
-table { 
-  border-collapse: collapse; 
-  width: 100%; 
-}
-
-th, td { 
-  border:1px solid black; 
-  padding:8px; 
-}
-
-button { 
-  padding:5px 10px; 
-  cursor:pointer; 
-}
-
-img { 
-  width:60px; 
-  height:70px; 
-  object-fit:cover;
-}
-
-.receipt {
-  width: 800px;
-  border:2px solid black;
-  padding:20px;
-  margin-top:20px;
-}
-
-.photo {
-  float:right;
-  width:120px;
-  height:150px;
-  border:1px solid black;
-  object-fit:cover;
-}
+h2 { text-align:center; }
+input, select { padding:6px; width:300px; margin:5px 0; }
+button { padding:8px 15px; margin-top:10px; }
+.receipt { border:2px solid black; padding:20px; width:800px; margin-top:20px; }
+.photo { float:right; width:120px; height:150px; object-fit:cover; border:1px solid black; }
 </style>
 </head>
 
 <body>
 
-<h2>Government Higher Secondary School</h2>
-<h3>Singhpur | Tehsil Jabera | District Damoh (M.P.)</h3>
+<h2>Government Higher Secondary School<br>Singhpur</h2>
 
-<input type="text" id="searchBox" placeholder="Search by Name..." onkeyup="searchStudent()">
+<h3>Student Entry Form</h3>
 
-<table id="studentTable">
-<tr>
-<th>SN</th>
-<th>Name</th>
-<th>Class</th>
-<th>Photo</th>
-<th>Receipt</th>
-</tr>
-</table>
+<form id="studentForm">
+
+<input type="text" id="name" placeholder="Student Name" required><br>
+<input type="text" id="father" placeholder="Father Name" required><br>
+<input type="text" id="mother" placeholder="Mother Name" required><br>
+<input type="date" id="dob" required><br>
+<input type="text" id="class" placeholder="Class" required><br>
+<input type="text" id="address" placeholder="Address"><br>
+<input type="text" id="caste" placeholder="Caste"><br>
+<input type="text" id="category" placeholder="Category"><br>
+<input type="text" id="subject" placeholder="Subject"><br>
+<input type="text" id="apar" placeholder="APAAR ID"><br>
+<input type="text" id="aadhar" placeholder="Aadhar ID"><br>
+<input type="text" id="samagra" placeholder="Samagra ID"><br>
+<input type="text" id="account" placeholder="Account No"><br>
+<input type="text" id="ifsc" placeholder="IFSC Code"><br>
+<input type="text" id="bank" placeholder="Bank Name"><br>
+<input type="text" id="mobile" placeholder="Mobile"><br>
+
+<input type="file" id="photo" accept="image/*"><br>
+
+<button type="submit">Submit & Generate Receipt</button>
+
+</form>
 
 <div id="receiptArea"></div>
 
 <script>
 
-let studentsData = [];
+const scriptURL = "https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4ChLc2CJjEJtrKNVKmbqrgu6lGfjG3bk3-KMv77cVV19ACm/exec";
 
-fetch("https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4ChLc2CJjEJtrKNVKmbqrgu6lGfjG3bk3-KMv77cVV19ACm/exec")
-.then(res => res.json())
-.then(data => {
-  studentsData = data;
-  loadTable(data);
+document.getElementById("studentForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  let reader = new FileReader();
+  let file = document.getElementById("photo").files[0];
+
+  reader.onloadend = function() {
+
+    let data = {
+      name: name.value,
+      father: father.value,
+      mother: mother.value,
+      dob: dob.value,
+      class: class.value,
+      address: address.value,
+      caste: caste.value,
+      category: category.value,
+      subject: subject.value,
+      apar: apar.value,
+      aadhar: aadhar.value,
+      samagra: samagra.value,
+      account: account.value,
+      ifsc: ifsc.value,
+      bank: bank.value,
+      mobile: mobile.value,
+      photo: reader.result
+    };
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(response => {
+
+      generateReceipt(data);
+
+    });
+
+  };
+
+  if(file) reader.readAsDataURL(file);
 });
-
-function loadTable(data) {
-  let table = document.getElementById("studentTable");
-  table.innerHTML = `
-  <tr>
-  <th>SN</th>
-  <th>Name</th>
-  <th>Class</th>
-  <th>Photo</th>
-  <th>Receipt</th>
-  </tr>`;
-
-  data.forEach(student => {
-    let row = table.insertRow();
-    row.insertCell(0).innerHTML = student.sn;
-    row.insertCell(1).innerHTML = student.name;
-    row.insertCell(2).innerHTML = student.class;
-    row.insertCell(3).innerHTML = `<img src="${student.photo}">`;
-
-    row.insertCell(4).innerHTML =
-      `<button onclick='generateReceipt(${JSON.stringify(student)})'>Generate</button>`;
-  });
-}
-
-function searchStudent() {
-  let input = document.getElementById("searchBox").value.toLowerCase();
-  let filtered = studentsData.filter(s => s.name.toLowerCase().includes(input));
-  loadTable(filtered);
-}
 
 function generateReceipt(student) {
 
@@ -137,22 +120,12 @@ function generateReceipt(student) {
   <p><b>Address:</b> ${student.address}</p>
 
   <hr>
-
-  <p><b>APAAR ID:</b> ${student.apar}</p>
-  <p><b>Aadhar:</b> ${student.aadhar}</p>
-  <p><b>Samagra:</b> ${student.samagra}</p>
-  <p><b>Bank:</b> ${student.bank}</p>
-  <p><b>Account:</b> ${student.account}</p>
-  <p><b>IFSC:</b> ${student.ifsc}</p>
-  <p><b>Mobile:</b> ${student.mobile}</p>
-
-  <hr>
   <p><b>This is a computer generated receipt. No signature required.</b></p>
   </div>
+
   <br>
   <button onclick="downloadPDF()">Download PDF</button>
   `;
-
 }
 
 function downloadPDF() {
