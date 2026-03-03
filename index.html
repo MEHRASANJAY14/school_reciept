@@ -58,12 +58,6 @@ body{
   font-weight:600;
   letter-spacing:2px;
   margin-top:5px;
-  animation:blink 1s infinite alternate;
-}
-
-@keyframes blink{
-  from{opacity:1;}
-  to{opacity:0.85;}
 }
 
 .quote{
@@ -75,37 +69,39 @@ body{
 }
 
 .container{
-  max-width:1100px;
+  max-width:1000px;
   margin:50px auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:25px;
   padding:0 20px;
 }
 
+/* ✅ Updated White Compact Cards */
 .card{
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(10px);
-  border-radius:20px;
-  padding:40px 20px;
+  background:white;
+  border-radius:15px;
+  padding:25px 15px;
   text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
   transition:0.3s;
   cursor:pointer;
+  color:#002147;
 }
 
 .card:hover{
-  transform:translateY(-8px);
-  background:rgba(255,255,255,0.25);
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.35);
 }
 
 .icon{
-  font-size:50px;
-  margin-bottom:12px;
+  font-size:40px;
+  margin-bottom:8px;
 }
 
 .card h3{
-  margin:10px 0;
+  margin:8px 0;
+  font-size:16px;
 }
 
 .footer{
@@ -114,6 +110,12 @@ body{
   font-size:13px;
   opacity:0.8;
   padding-bottom:25px;
+}
+
+@media(max-width:768px){
+  .header h1{
+    font-size:18px;
+  }
 }
 
 </style>
