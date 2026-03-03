@@ -2,52 +2,135 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GHSS Singhpur Student Portal</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-body { font-family: Arial; padding:20px; }
-h2 { text-align:center; }
-input, select { padding:6px; width:300px; margin:5px 0; }
-button { padding:8px 15px; margin-top:10px; }
-.receipt { border:2px solid black; padding:20px; width:800px; margin-top:20px; }
-.photo { float:right; width:120px; height:150px; object-fit:cover; border:1px solid black; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background: #003366;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.container {
+  max-width: 700px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h3 {
+  text-align: center;
+  color: #003366;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #003366;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #003366;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #0055aa;
+}
+
+.receipt {
+  border:2px solid black;
+  padding:20px;
+  margin-top:20px;
+  background:white;
+}
+
+.photo {
+  float:right;
+  width:100px;
+  height:130px;
+  object-fit:cover;
+  border:1px solid black;
+}
+
+@media (max-width: 600px) {
+  .receipt {
+    font-size: 14px;
+  }
+}
+
 </style>
 </head>
 
 <body>
 
-<h2>Government Higher Secondary School<br>Singhpur</h2>
+<div class="header">
+  <h2>Government Higher Secondary School</h2>
+  <p>Singhpur | Tehsil Jabera | District Damoh (M.P.)</p>
+</div>
+
+<div class="container">
 
 <h3>Student Entry Form</h3>
 
 <form id="studentForm">
 
-<input type="text" id="name" placeholder="Student Name" required><br>
-<input type="text" id="father" placeholder="Father Name" required><br>
-<input type="text" id="mother" placeholder="Mother Name" required><br>
-<input type="date" id="dob" required><br>
-<input type="text" id="class" placeholder="Class" required><br>
-<input type="text" id="address" placeholder="Address"><br>
-<input type="text" id="caste" placeholder="Caste"><br>
-<input type="text" id="category" placeholder="Category"><br>
-<input type="text" id="subject" placeholder="Subject"><br>
-<input type="text" id="apar" placeholder="APAAR ID"><br>
-<input type="text" id="aadhar" placeholder="Aadhar ID"><br>
-<input type="text" id="samagra" placeholder="Samagra ID"><br>
-<input type="text" id="account" placeholder="Account No"><br>
-<input type="text" id="ifsc" placeholder="IFSC Code"><br>
-<input type="text" id="bank" placeholder="Bank Name"><br>
-<input type="text" id="mobile" placeholder="Mobile"><br>
+<input type="text" id="name" placeholder="Student Name" required>
+<input type="text" id="father" placeholder="Father Name" required>
+<input type="text" id="mother" placeholder="Mother Name" required>
+<input type="date" id="dob" required>
+<input type="text" id="class" placeholder="Class" required>
+<input type="text" id="address" placeholder="Address">
+<input type="text" id="caste" placeholder="Caste">
+<input type="text" id="category" placeholder="Category">
+<input type="text" id="subject" placeholder="Subject">
+<input type="text" id="apar" placeholder="APAAR ID">
+<input type="text" id="aadhar" placeholder="Aadhar ID">
+<input type="text" id="samagra" placeholder="Samagra ID">
+<input type="text" id="account" placeholder="Account No">
+<input type="text" id="ifsc" placeholder="IFSC Code">
+<input type="text" id="bank" placeholder="Bank Name">
+<input type="text" id="mobile" placeholder="Mobile">
 
-<input type="file" id="photo" accept="image/*"><br>
+<label><b>Upload Student Photo</b></label>
+<input type="file" id="photo" accept="image/*">
 
 <button type="submit">Submit & Generate Receipt</button>
 
 </form>
 
 <div id="receiptArea"></div>
+
+</div>
 
 <script>
 
@@ -87,9 +170,8 @@ document.getElementById("studentForm").addEventListener("submit", function(e){
     })
     .then(res => res.json())
     .then(response => {
-
       generateReceipt(data);
-
+      document.getElementById("studentForm").reset();
     });
 
   };
@@ -123,7 +205,6 @@ function generateReceipt(student) {
   <p><b>This is a computer generated receipt. No signature required.</b></p>
   </div>
 
-  <br>
   <button onclick="downloadPDF()">Download PDF</button>
   `;
 }
