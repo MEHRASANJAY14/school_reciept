@@ -3,66 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Student Entry - GHSS Singhpur</title>
+<title>New Student Entry</title>
 
 <style>
 body { font-family: Arial; background:#f4f6f9; margin:0; }
-.header { background:#002147; color:white; text-align:center; padding:15px; }
-.container { max-width:900px; margin:20px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
-.form-group { margin-bottom:12px; }
-label { font-weight:bold; display:block; margin-bottom:4px; }
-input, select { width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; }
-button { width:100%; padding:10px; background:#002147; color:white; border:none; margin-top:15px; border-radius:5px; font-size:16px; }
-button:hover { background:#00509e; }
-#status { margin-top:15px; padding:10px; border-radius:5px; display:none; font-weight:bold; }
+.container { max-width:600px; margin:40px auto; background:white; padding:20px; border-radius:10px; }
+input, select { width:100%; padding:8px; margin-bottom:10px; }
+button { width:100%; padding:10px; background:#002147; color:white; border:none; }
 </style>
+
 </head>
 <body>
 
-<div class="header">
-<h2>Government Higher Secondary School</h2>
-<p>New Student Entry Form</p>
-</div>
-
 <div class="container">
 
-<form id="studentForm">
+<h2>New Student Entry</h2>
 
-<div class="form-group">
-<label>Student Name</label>
-<input type="text" id="name" required>
-</div>
+<form id="mainForm">
 
-<div class="form-group">
-<label>Father Name</label>
-<input type="text" id="father">
-</div>
+<input type="text" id="name" placeholder="Student Name" required>
+<input type="text" id="mobile" placeholder="Mobile">
 
-<div class="form-group">
-<label>Class</label>
-<select id="class">
-<option>9</option>
-<option>10</option>
-<option>11</option>
-<option>12</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>Mobile</label>
-<input type="text" id="mobile">
-</div>
-
-<div class="form-group">
-<label>Upload Photo</label>
 <input type="file" id="photo" accept="image/*">
-</div>
 
-<button type="submit">Save Student Data</button>
+<button type="submit">Save Student</button>
 
 </form>
-
-<div id="status"></div>
 
 </div>
 
@@ -70,56 +36,46 @@ button:hover { background:#00509e; }
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbwel43FZMg2tUZmfuVJ9WztUJUSJbJzJPX8Gkz90ovug4An16URtv2prPGsJHXBp1PD/exec";
 
-document.getElementById("studentForm").addEventListener("submit", function(e){
+document.getElementById("mainForm").addEventListener("submit", function(e){
 
   e.preventDefault();
-
-  const status = document.getElementById("status");
-  status.style.display = "block";
-  status.style.background = "#fff3cd";
-  status.innerHTML = "Sending data... Please wait ⏳";
-
-  let formData = new FormData();
-
-  formData.append("name", document.getElementById("name").value);
-  formData.append("father", document.getElementById("father").value);
-  formData.append("class", document.getElementById("class").value);
-  formData.append("mobile", document.getElementById("mobile").value);
 
   let file = document.getElementById("photo").files[0];
 
   if(file){
     let reader = new FileReader();
     reader.onload = function(){
-      formData.append("photo", reader.result);
-      sendData(formData);
+      submitData(reader.result);
     };
     reader.readAsDataURL(file);
   } else {
-    formData.append("photo", "");
-    sendData(formData);
+    submitData("");
   }
 
 });
 
-function sendData(formData){
+function submitData(photoData){
 
-  fetch(scriptURL, {
-    method: "POST",
-    body: formData,
-    mode: "no-cors"
-  })
-  .then(() => {
-    const status = document.getElementById("status");
-    status.style.background = "#d4edda";
-    status.innerHTML = "✅ Data Submitted Successfully (Check Sheet)";
-    document.getElementById("studentForm").reset();
-  })
-  .catch(() => {
-    const status = document.getElementById("status");
-    status.style.background = "#f8d7da";
-    status.innerHTML = "❌ Network Error";
-  });
+  let form = document.createElement("form");
+  form.method = "POST";
+  form.action = scriptURL;
+
+  let fields = {
+    name: document.getElementById("name").value,
+    mobile: document.getElementById("mobile").value,
+    photo: photoData
+  };
+
+  for (let key in fields) {
+    let input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = fields[key];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
 
 }
 
