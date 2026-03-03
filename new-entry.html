@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debug Save Test</title>
 </head>
 <body>
 
-<h2>Test Page</h2>
+<h2>Debug Student Save Test</h2>
 
-<button onclick="test()">Click Me</button>
+<form id="studentForm">
+  <input type="text" id="name" placeholder="Student Name" required>
+  <button type="submit">Save</button>
+</form>
+
+<div id="result"></div>
 
 <script>
-function test(){
-  alert("JavaScript Working ✅");
-}
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4ChLc2CJjEJtrKNVKmbqrgu6lGfjG3bk3-KMv77cVV19ACm/exec";
+
+document.getElementById("studentForm").addEventListener("submit", function(e){
+
+  e.preventDefault();
+  alert("Submit Triggered ✅");
+
+  let formData = new FormData();
+  formData.append("name", document.getElementById("name").value);
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: formData
+  })
+  .then(response => {
+    alert("Response received. Status: " + response.status);
+    return response.text();
+  })
+  .then(result => {
+    document.getElementById("result").innerHTML = "Server Response: " + result;
+  })
+  .catch(error => {
+    alert("Error: " + error.message);
+  });
+
+});
+
 </script>
 
 </body>
