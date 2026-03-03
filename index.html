@@ -10,16 +10,8 @@
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(-45deg,#002147,#4e73df,#001f3f,#003366);
-  background-size:400% 400%;
-  animation:gradientMove 12s ease infinite;
+  background:linear-gradient(135deg,#002147,#4e73df);
   color:white;
-}
-
-@keyframes gradientMove{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
 }
 
 .header{
@@ -52,10 +44,34 @@ body{
   font-size:14px;
 }
 
-.clock{
-  margin-top:8px;
+.date{
+  margin-top:10px;
+}
+
+#greeting{
+  font-size:16px;
+  font-weight:500;
+}
+
+.digital-clock{
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:2px;
+  margin-top:5px;
+  animation:blink 1s infinite alternate;
+}
+
+@keyframes blink{
+  from{opacity:1;}
+  to{opacity:0.85;}
+}
+
+.quote{
+  margin-top:10px;
   font-size:14px;
-  opacity:0.9;
+  font-style:italic;
+  opacity:0;
+  transition:opacity 1s ease-in-out;
 }
 
 .container{
@@ -74,12 +90,12 @@ body{
   padding:40px 20px;
   text-align:center;
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
-  transition:0.4s;
+  transition:0.3s;
   cursor:pointer;
 }
 
 .card:hover{
-  transform:translateY(-10px) scale(1.05);
+  transform:translateY(-8px);
   background:rgba(255,255,255,0.25);
 }
 
@@ -110,7 +126,13 @@ body{
 <h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
 <p>Block: Jabera | District: Damoh (M.P.)</p>
 <p>Established: 1985</p>
-<div class="clock" id="clock"></div>
+
+<div class="date">
+  <div id="greeting"></div>
+  <div id="clock" class="digital-clock"></div>
+  <div id="quote" class="quote"></div>
+</div>
+
 </div>
 
 <div class="container">
@@ -138,14 +160,75 @@ body{
 
 <script>
 
-// Live Clock
-function updateClock(){
-  const now=new Date();
-  document.getElementById("clock").innerText=
-    now.toLocaleDateString()+" | "+now.toLocaleTimeString();
+// Date + Time + Greeting
+function updateDateTime(){
+
+  const now = new Date();
+
+  const day = String(now.getDate()).padStart(2,'0');
+
+  const monthNames = ["January","February","March","April","May","June",
+                      "July","August","September","October","November","December"];
+
+  const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  const month = monthNames[now.getMonth()];
+  const year = now.getFullYear();
+  const dayName = dayNames[now.getDay()];
+
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2,'0');
+  const seconds = String(now.getSeconds()).padStart(2,'0');
+
+  let greetingText = "";
+  if(hours < 12){
+    greetingText = "🌅 Good Morning";
+  } else if(hours < 17){
+    greetingText = "☀ Good Afternoon";
+  } else {
+    greetingText = "🌙 Good Evening";
+  }
+
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  hours = String(hours).padStart(2,'0');
+
+  const formatted = dayName + ", " + day + "-" + month + "-" + year +
+                    " | " + hours + ":" + minutes + ":" + seconds + " " + ampm;
+
+  document.getElementById("clock").innerText = formatted;
+  document.getElementById("greeting").innerText = greetingText;
 }
-setInterval(updateClock,1000);
-updateClock();
+
+setInterval(updateDateTime,1000);
+updateDateTime();
+
+// Motivational Quotes Rotation
+const quotes = [
+  "📘 Education is the most powerful weapon to change the world.",
+  "🎓 Learning never exhausts the mind.",
+  "🌟 Success is the sum of small efforts repeated daily.",
+  "📖 Knowledge gives confidence.",
+  "🚀 Dream big. Work hard. Stay focused.",
+  "🏆 Discipline is the bridge between goals and achievement."
+];
+
+let quoteIndex = 0;
+const quoteElement = document.getElementById("quote");
+
+function rotateQuotes(){
+  quoteElement.style.opacity = 0;
+
+  setTimeout(()=>{
+    quoteElement.innerText = quotes[quoteIndex];
+    quoteElement.style.opacity = 1;
+    quoteIndex = (quoteIndex + 1) % quotes.length;
+  },500);
+}
+
+setInterval(rotateQuotes,5000);
+rotateQuotes();
 
 </script>
 
