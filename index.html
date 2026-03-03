@@ -24,7 +24,7 @@ body{
 /* HEADER */
 .header{
   text-align:center;
-  padding:15px 10px;
+  padding:10px 10px 5px;
 }
 
 .header h1{
@@ -37,8 +37,13 @@ body{
   font-size:12px;
 }
 
+.date{
+  margin-top:5px;
+}
+
 #greeting{
   font-size:13px;
+  font-weight:500;
 }
 
 .digital-clock{
@@ -47,27 +52,28 @@ body{
 }
 
 .quote{
-  font-size:12px;
   margin-top:4px;
+  font-size:12px;
+  font-style:italic;
   opacity:0;
   transition:opacity 1s;
 }
 
 /* MAIN */
 .container{
-  flex:1;
   display:flex;
-  align-items:center;
   justify-content:center;
   gap:18px;
   padding:10px;
+  margin-top:10px;
+  flex-wrap:wrap;
 }
 
 .card{
   background:white;
-  border-radius:10px;
+  border-radius:12px;
   padding:18px 12px;
-  width:180px;
+  width:190px;
   text-align:center;
   box-shadow:0 6px 15px rgba(0,0,0,0.25);
   cursor:pointer;
@@ -77,54 +83,71 @@ body{
 
 .card:hover{
   transform:translateY(-5px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.35);
 }
 
 .icon{
-  font-size:24px;
-  margin-bottom:5px;
+  font-size:26px;
+  margin-bottom:6px;
 }
 
 .card h3{
-  font-size:13px;
   margin:5px 0;
+  font-size:13px;
 }
 
-/* FIXED FOOTER */
+/* FOOTER */
 .footer{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:rgba(0,0,0,0.3);
+  margin-top:auto;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(8px);
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
-  gap:15px;
-  padding:8px;
+  padding:8px 20px;
   font-size:12px;
+  border-top:1px solid rgba(255,255,255,0.3);
+}
+
+.footer-left{
+  display:flex;
+  gap:10px;
 }
 
 .footer button{
   background:white;
   border:none;
-  padding:5px 10px;
-  border-radius:5px;
+  padding:5px 12px;
+  border-radius:20px;
   cursor:pointer;
   font-size:12px;
   color:#002147;
   font-weight:600;
+  transition:0.3s;
 }
 
 .footer button:hover{
   background:#f0f0f0;
+  transform:translateY(-2px);
 }
 
-/* Mobile */
+.footer-center{
+  text-align:center;
+  flex:1;
+}
+
 @media(max-width:768px){
   .container{
     flex-direction:column;
+    align-items:center;
   }
   .card{
     width:85%;
+  }
+  .footer{
+    flex-direction:column;
+    gap:6px;
+    text-align:center;
   }
 }
 
@@ -139,9 +162,11 @@ body{
 <p>Block: Jabera | District: Damoh (M.P.)</p>
 <p>Established: 1985</p>
 
-<div id="greeting"></div>
-<div id="clock" class="digital-clock"></div>
-<div id="quote" class="quote"></div>
+<div class="date">
+  <div id="greeting"></div>
+  <div id="clock" class="digital-clock"></div>
+  <div id="quote" class="quote"></div>
+</div>
 
 </div>
 
@@ -165,14 +190,19 @@ body{
 </div>
 
 <div class="footer">
-<button onclick="location.href='index.html'">🏠 Home</button>
-<button onclick="location.reload()">🔄 Refresh</button>
-<span>© 2026 GHSS Singhpur</span>
+  <div class="footer-left">
+    <button onclick="location.href='index.html'">🏠 Home</button>
+    <button onclick="location.reload()">🔄 Refresh</button>
+  </div>
+
+  <div class="footer-center">
+    © 2026 Govt Higher Secondary School Singhpur | Digital Admission System
+  </div>
 </div>
 
 <script>
 
-// Date + Greeting
+// Date + Time + Greeting
 function updateDateTime(){
 
   const now = new Date();
@@ -206,12 +236,13 @@ function updateDateTime(){
 setInterval(updateDateTime,1000);
 updateDateTime();
 
-// Quotes
+// Motivational Quotes
 const quotes=[
 "📘 Education is the most powerful weapon to change the world.",
 "🎓 Learning never exhausts the mind.",
 "🌟 Success is the sum of small efforts repeated daily.",
-"📖 Knowledge gives confidence."
+"📖 Knowledge gives confidence.",
+"🚀 Dream big. Work hard. Stay focused."
 ];
 
 let i=0;
