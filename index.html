@@ -3,155 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHSS Singhpur Dashboard</title>
+<title>School Dashboard</title>
 
 <style>
 
-body {
+body{
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#002147,#4e73df);
 }
 
-/* HEADER */
-.header {
-  background: linear-gradient(135deg, #002147, #00509e);
-  color:white;
+.header{
   text-align:center;
-  padding:30px 20px;
-  position:relative;
+  color:white;
+  padding:25px 15px;
 }
 
-.header h2 {
+.header h1{
+  margin:0;
+  font-size:22px;
+}
+
+.header p{
   margin:5px 0;
-  font-size:26px;
+  font-size:14px;
 }
 
-.header p {
-  margin:5px 0;
-  font-size:15px;
-  opacity:0.9;
-}
-
-/* LOGO CIRCLE */
-.logo-circle {
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  background:white;
-  color:#002147;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:18px;
-  margin:0 auto 15px auto;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-}
-
-/* DASHBOARD CONTAINER */
-.container {
-  max-width:1000px;
-  margin:40px auto;
+.container{
+  max-width:1100px;
+  margin:30px auto;
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap:30px;
-  padding:20px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+  padding:0 20px;
 }
 
-/* CARD STYLE */
-.card {
-  background: rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
-  padding:35px 25px;
+.card{
+  background:white;
   border-radius:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  padding:30px;
   text-align:center;
-  transition: all 0.3s ease;
-  border:1px solid rgba(255,255,255,0.4);
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow:0 15px 30px rgba(0,0,0,0.25);
-}
-
-.card-icon {
-  font-size:40px;
-  margin-bottom:15px;
-}
-
-.card h3 {
-  color:#002147;
-  margin-bottom:15px;
-}
-
-.card p {
-  font-size:14px;
-  margin-bottom:20px;
-  color:#444;
-}
-
-/* BUTTON */
-.btn {
-  display:inline-block;
-  padding:12px 22px;
-  background: linear-gradient(135deg, #002147, #00509e);
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
-  font-weight:bold;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
   transition:0.3s;
+  cursor:pointer;
 }
 
-.btn:hover {
-  background: linear-gradient(135deg, #00509e, #002147);
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
 }
 
-/* FOOTER */
-.footer {
-  text-align:center;
-  margin-top:50px;
-  padding:15px;
-  font-size:14px;
+.card h3{
+  margin:10px 0;
+  color:#002147;
+}
+
+.card p{
   color:#555;
+  font-size:14px;
 }
 
-@media(max-width:600px){
-  .header h2 { font-size:20px; }
+.icon{
+  font-size:40px;
+}
+
+.footer{
+  text-align:center;
+  color:white;
+  margin-top:40px;
+  padding-bottom:20px;
+  font-size:13px;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="header">
-  <div class="logo-circle">GHSS</div>
-  <h2>Government Higher Secondary School</h2>
-  <p>Singhpur | Tehsil Jabera | District Damoh (M.P.)</p>
+<h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
+<p>Block: Jabera | District: Damoh (M.P.)</p>
+<p>Established: 1985</p>
 </div>
 
 <div class="container">
 
-  <div class="card">
-    <div class="card-icon">➕</div>
-    <h3>New Student Entry</h3>
-    <p>Add new student details and generate computerised receipt instantly.</p>
-    <a href="new-entry.html" class="btn">Open Entry Form</a>
-  </div>
+<div class="card" onclick="location.href='new-entry.html'">
+<div class="icon">📝</div>
+<h3>New Student Entry</h3>
+<p>Add new student admission record</p>
+</div>
 
-  <div class="card">
-    <div class="card-icon">📋</div>
-    <h3>Existing Student Records</h3>
-    <p>Search, view and print previously saved student records.</p>
-    <a href="existing-entry.html" class="btn">View Records</a>
-  </div>
+<div class="card" onclick="location.href='existing-records.html'">
+<div class="icon">📋</div>
+<h3>Existing Records</h3>
+<p>View & Print existing student receipts</p>
+</div>
+
+<div class="card" onclick="location.href='search-print.html'">
+<div class="icon">🔎</div>
+<h3>Search & Print</h3>
+<p>Search student by ID / Aadhaar</p>
+</div>
 
 </div>
 
 <div class="footer">
-  © 2026 GHSS Singhpur | Digital School Management System
+© 2026 Govt Higher Secondary School Singhpur | Computerized System
 </div>
 
 </body>
