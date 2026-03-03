@@ -69,12 +69,19 @@ button:hover {
   background: #00509e;
 }
 
+.status-box {
+  display:none;
+  padding:12px;
+  margin-top:15px;
+  border-radius:5px;
+  font-weight:bold;
+}
+
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
   }
 }
-
 </style>
 </head>
 
@@ -181,6 +188,8 @@ button:hover {
 
 </form>
 
+<div id="statusBox" class="status-box"></div>
+
 </div>
 
 <script>
@@ -190,6 +199,12 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4
 document.getElementById("studentForm").addEventListener("submit", function(e){
 
   e.preventDefault();
+
+  let statusBox = document.getElementById("statusBox");
+  statusBox.style.display = "block";
+  statusBox.style.background = "#fff3cd";
+  statusBox.style.color = "#856404";
+  statusBox.innerHTML = "Sending data... Please wait ⏳";
 
   let formData = new FormData();
 
@@ -232,14 +247,36 @@ function sendData(formData){
     method: "POST",
     body: formData
   })
-  .then(res => res.text())
   .then(response => {
-    alert("Student Data Saved Successfully ✅");
+
+    console.log("HTTP Status:", response.status);
+
+    if (!response.ok) {
+      throw new Error("HTTP Error: " + response.status);
+    }
+
+    return response.text();
+  })
+  .then(result => {
+
+    console.log("Server Response:", result);
+
+    let statusBox = document.getElementById("statusBox");
+    statusBox.style.background = "#d4edda";
+    statusBox.style.color = "#155724";
+    statusBox.innerHTML = "✅ Success! Server Response: " + result;
+
     document.getElementById("studentForm").reset();
   })
   .catch(error => {
-    alert("Error Saving Data ❌");
-    console.error(error);
+
+    console.error("Full Error:", error);
+
+    let statusBox = document.getElementById("statusBox");
+    statusBox.style.background = "#f8d7da";
+    statusBox.style.color = "#721c24";
+    statusBox.innerHTML = "❌ ERROR: " + error.message;
+
   });
 
 }
