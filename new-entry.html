@@ -13,7 +13,7 @@ body{
 }
 
 .container{
-  max-width:700px;
+  max-width:800px;
   margin:20px auto;
   background:white;
   padding:20px;
@@ -36,7 +36,7 @@ label{
   color:#0f2c59;
 }
 
-input, select{
+input, select, textarea{
   width:100%;
   padding:8px;
   border-radius:6px;
@@ -45,27 +45,24 @@ input, select{
   font-size:13px;
 }
 
-button{
-  width:100%;
+.button-row{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.button-row button{
+  flex:1;
   padding:10px;
-  background:#0f2c59;
-  color:white;
   border:none;
   border-radius:8px;
   cursor:pointer;
   font-weight:600;
-  margin-top:10px;
+  color:white;
 }
 
-button:hover{
-  background:#163d7a;
-}
-
-.preview img{
-  max-width:120px;
-  border-radius:8px;
-  margin-top:6px;
-}
+.submit-btn{ background:#0f2c59; }
+.back-btn{ background:#6c757d; }
 
 .message{
   text-align:center;
@@ -73,25 +70,32 @@ button:hover{
   font-weight:600;
 }
 
-.action-buttons{
-  margin-top:15px;
+.preview img{
+  max-width:120px;
+  margin-top:6px;
+  border-radius:8px;
+}
+
+.success-box{
   display:none;
-  flex-direction:column;
-  gap:8px;
+  margin-top:20px;
+  text-align:center;
 }
 
-.dashboard-btn{
-  background:#0056b3 !important;
+.success-box button{
+  width:100%;
+  margin-top:8px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
 }
 
-.print-btn{
-  background:#c82333 !important;
-}
-
-.back-bottom{
-  background:#6c757d !important;
-  margin-top:15px;
-}
+.new-btn{ background:#1e7e34; }
+.dashboard-btn{ background:#0056b3; }
+.print-btn{ background:#c82333; }
 
 </style>
 </head>
@@ -109,6 +113,21 @@ button:hover{
 </div>
 
 <div class="form-group">
+<label>Father Name</label>
+<input type="text" name="father">
+</div>
+
+<div class="form-group">
+<label>Mother Name</label>
+<input type="text" name="mother">
+</div>
+
+<div class="form-group">
+<label>Date of Birth</label>
+<input type="date" name="dob">
+</div>
+
+<div class="form-group">
 <label>Class *</label>
 <select name="class" required>
 <option value="">-- Select Class --</option>
@@ -117,6 +136,21 @@ button:hover{
 <option>11</option>
 <option>12</option>
 </select>
+</div>
+
+<div class="form-group">
+<label>Village</label>
+<input type="text" name="village">
+</div>
+
+<div class="form-group">
+<label>Address</label>
+<textarea name="address"></textarea>
+</div>
+
+<div class="form-group">
+<label>Caste</label>
+<input type="text" name="caste">
 </div>
 
 <div class="form-group">
@@ -133,34 +167,66 @@ button:hover{
 </div>
 
 <div class="form-group">
-<label>Aadhaar ID</label>
+<label>Subject</label>
+<input type="text" name="subject">
+</div>
+
+<div class="form-group">
+<label>APAAR ID</label>
+<input type="text" name="apar">
+</div>
+
+<div class="form-group">
+<label>Aadhaar ID (12 Digit)</label>
 <input type="text" name="aadhar" maxlength="12">
 </div>
 
 <div class="form-group">
-<label>Mobile</label>
+<label>Samagra ID</label>
+<input type="text" name="samagra">
+</div>
+
+<div class="form-group">
+<label>Account No</label>
+<input type="text" name="account">
+</div>
+
+<div class="form-group">
+<label>IFSC Code</label>
+<input type="text" name="ifsc">
+</div>
+
+<div class="form-group">
+<label>Bank Name</label>
+<input type="text" name="bank">
+</div>
+
+<div class="form-group">
+<label>Mobile (10 Digit)</label>
 <input type="text" name="mobile" maxlength="10">
 </div>
 
 <div class="form-group">
-<label>Photo</label>
+<label>Student Photo</label>
 <input type="file" id="photo" accept="image/*">
 <div class="preview" id="preview"></div>
 </div>
 
-<button type="submit">Submit</button>
+<div class="button-row">
+<button type="submit" class="submit-btn">Submit</button>
+<button type="button" class="back-btn" onclick="location.href='index.html'">⬅ Back</button>
+</div>
 
 <div class="message" id="msg"></div>
 
 </form>
 
-<div class="action-buttons" id="actions">
+<div class="success-box" id="successBox">
+<h3 id="successText"></h3>
+<button class="new-btn" onclick="location.reload()">➕ Back to New Entry</button>
 <button class="dashboard-btn" onclick="location.href='index.html'">🏠 Back to Dashboard</button>
-<button onclick="location.reload()">➕ New Entry</button>
 <button class="print-btn" onclick="printReceipt()">🖨 Print Receipt</button>
 </div>
-
-<button class="back-bottom" onclick="location.href='index.html'">⬅ Back</button>
 
 </div>
 
@@ -168,15 +234,15 @@ button:hover{
 
 const scriptURL="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
 
-let receiptNumber="";
+let studentId="";
 
 const form=document.getElementById("studentForm");
 const msg=document.getElementById("msg");
-const photoInput=document.getElementById("photo");
+const successBox=document.getElementById("successBox");
+const successText=document.getElementById("successText");
 const preview=document.getElementById("preview");
-const actions=document.getElementById("actions");
 
-photoInput.addEventListener("change",function(){
+document.getElementById("photo").addEventListener("change",function(){
   const file=this.files[0];
   if(file){
     const reader=new FileReader();
@@ -190,27 +256,50 @@ photoInput.addEventListener("change",function(){
 form.addEventListener("submit",e=>{
   e.preventDefault();
 
+  const aadhar=form.aadhar.value;
+  const mobile=form.mobile.value;
+
+  if(aadhar && !/^\d{12}$/.test(aadhar)){
+    msg.style.color="red";
+    msg.innerText="Aadhaar must be 12 digits.";
+    return;
+  }
+
+  if(mobile && !/^\d{10}$/.test(mobile)){
+    msg.style.color="red";
+    msg.innerText="Mobile must be 10 digits.";
+    return;
+  }
+
   msg.style.color="blue";
   msg.innerText="Submitting... Please wait";
 
-  receiptNumber="GHSS-"+Date.now();
+  Array.from(form.elements).forEach(el=>{
+    if(el.type==="text") el.value=el.value.toUpperCase();
+  });
 
   const formData=new FormData(form);
-  formData.append("receipt",receiptNumber);
 
   fetch(scriptURL,{method:"POST",body:formData})
   .then(res=>res.text())
   .then(data=>{
-    if(data.includes("SUCCESS")){
-      msg.style.color="green";
-      msg.innerText="Data Submitted Successfully!";
-      form.reset();
-      preview.innerHTML="";
-      actions.style.display="flex";
+
+    if(data==="DUPLICATE"){
+      msg.style.color="red";
+      msg.innerText="Duplicate Aadhaar Found!";
+      return;
+    }
+
+    if(data.startsWith("SUCCESS")){
+      studentId=data.split("|")[1];
+      form.style.display="none";
+      successBox.style.display="block";
+      successText.innerText="Data Submitted Successfully! Student ID: "+studentId;
     }else{
       msg.style.color="red";
       msg.innerText="Server Error: "+data;
     }
+
   })
   .catch(err=>{
     msg.style.color="red";
@@ -220,7 +309,7 @@ form.addEventListener("submit",e=>{
 });
 
 function printReceipt(){
-  window.open("print.html?receipt="+receiptNumber,"_blank");
+  window.open("print.html?studentId="+studentId,"_blank");
 }
 
 </script>
