@@ -3,89 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHSS Singhpur Student Portal</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<title>GHSS Singhpur Dashboard</title>
 
 <style>
 
 body {
+  margin:0;
   font-family: Arial, sans-serif;
-  background: #f4f6f9;
-  margin: 0;
-  padding: 0;
+  background:#f2f5f9;
 }
 
 .header {
-  background: #003366;
-  color: white;
-  padding: 15px;
-  text-align: center;
+  background:#003366;
+  color:white;
+  text-align:center;
+  padding:20px;
 }
 
 .container {
-  max-width: 700px;
-  margin: 20px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-h3 {
-  text-align: center;
-  color: #003366;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-input:focus {
-  border-color: #003366;
-  outline: none;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background: #003366;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button:hover {
-  background: #0055aa;
-}
-
-.receipt {
-  border:2px solid black;
+  max-width:900px;
+  margin:30px auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap:20px;
   padding:20px;
-  margin-top:20px;
+}
+
+.card {
   background:white;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  text-align:center;
+  transition:0.3s;
 }
 
-.photo {
-  float:right;
-  width:100px;
-  height:130px;
-  object-fit:cover;
-  border:1px solid black;
+.card:hover {
+  transform:translateY(-5px);
 }
 
-@media (max-width: 600px) {
-  .receipt {
-    font-size: 14px;
-  }
+.card h3 {
+  margin-bottom:15px;
+  color:#003366;
+}
+
+.btn {
+  display:inline-block;
+  padding:10px 20px;
+  background:#003366;
+  color:white;
+  text-decoration:none;
+  border-radius:6px;
+  font-weight:bold;
+}
+
+.btn:hover {
+  background:#0055aa;
+}
+
+.footer {
+  text-align:center;
+  margin-top:40px;
+  padding:15px;
+  font-size:14px;
+  color:#555;
 }
 
 </style>
@@ -95,126 +76,28 @@ button:hover {
 
 <div class="header">
   <h2>Government Higher Secondary School</h2>
-  <p>Singhpur | Tehsil Jabera | District Damoh (M.P.)</p>
+  <h3>Singhpur | Tehsil Jabera | District Damoh (M.P.)</h3>
 </div>
 
 <div class="container">
 
-<h3>Student Entry Form</h3>
+  <div class="card">
+    <h3>➕ New Student Entry</h3>
+    <p>Add new student details and generate receipt.</p>
+    <a href="new-entry.html" class="btn">Open Entry Form</a>
+  </div>
 
-<form id="studentForm">
-
-<input type="text" id="name" placeholder="Student Name" required>
-<input type="text" id="father" placeholder="Father Name" required>
-<input type="text" id="mother" placeholder="Mother Name" required>
-<input type="date" id="dob" required>
-<input type="text" id="class" placeholder="Class" required>
-<input type="text" id="address" placeholder="Address">
-<input type="text" id="caste" placeholder="Caste">
-<input type="text" id="category" placeholder="Category">
-<input type="text" id="subject" placeholder="Subject">
-<input type="text" id="apar" placeholder="APAAR ID">
-<input type="text" id="aadhar" placeholder="Aadhar ID">
-<input type="text" id="samagra" placeholder="Samagra ID">
-<input type="text" id="account" placeholder="Account No">
-<input type="text" id="ifsc" placeholder="IFSC Code">
-<input type="text" id="bank" placeholder="Bank Name">
-<input type="text" id="mobile" placeholder="Mobile">
-
-<label><b>Upload Student Photo</b></label>
-<input type="file" id="photo" accept="image/*">
-
-<button type="submit">Submit & Generate Receipt</button>
-
-</form>
-
-<div id="receiptArea"></div>
+  <div class="card">
+    <h3>📋 Existing Student Records</h3>
+    <p>Search, view and print student receipts.</p>
+    <a href="existing-entry.html" class="btn">View Records</a>
+  </div>
 
 </div>
 
-<script>
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4ChLc2CJjEJtrKNVKmbqrgu6lGfjG3bk3-KMv77cVV19ACm/exec";
-
-document.getElementById("studentForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  let reader = new FileReader();
-  let file = document.getElementById("photo").files[0];
-
-  reader.onloadend = function() {
-
-    let data = {
-      name: name.value,
-      father: father.value,
-      mother: mother.value,
-      dob: dob.value,
-      class: class.value,
-      address: address.value,
-      caste: caste.value,
-      category: category.value,
-      subject: subject.value,
-      apar: apar.value,
-      aadhar: aadhar.value,
-      samagra: samagra.value,
-      account: account.value,
-      ifsc: ifsc.value,
-      bank: bank.value,
-      mobile: mobile.value,
-      photo: reader.result
-    };
-
-    fetch(scriptURL, {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(response => {
-      generateReceipt(data);
-      document.getElementById("studentForm").reset();
-    });
-
-  };
-
-  if(file) reader.readAsDataURL(file);
-});
-
-function generateReceipt(student) {
-
-  let receiptNo = "GHSS-" + Date.now();
-
-  document.getElementById("receiptArea").innerHTML = `
-  <div class="receipt" id="receiptContent">
-  <h3 align="center">STUDENT INFORMATION RECEIPT</h3>
-  <p><b>Receipt No:</b> ${receiptNo}</p>
-  <p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
-
-  <img src="${student.photo}" class="photo">
-
-  <p><b>Name:</b> ${student.name}</p>
-  <p><b>Father:</b> ${student.father}</p>
-  <p><b>Mother:</b> ${student.mother}</p>
-  <p><b>DOB:</b> ${student.dob}</p>
-  <p><b>Class:</b> ${student.class}</p>
-  <p><b>Subject:</b> ${student.subject}</p>
-  <p><b>Caste:</b> ${student.caste}</p>
-  <p><b>Category:</b> ${student.category}</p>
-  <p><b>Address:</b> ${student.address}</p>
-
-  <hr>
-  <p><b>This is a computer generated receipt. No signature required.</b></p>
-  </div>
-
-  <button onclick="downloadPDF()">Download PDF</button>
-  `;
-}
-
-function downloadPDF() {
-  var element = document.getElementById('receiptContent');
-  html2pdf().from(element).save();
-}
-
-</script>
+<div class="footer">
+  © 2026 GHSS Singhpur | Computer Generated System
+</div>
 
 </body>
 </html>
