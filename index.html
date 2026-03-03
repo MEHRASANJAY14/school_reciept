@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>School Dashboard</title>
+<title>GHSS Singhpur Dashboard</title>
 
 <style>
 
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
-html, body{
+html,body{
   height:100%;
-  overflow:hidden; /* 🚫 No Scroll */
-  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body{
-  background:linear-gradient(135deg,#002147,#4e73df);
+  background:linear-gradient(160deg,#0f2c59,#3f66c4);
   color:white;
   display:flex;
   flex-direction:column;
@@ -29,110 +29,105 @@ body{
 /* HEADER */
 .header{
   text-align:center;
-  padding:8px 10px;
+  padding:15px 10px 5px;
 }
 
 .header h1{
-  font-size:17px;
-  margin:2px 0;
+  font-size:18px;
+  letter-spacing:1px;
 }
 
 .header p{
   font-size:11px;
-  margin:1px 0;
+  opacity:0.9;
+}
+
+.time-section{
+  margin-top:6px;
 }
 
 #greeting{
-  font-size:12px;
-  margin-top:3px;
+  font-size:13px;
+  margin-bottom:3px;
 }
 
 .digital-clock{
-  font-size:13px;
+  font-size:14px;
   font-weight:600;
 }
 
 .quote{
   font-size:11px;
   margin-top:3px;
-  opacity:0;
-  transition:opacity 1s;
+  opacity:0.85;
 }
 
-/* MAIN CARDS */
-.container{
+/* MAIN CENTER */
+.main{
   flex:1;
   display:flex;
   justify-content:center;
   align-items:center;
+}
+
+.card-container{
+  width:90%;
+  max-width:400px;
+  display:flex;
+  flex-direction:column;
   gap:15px;
-  padding:5px;
 }
 
 .card{
   background:white;
-  border-radius:10px;
-  padding:15px 10px;
-  width:170px;
+  border-radius:18px;
+  padding:22px;
   text-align:center;
-  box-shadow:0 5px 12px rgba(0,0,0,0.25);
+  color:#0f2c59;
+  font-weight:600;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
   cursor:pointer;
-  color:#002147;
-  transition:0.3s;
+  transition:0.3s ease;
 }
 
 .card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px);
 }
 
-.icon{
-  font-size:22px;
-  margin-bottom:5px;
-}
-
-.card h3{
-  font-size:12px;
+.card span{
+  display:block;
+  font-size:28px;
+  margin-bottom:6px;
 }
 
 /* FOOTER */
 .footer{
-  background:rgba(0,0,0,0.3);
+  background:rgba(0,0,0,0.25);
+  padding:8px 15px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:6px 15px;
   font-size:11px;
 }
 
 .footer-left{
   display:flex;
-  gap:8px;
+  gap:10px;
 }
 
 .footer button{
   background:white;
   border:none;
-  padding:4px 10px;
-  border-radius:15px;
+  padding:5px 12px;
+  border-radius:20px;
   cursor:pointer;
   font-size:11px;
-  color:#002147;
   font-weight:600;
+  color:#0f2c59;
 }
 
 .footer button:hover{
-  background:#f0f0f0;
-}
-
-/* Mobile strict fit */
-@media(max-width:768px){
-  .container{
-    flex-direction:column;
-    gap:10px;
-  }
-  .card{
-    width:80%;
-  }
+  background:#eaeaea;
 }
 
 </style>
@@ -141,34 +136,35 @@ body{
 <body>
 
 <div class="header">
+  <h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
+  <p>Block: Jabera | District: Damoh (M.P.) | Estd. 1985</p>
 
-<h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
-<p>Block: Jabera | District: Damoh (M.P.)</p>
-<p>Established: 1985</p>
-
-<div id="greeting"></div>
-<div id="clock" class="digital-clock"></div>
-<div id="quote" class="quote"></div>
-
+  <div class="time-section">
+    <div id="greeting"></div>
+    <div id="clock" class="digital-clock"></div>
+    <div id="quote" class="quote"></div>
+  </div>
 </div>
 
-<div class="container">
+<div class="main">
+  <div class="card-container">
 
-<div class="card" onclick="location.href='new-entry.html'">
-<div class="icon">📝</div>
-<h3>New Entry</h3>
-</div>
+    <div class="card" onclick="location.href='new-entry.html'">
+      <span>📝</span>
+      New Student Entry
+    </div>
 
-<div class="card" onclick="location.href='existing-records.html'">
-<div class="icon">📋</div>
-<h3>Records</h3>
-</div>
+    <div class="card" onclick="location.href='existing-records.html'">
+      <span>📋</span>
+      Student Records
+    </div>
 
-<div class="card" onclick="location.href='search-print.html'">
-<div class="icon">🔎</div>
-<h3>Search</h3>
-</div>
+    <div class="card" onclick="location.href='search-print.html'">
+      <span>🔎</span>
+      Search & Print
+    </div>
 
+  </div>
 </div>
 
 <div class="footer">
@@ -181,59 +177,46 @@ body{
 
 <script>
 
-function updateDateTime(){
-
+function updateTime(){
   const now=new Date();
-  const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  const monthNames=["January","February","March","April","May","June",
-                    "July","August","September","October","November","December"];
+  const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-  const day=String(now.getDate()).padStart(2,'0');
-  const month=monthNames[now.getMonth()];
-  const year=now.getFullYear();
-  const dayName=dayNames[now.getDay()];
+  let h=now.getHours();
+  const m=String(now.getMinutes()).padStart(2,'0');
+  const s=String(now.getSeconds()).padStart(2,'0');
 
-  let hours=now.getHours();
-  const minutes=String(now.getMinutes()).padStart(2,'0');
-  const seconds=String(now.getSeconds()).padStart(2,'0');
+  let greet="";
+  if(h<12) greet="🌅 Good Morning";
+  else if(h<17) greet="☀ Good Afternoon";
+  else greet="🌙 Good Evening";
 
-  let greeting="";
-  if(hours<12) greeting="🌅 Good Morning";
-  else if(hours<17) greeting="☀ Good Afternoon";
-  else greeting="🌙 Good Evening";
+  const ampm=h>=12?"PM":"AM";
+  h=h%12||12;
 
-  const ampm=hours>=12?"PM":"AM";
-  hours=hours%12||12;
-
-  document.getElementById("greeting").innerText=greeting;
+  document.getElementById("greeting").innerText=greet;
   document.getElementById("clock").innerText=
-    dayName+", "+day+"-"+month+"-"+year+
-    " | "+String(hours).padStart(2,'0')+":"+minutes+":"+seconds+" "+ampm;
+    days[now.getDay()]+", "+
+    String(now.getDate()).padStart(2,'0')+"-"+months[now.getMonth()]+"-"+now.getFullYear()+
+    " | "+String(h).padStart(2,'0')+":"+m+":"+s+" "+ampm;
 }
 
-setInterval(updateDateTime,1000);
-updateDateTime();
+setInterval(updateTime,1000);
+updateTime();
 
 const quotes=[
-"📘 Education is the most powerful weapon to change the world.",
-"🎓 Learning never exhausts the mind.",
-"🌟 Success is the sum of small efforts repeated daily."
+"Education is the most powerful weapon to change the world.",
+"Discipline is the bridge between goals and success.",
+"Learning never exhausts the mind."
 ];
 
 let i=0;
-const q=document.getElementById("quote");
-
-function rotateQuotes(){
-  q.style.opacity=0;
-  setTimeout(()=>{
-    q.innerText=quotes[i];
-    q.style.opacity=1;
-    i=(i+1)%quotes.length;
-  },500);
+function rotateQuote(){
+  document.getElementById("quote").innerText=quotes[i];
+  i=(i+1)%quotes.length;
 }
-
-setInterval(rotateQuotes,5000);
-rotateQuotes();
+setInterval(rotateQuote,5000);
+rotateQuote();
 
 </script>
 
