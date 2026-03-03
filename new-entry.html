@@ -3,141 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Admission Form</title>
+<title>New Student Entry</title>
 
 <style>
-
 body{
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f2c59,#3f66c4);
   margin:0;
-  background: linear-gradient(135deg,#002147,#4e73df);
-}
-
-.header{
-  text-align:center;
-  color:white;
-  padding:25px 10px;
-}
-
-.header h2{
-  margin:0;
-  letter-spacing:1px;
-}
-
-.header p{
-  margin:4px 0;
-  font-size:14px;
+  padding:20px;
 }
 
 .container{
-  max-width:1100px;
-  margin:20px auto;
-  background:rgba(255,255,255,0.95);
-  padding:35px;
-  border-radius:18px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.25);
-  backdrop-filter: blur(6px);
-  animation: fadeIn 0.6s ease-in-out;
+  max-width:850px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
+h2{
+  text-align:center;
+  margin-bottom:20px;
+  color:#0f2c59;
 }
 
-.form-row{
-  display:grid;
-  grid-template-columns:220px 1fr;
-  margin-bottom:16px;
-  align-items:center;
+.form-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:12px;
 }
 
 label{
+  font-size:13px;
+  margin-bottom:3px;
   font-weight:600;
-  color:#002147;
 }
 
 input, select{
-  padding:11px;
-  border-radius:10px;
+  padding:8px;
   border:1px solid #ccc;
-  width:100%;
-  transition:all 0.3s ease;
-  font-size:14px;
+  border-radius:6px;
+  font-size:13px;
 }
 
-input:focus, select:focus{
-  border-color:#4e73df;
-  box-shadow:0 0 8px rgba(78,115,223,0.4);
-  outline:none;
-  transform:scale(1.01);
+.row{
+  display:flex;
+  gap:10px;
+}
+
+.row .form-group{
+  flex:1;
+}
+
+.buttons{
+  margin-top:15px;
+  display:flex;
+  justify-content:space-between;
 }
 
 button{
-  width:100%;
-  padding:13px;
-  background:linear-gradient(to right,#002147,#004080);
-  color:white;
+  padding:8px 15px;
   border:none;
-  border-radius:10px;
+  border-radius:6px;
   cursor:pointer;
-  font-size:16px;
   font-weight:600;
-  transition:0.3s;
+  font-size:13px;
 }
 
-button:hover{
-  transform:scale(1.02);
-  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+.submit-btn{
+  background:#0f2c59;
+  color:white;
 }
 
-button:disabled{
-  background:gray;
-  transform:none;
+.back-btn{
+  background:#ccc;
+}
+
+.success-panel{
+  margin-top:20px;
+  padding:15px;
+  background:#e6ffe6;
+  border-radius:10px;
+  text-align:center;
+  display:none;
+}
+
+.success-panel button{
+  margin:5px;
 }
 
 .message{
-  margin-top:18px;
-  font-weight:bold;
+  margin-top:10px;
+  font-size:13px;
   text-align:center;
-  font-size:15px;
+  font-weight:600;
 }
-
-.success{color:green;}
-.error{color:red;}
 
 @media(max-width:768px){
-  .form-row{
-    grid-template-columns:1fr;
+  .row{
+    flex-direction:column;
   }
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="header">
-<h2>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h2>
-<p>Block: Jabera | District: Damoh (M.P.)</p>
-<p>Established: 1985</p>
-</div>
-
 <div class="container">
 
-<form id="mainForm">
+<h2>New Student Entry</h2>
 
-<!-- ALL ORIGINAL FIELDS (NO REMOVAL) -->
+<form id="studentForm">
 
-<div class="form-row"><label>Student Name</label><input type="text" name="name" required></div>
-<div class="form-row"><label>Father Name</label><input type="text" name="father"></div>
-<div class="form-row"><label>Mother Name</label><input type="text" name="mother"></div>
-<div class="form-row"><label>Date of Birth</label><input type="date" name="dob"></div>
+<div class="row">
+<div class="form-group">
+<label>Student Name</label>
+<input type="text" name="name" required>
+</div>
 
-<div class="form-row">
+<div class="form-group">
+<label>Father Name</label>
+<input type="text" name="father" required>
+</div>
+</div>
+
+<div class="row">
+<div class="form-group">
+<label>Mother Name</label>
+<input type="text" name="mother" required>
+</div>
+
+<div class="form-group">
+<label>DOB</label>
+<input type="date" name="dob" required>
+</div>
+</div>
+
+<div class="row">
+<div class="form-group">
 <label>Class</label>
 <select name="class" required>
-<option value="" disabled selected>-- SELECT CLASS --</option>
 <option value="9">9</option>
 <option value="10">10</option>
 <option value="11">11</option>
@@ -145,14 +151,27 @@ button:disabled{
 </select>
 </div>
 
-<div class="form-row"><label>Village</label><input type="text" name="village"></div>
-<div class="form-row"><label>Address</label><input type="text" name="address"></div>
-<div class="form-row"><label>Caste</label><input type="text" name="caste" required></div>
+<div class="form-group">
+<label>Village</label>
+<input type="text" name="village">
+</div>
+</div>
 
-<div class="form-row">
+<div class="form-group">
+<label>Address</label>
+<input type="text" name="address">
+</div>
+
+<div class="row">
+<div class="form-group">
+<label>Caste</label>
+<input type="text" name="caste">
+</div>
+
+<div class="form-group">
 <label>Category</label>
 <select name="category" required>
-<option value="" disabled selected>-- SELECT CATEGORY --</option>
+<option value="">-- Select Category --</option>
 <option value="GENERAL">GENERAL</option>
 <option value="EWS">EWS</option>
 <option value="SC">SC</option>
@@ -161,82 +180,132 @@ button:disabled{
 <option value="OTHER">OTHER</option>
 </select>
 </div>
+</div>
 
-<div class="form-row"><label>Subject</label><input type="text" name="subject"></div>
-<div class="form-row"><label>APAAR ID</label><input type="text" name="apar"></div>
-<div class="form-row"><label>Aadhaar ID</label><input type="text" name="aadhar" maxlength="12" required></div>
-<div class="form-row"><label>Samagra ID</label><input type="text" name="samagra"></div>
-<div class="form-row"><label>Account No</label><input type="text" name="account"></div>
-<div class="form-row"><label>IFSC Code</label><input type="text" name="ifsc"></div>
-<div class="form-row"><label>Bank Name</label><input type="text" name="bank"></div>
-<div class="form-row"><label>Mobile</label><input type="text" name="mobile"></div>
-<div class="form-row"><label>Photo</label><input type="file" id="photoInput" accept="image/*"></div>
+<div class="form-group">
+<label>Subject</label>
+<input type="text" name="subject">
+</div>
 
-<button type="submit" id="submitBtn">Submit Form</button>
+<div class="row">
+<div class="form-group">
+<label>APAAR ID</label>
+<input type="text" name="apar">
+</div>
+
+<div class="form-group">
+<label>Aadhaar (12 digit)</label>
+<input type="text" name="aadhar" maxlength="12">
+</div>
+</div>
+
+<div class="row">
+<div class="form-group">
+<label>Samagra ID</label>
+<input type="text" name="samagra">
+</div>
+
+<div class="form-group">
+<label>Mobile (10 digit)</label>
+<input type="text" name="mobile" maxlength="10">
+</div>
+</div>
+
+<div class="row">
+<div class="form-group">
+<label>Bank Name</label>
+<input type="text" name="bank">
+</div>
+
+<div class="form-group">
+<label>Account No</label>
+<input type="text" name="account">
+</div>
+</div>
+
+<div class="form-group">
+<label>IFSC Code</label>
+<input type="text" name="ifsc">
+</div>
+
+<div class="buttons">
+<button type="button" class="back-btn" onclick="goBack()">⬅ Back</button>
+<button type="submit" class="submit-btn">Submit</button>
+</div>
+
+<div class="message" id="msg"></div>
 
 </form>
 
-<div id="msg" class="message"></div>
+<!-- SUCCESS PANEL -->
+<div class="success-panel" id="successPanel">
+<h3>✅ Student Added Successfully</h3>
+<p id="studentIdText"></p>
+
+<button onclick="printReceipt()">🖨 Print</button>
+<button onclick="addNew()">➕ New Entry</button>
+<button onclick="goBack()">🏠 Dashboard</button>
+</div>
 
 </div>
 
-<!-- SAME JS LOGIC (NO CHANGE) -->
 <script>
 
-const scriptURL="YOUR_APPS_SCRIPT_URL_HERE";
+const SCRIPT_URL = "YOUR_WEB_APP_URL"; // 🔴 Replace with your Web App URL
+let savedStudentId = "";
 
-const form=document.getElementById("mainForm");
-const msg=document.getElementById("msg");
-const btn=document.getElementById("submitBtn");
+const form = document.getElementById("studentForm");
+const msg = document.getElementById("msg");
+const successPanel = document.getElementById("successPanel");
 
-form.addEventListener("submit",function(e){
+form.addEventListener("submit", function(e){
+  e.preventDefault();
 
-e.preventDefault();
-msg.innerHTML="Submitting... Please wait ⏳";
-btn.disabled=true;
+  msg.innerText = "Submitting... Please wait ⏳";
 
-const formData=new FormData(form);
-const file=document.getElementById("photoInput").files[0];
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(res => res.json())
+  .then(data => {
 
-if(file){
-const reader=new FileReader();
-reader.onload=function(){
-formData.append("photo",reader.result);
-sendData(formData);
-}
-reader.readAsDataURL(file);
-}else{
-sendData(formData);
-}
+    if(data.status === "SUCCESS"){
+      savedStudentId = data.studentId;
+
+      form.style.display = "none";
+      successPanel.style.display = "block";
+
+      document.getElementById("studentIdText").innerText =
+        "Student ID: " + savedStudentId;
+
+      msg.innerText = "";
+    }
+    else if(data.status === "DUPLICATE"){
+      msg.innerText = "⚠ " + data.message +
+                      " (Existing ID: " + data.studentId + ")";
+    }
+    else{
+      msg.innerText = "❌ " + data.message;
+    }
+
+  })
+  .catch(()=>{
+    msg.innerText = "Server Error!";
+  });
 
 });
 
-function sendData(formData){
-
-fetch(scriptURL,{method:"POST",body:formData})
-.then(res=>res.json())
-.then(data=>{
-
-if(data.status==="DUPLICATE"){
-msg.innerHTML="⚠ Aadhaar already exists!";
-msg.className="message error";
-btn.disabled=false;
-return;
+function printReceipt(){
+  window.open("print.html?studentId=" + savedStudentId, "_blank");
 }
 
-if(data.status==="SUCCESS"){
-msg.innerHTML="Data Submitted Successfully ✅";
-msg.className="message success";
-form.reset();
-btn.disabled=false;
+function addNew(){
+  window.location.reload();
 }
 
-})
-.catch(()=>{
-msg.innerHTML="Submission Failed ❌";
-msg.className="message error";
-btn.disabled=false;
-});
+function goBack(){
+  window.location.href = "index.html";
 }
 
 </script>
