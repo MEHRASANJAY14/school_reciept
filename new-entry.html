@@ -1,130 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Test Entry</title>
-
+<title>Print Receipt</title>
 <style>
-body {
-  font-family: Arial;
-  background: #f4f6f9;
-  margin: 0;
-}
-
-.container {
-  max-width: 600px;
-  margin: 60px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-input {
-  padding: 8px;
-  width: 100%;
-}
-
-button {
-  grid-column: span 2;
-  padding: 10px;
-  background: #002147;
-  color: white;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #00509e;
-}
-
-/* Mobile */
-@media(max-width:768px){
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  button {
-    grid-column: span 1;
-  }
-}
+body{font-family:Arial}
+.container{width:800px;margin:30px auto;border:2px solid black;padding:20px}
+.photo{float:right;width:120px;height:150px;border:1px solid black}
 </style>
 </head>
 <body>
 
 <div class="container">
-<h2>Test Student Entry</h2>
+<h2 align="center">Government Higher Secondary School</h2>
+<h3 align="center">Admission Receipt</h3>
+<hr>
 
-<form id="mainForm" class="form-grid">
+<img id="photo" class="photo">
 
-<input type="text" id="name" placeholder="Student Name" required>
+<p><b>Receipt No:</b> <span id="receipt"></span></p>
+<p><b>Name:</b> <span id="name"></span></p>
+<p><b>Father Name:</b> <span id="father"></span></p>
+<p><b>Class:</b> <span id="class"></span></p>
+<p><b>Mobile:</b> <span id="mobile"></span></p>
 
-<input type="file" id="photo" accept="image/*">
+<hr>
+<p>This is computer generated receipt. No signature required.</p>
 
-<button type="submit">Save Student</button>
-
-</form>
+<button onclick="window.print()">Print</button>
 
 </div>
 
 <script>
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
-
-document.getElementById("mainForm").addEventListener("submit", function(e){
-
-  e.preventDefault();
-
-  let file = document.getElementById("photo").files[0];
-
-  if(file){
-    let reader = new FileReader();
-    reader.onload = function(){
-      submitData(reader.result);
-    };
-    reader.readAsDataURL(file);
-  } else {
-    submitData("");
-  }
-
-});
-
-function submitData(photoData){
-
-  let form = document.createElement("form");
-  form.method = "POST";
-  form.action = scriptURL;
-
-  let fields = {
-    name: document.getElementById("name").value,
-    photo: photoData,
-    redirect: "https://yourusername.github.io/print-receipt.html"
-  };
-
-  for (let key in fields) {
-    let input = document.createElement("input");
-    input.type = "hidden";
-    input.name = key;
-    input.value = fields[key];
-    form.appendChild(input);
-  }
-
-  document.body.appendChild(form);
-  form.submit();
-
-}
-
+const url=new URLSearchParams(window.location.search);
+receipt.innerText=url.get("receipt");
+name.innerText=url.get("name");
+father.innerText=url.get("father");
+class.innerText=url.get("class");
+mobile.innerText=url.get("mobile");
+photo.src=url.get("photo");
 </script>
 
 </body>
