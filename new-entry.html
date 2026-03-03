@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Student Entry - GHSS Singhpur</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+body { font-family: Arial; background:#f4f6f9; margin:0; }
+.header { background:#002147; color:white; text-align:center; padding:15px; }
+.container { max-width:800px; margin:20px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+h3 { border-bottom:2px solid #002147; padding-bottom:5px; color:#002147; }
+input { width:100%; padding:8px; margin:6px 0; border-radius:5px; border:1px solid #ccc; }
+button { width:100%; padding:10px; background:#002147; color:white; border:none; border-radius:6px; margin-top:10px; }
+button:hover { background:#00509e; }
+.receipt { border:2px solid black; padding:20px; margin-top:20px; }
+.photo { float:right; width:100px; height:130px; object-fit:cover; border:1px solid black; }
+</style>
+</head>
+<body>
+
+<div class="header">
+<h2>New Student Entry</h2>
+</div>
+
+<div class="container">
+
+<form id="studentForm">
+
+<h3>Personal Details</h3>
+<input type="text" id="name" placeholder="Student Name" required>
+<input type="text" id="father" placeholder="Father Name" required>
+<input type="text" id="mother" placeholder="Mother Name" required>
+<input type="date" id="dob" required>
+<input type="text" id="class" placeholder="Class" required>
+<input type="text" id="subject" placeholder="Subject">
+
+<h3>Category Details</h3>
+<input type="text" id="caste" placeholder="Caste">
+<input type="text" id="category" placeholder="Category">
+<input type="text" id="address" placeholder="Address">
+
+<h3>ID Details</h3>
+<input type="text" id="apar" placeholder="APAAR ID">
+<input type="text" id="aadhar" placeholder="Aadhar ID">
+<input type="text" id="samagra" placeholder="Samagra ID">
+
+<h3>Bank Details</h3>
+<input type="text" id="bank" placeholder="Bank Name">
+<input type="text" id="account" placeholder="Account No">
+<input type="text" id="ifsc" placeholder="IFSC Code">
+
+<h3>Contact</h3>
+<input type="text" id="mobile" placeholder="Mobile">
+
+<h3>Upload Photo</h3>
+<input type="file" id="photo" accept="image/*">
+
+<button type="submit">Save & Generate Receipt</button>
+
+</form>
+
+<div id="receiptArea"></div>
+
+</div>
+
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbyQel4QVNj6i36arN8KK4ChLc2CJjEJtrKNVKmbqrgu6lGfjG3bk3-KMv77cVV19ACm/exec";
+
+document.getElementById("studentForm").addEventListener("submit", function(e){
+e.preventDefault();
+let reader = new FileReader();
+let file = document.getElementById("photo").files[0];
+
+reader.onloadend = function(){
+let data = {
+name:name.value,father:father.value,mother:mother.value,dob:dob.value,
+class:class.value,address:address.value,caste:caste.value,
+category:category.value,subject:subject.value,apar:apar.value,
+aadhar:aadhar.value,samagra:samagra.value,
+account:account.value,ifsc:ifsc.value,bank:bank.value,
+mobile:mobile.value,photo:reader.result
+};
+
+fetch(scriptURL,{method:"POST",body:JSON.stringify(data)})
+.then(res=>res.json())
+.then(response=>generateReceipt(data));
+};
+
+if(file) reader.readAsDataURL(file);
+});
+
+function generateReceipt(student){
+let receiptNo="GHSS-"+Date.now();
+document.getElementById("receiptArea").innerHTML=`
+<div class="receipt" id="receiptContent">
+<h3 align="center">Student Receipt</h3>
+<p><b>Receipt No:</b> ${receiptNo}</p>
+<p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
+<img src="${student.photo}" class="photo">
+<p><b>Name:</b> ${student.name}</p>
+<p><b>Father:</b> ${student.father}</p>
+<p><b>Class:</b> ${student.class}</p>
+<p><b>Subject:</b> ${student.subject}</p>
+<hr>
+<p><b>This is computer generated receipt.</b></p>
+</div>
+<button onclick="html2pdf().from(document.getElementById('receiptContent')).save()">Download PDF</button>
+`;
+}
+</script>
+
+</body>
+</html>
