@@ -8,13 +8,13 @@
 <style>
 body{
   margin:0;
-  font-family:Segoe UI;
+  font-family:'Segoe UI',sans-serif;
   background:linear-gradient(160deg,#0f2c59,#3f66c4);
 }
 
 .container{
-  max-width:650px;
-  margin:15px auto;
+  max-width:700px;
+  margin:20px auto;
   background:white;
   padding:20px;
   border-radius:15px;
@@ -36,7 +36,7 @@ label{
   color:#0f2c59;
 }
 
-input, select, textarea{
+input, select{
   width:100%;
   padding:8px;
   border-radius:6px;
@@ -57,32 +57,47 @@ button{
   margin-top:10px;
 }
 
-.preview{
-  margin-top:8px;
-  text-align:center;
+button:hover{
+  background:#163d7a;
 }
 
 .preview img{
-  max-width:100px;
+  max-width:120px;
   border-radius:8px;
+  margin-top:6px;
 }
 
-.back-btn{
-  background:#999;
-  margin-bottom:10px;
-}
 .message{
   text-align:center;
   margin-top:10px;
   font-weight:600;
 }
+
+.action-buttons{
+  margin-top:15px;
+  display:none;
+  flex-direction:column;
+  gap:8px;
+}
+
+.dashboard-btn{
+  background:#0056b3 !important;
+}
+
+.print-btn{
+  background:#c82333 !important;
+}
+
+.back-bottom{
+  background:#6c757d !important;
+  margin-top:15px;
+}
+
 </style>
 </head>
 <body>
 
 <div class="container">
-
-<button class="back-btn" onclick="location.href='index.html'">⬅ Back</button>
 
 <h2>New Student Entry</h2>
 
@@ -118,7 +133,17 @@ button{
 </div>
 
 <div class="form-group">
-<label>Photo Upload</label>
+<label>Aadhaar ID</label>
+<input type="text" name="aadhar" maxlength="12">
+</div>
+
+<div class="form-group">
+<label>Mobile</label>
+<input type="text" name="mobile" maxlength="10">
+</div>
+
+<div class="form-group">
+<label>Photo</label>
 <input type="file" id="photo" accept="image/*">
 <div class="preview" id="preview"></div>
 </div>
@@ -128,15 +153,28 @@ button{
 <div class="message" id="msg"></div>
 
 </form>
+
+<div class="action-buttons" id="actions">
+<button class="dashboard-btn" onclick="location.href='index.html'">🏠 Back to Dashboard</button>
+<button onclick="location.reload()">➕ New Entry</button>
+<button class="print-btn" onclick="printReceipt()">🖨 Print Receipt</button>
+</div>
+
+<button class="back-bottom" onclick="location.href='index.html'">⬅ Back</button>
+
 </div>
 
 <script>
 
-const scriptURL="YOUR_SCRIPT_URL_HERE";
+const scriptURL="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
+
+let receiptNumber="";
+
 const form=document.getElementById("studentForm");
 const msg=document.getElementById("msg");
 const photoInput=document.getElementById("photo");
 const preview=document.getElementById("preview");
+const actions=document.getElementById("actions");
 
 photoInput.addEventListener("change",function(){
   const file=this.files[0];
@@ -153,9 +191,12 @@ form.addEventListener("submit",e=>{
   e.preventDefault();
 
   msg.style.color="blue";
-  msg.innerText="Submitting...";
+  msg.innerText="Submitting... Please wait";
+
+  receiptNumber="GHSS-"+Date.now();
 
   const formData=new FormData(form);
+  formData.append("receipt",receiptNumber);
 
   fetch(scriptURL,{method:"POST",body:formData})
   .then(res=>res.text())
@@ -165,6 +206,7 @@ form.addEventListener("submit",e=>{
       msg.innerText="Data Submitted Successfully!";
       form.reset();
       preview.innerHTML="";
+      actions.style.display="flex";
     }else{
       msg.style.color="red";
       msg.innerText="Server Error: "+data;
@@ -176,6 +218,10 @@ form.addEventListener("submit",e=>{
   });
 
 });
+
+function printReceipt(){
+  window.open("print.html?receipt="+receiptNumber,"_blank");
+}
 
 </script>
 
