@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Admission Receipt</title>
 
 <style>
+
 body{
   font-family: Arial, sans-serif;
   background:#f4f6f9;
+  margin:0;
+  padding:20px;
 }
 
-.container{
+.receipt-container{
   width:800px;
-  margin:20px auto;
-  background:white;
+  margin:0 auto;
+  background:#ffffff;
   padding:25px;
-  border:2px solid black;
+  border:2px solid #000;
 }
 
 .header{
   text-align:center;
 }
 
-.school-name{
+.header h2{
+  margin:0;
   font-size:20px;
-  font-weight:bold;
 }
 
-.photo{
+.header p{
+  margin:3px 0;
+  font-size:14px;
+}
+
+.title{
+  text-align:center;
+  margin-top:10px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.photo-box{
   float:right;
   width:120px;
   height:150px;
-  border:1px solid black;
+  border:1px solid #000;
   object-fit:cover;
 }
 
 .details{
   margin-top:20px;
+  font-size:14px;
 }
 
-.details p{
-  margin:8px 0;
-  font-size:15px;
+.details table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.details td{
+  padding:6px 4px;
+  vertical-align:top;
+}
+
+.label{
+  font-weight:bold;
+  width:180px;
 }
 
 .footer{
@@ -64,37 +91,94 @@ button{
   margin:5px;
 }
 
-@media print{
-  .button-area{display:none;}
-  body{background:white;}
+button:hover{
+  background:#004080;
 }
+
+@media print{
+  body{
+    background:white;
+    padding:0;
+  }
+  .button-area{
+    display:none;
+  }
+}
+
+@media(max-width:850px){
+  .receipt-container{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="container" id="receipt">
+<div class="receipt-container" id="receipt">
 
 <div class="header">
-<div class="school-name">GOVT HIGHER SECONDARY SCHOOL SINGHPUR</div>
-<div>Block: Jabera | District: Damoh (M.P.)</div>
-<div>Established: 1985</div>
-<hr>
-<h3>Admission Receipt</h3>
+<h2>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h2>
+<p>Block: Jabera | District: Damoh (M.P.)</p>
+<p>Established: 1985</p>
 </div>
 
-<img id="photo" class="photo">
+<hr>
+
+<div class="title">ADMISSION RECEIPT</div>
+
+<img id="photo" class="photo-box">
 
 <div class="details">
-<p><b>Student ID:</b> <span id="studentID"></span></p>
-<p><b>Student Name:</b> <span id="name"></span></p>
-<p><b>Father Name:</b> <span id="father"></span></p>
-<p><b>Class:</b> <span id="class"></span></p>
-<p><b>Caste:</b> <span id="caste"></span></p>
-<p><b>Category:</b> <span id="category"></span></p>
-<p><b>Aadhaar:</b> <span id="aadhar"></span></p>
-<p><b>Mobile:</b> <span id="mobile"></span></p>
-<p><b>Date:</b> <span id="date"></span></p>
+<table>
+
+<tr>
+<td class="label">Student ID</td>
+<td>: <span id="studentID"></span></td>
+</tr>
+
+<tr>
+<td class="label">Student Name</td>
+<td>: <span id="name"></span></td>
+</tr>
+
+<tr>
+<td class="label">Father Name</td>
+<td>: <span id="father"></span></td>
+</tr>
+
+<tr>
+<td class="label">Class</td>
+<td>: <span id="class"></span></td>
+</tr>
+
+<tr>
+<td class="label">Caste</td>
+<td>: <span id="caste"></span></td>
+</tr>
+
+<tr>
+<td class="label">Category</td>
+<td>: <span id="category"></span></td>
+</tr>
+
+<tr>
+<td class="label">Aadhaar Number</td>
+<td>: <span id="aadhar"></span></td>
+</tr>
+
+<tr>
+<td class="label">Mobile Number</td>
+<td>: <span id="mobile"></span></td>
+</tr>
+
+<tr>
+<td class="label">Date</td>
+<td>: <span id="date"></span></td>
+</tr>
+
+</table>
 </div>
 
 <hr>
@@ -107,14 +191,15 @@ This is a computer generated receipt. No signature required.
 
 <div class="button-area">
 <button onclick="window.print()">🖨 Print Receipt</button>
-<button onclick="window.print()">⬇ Download PDF</button>
+<button onclick="window.print()">⬇ Download as PDF</button>
 </div>
 
 <script>
 
-// Get URL Parameters
+// Get URL parameters
 const params = new URLSearchParams(window.location.search);
 
+// Fill data safely
 document.getElementById("studentID").innerText = params.get("id") || "";
 document.getElementById("name").innerText = params.get("name") || "";
 document.getElementById("father").innerText = params.get("father") || "";
@@ -122,4 +207,18 @@ document.getElementById("class").innerText = params.get("class") || "";
 document.getElementById("caste").innerText = params.get("caste") || "";
 document.getElementById("category").innerText = params.get("category") || "";
 document.getElementById("aadhar").innerText = params.get("aadhar") || "";
-document.getElementById("
+document.getElementById("mobile").innerText = params.get("mobile") || "";
+document.getElementById("date").innerText = new Date().toLocaleDateString();
+
+// Photo
+const photoURL = params.get("photo");
+if(photoURL){
+  document.getElementById("photo").src = photoURL;
+}else{
+  document.getElementById("photo").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
