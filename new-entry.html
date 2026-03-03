@@ -6,40 +6,56 @@
 
 <style>
 body{
-  font-family:Arial;
-  background:linear-gradient(to right,#e3f2fd,#f4f6f9);
+  font-family: 'Segoe UI', Arial;
+  background: linear-gradient(135deg,#002147,#4e73df);
   margin:0;
 }
 
 .header{
-  background:#002147;
-  color:white;
   text-align:center;
-  padding:18px;
+  color:white;
+  padding:20px;
 }
 
 .container{
-  max-width:1100px;
-  margin:30px auto;
+  max-width:1000px;
+  margin:20px auto;
   background:white;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  padding:30px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 .form-row{
   display:grid;
   grid-template-columns:220px 1fr;
-  margin-bottom:12px;
+  margin-bottom:15px;
+  align-items:center;
 }
 
-label{font-weight:bold;}
+label{
+  font-weight:bold;
+  color:#002147;
+}
 
-input,select{
-  padding:8px;
-  border-radius:6px;
+input, select{
+  padding:10px;
+  border-radius:8px;
   border:1px solid #ccc;
   text-transform:uppercase;
+  transition:0.3s;
+}
+
+input:focus, select:focus{
+  border-color:#4e73df;
+  box-shadow:0 0 8px rgba(78,115,223,0.4);
+  outline:none;
 }
 
 input[type="date"]{
@@ -49,15 +65,22 @@ input[type="date"]{
 button{
   width:100%;
   padding:12px;
-  background:#002147;
+  background:linear-gradient(to right,#002147,#4e73df);
   color:white;
   border:none;
-  border-radius:6px;
+  border-radius:8px;
   font-size:16px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-button:disabled{background:gray;}
+button:hover{
+  transform:scale(1.02);
+}
+
+button:disabled{
+  background:gray;
+}
 
 .message{
   margin-top:15px;
@@ -119,6 +142,11 @@ button:disabled{background:gray;}
 </div>
 
 <div class="form-row">
+<label>Caste</label>
+<input type="text" name="caste" placeholder="Enter Caste" required>
+</div>
+
+<div class="form-row">
 <label>Village</label>
 <input type="text" name="village">
 </div>
@@ -126,31 +154,6 @@ button:disabled{background:gray;}
 <div class="form-row">
 <label>Address</label>
 <input type="text" name="address">
-</div>
-
-<div class="form-row">
-<label>Caste</label>
-<select name="caste" required>
-<option value="" disabled selected>-- SELECT CASTE --</option>
-<option value="GENERAL">GENERAL</option>
-<option value="EWS">EWS</option>
-<option value="SC">SC</option>
-<option value="ST">ST</option>
-<option value="OBC">OBC</option>
-<option value="OTHER">OTHER</option>
-</select>
-</div>
-
-<div class="form-row">
-<label>Category</label>
-<select name="category">
-<option value="GENERAL">GENERAL</option>
-<option value="EWS">EWS</option>
-<option value="SC">SC</option>
-<option value="ST">ST</option>
-<option value="OBC">OBC</option>
-<option value="OTHER">OTHER</option>
-</select>
 </div>
 
 <div class="form-row">
