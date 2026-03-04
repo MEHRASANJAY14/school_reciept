@@ -54,7 +54,7 @@ border:2px solid black;
 background:white;
 position:absolute;
 right:10mm;
-top:55mm;
+top:40mm;
 object-fit:cover;
 }
 
@@ -66,14 +66,12 @@ height:80px;
 border:2px solid black;
 position:absolute;
 right:12mm;
-top:180mm;
+top:165mm;
 background:white;
 display:flex;
 align-items:center;
 justify-content:center;
 }
-
-/* TABLE */
 
 table{
 width:100%;
@@ -175,6 +173,11 @@ Established: 1985
 <td class="student-id" id="studentID"></td>
 </tr>
 
+<tr>
+<td class="label">Receipt Generated</td>
+<td id="rdate"></td>
+</tr>
+
 <tr><td class="label">Student Name</td><td id="name"></td></tr>
 <tr><td class="label">Father Name</td><td id="father"></td></tr>
 <tr><td class="label">Mother Name</td><td id="mother"></td></tr>
@@ -238,6 +241,14 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
+/* DATE FORMAT DD-MM-YYYY */
+
+let d = new Date();
+let day = String(d.getDate()).padStart(2,'0');
+let month = String(d.getMonth()+1).padStart(2,'0');
+let year = d.getFullYear();
+
+document.getElementById("rdate").innerText = day+"-"+month+"-"+year;
 
 /* PHOTO */
 
@@ -257,7 +268,6 @@ img.src = "https://lh3.googleusercontent.com/d/"+fileId;
 
 }
 
-
 /* QR CODE */
 
 let verifyURL = window.location.href;
@@ -267,7 +277,6 @@ text: verifyURL,
 width:70,
 height:70
 });
-
 
 /* PDF */
 
