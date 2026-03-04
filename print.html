@@ -54,7 +54,7 @@ padding:2px;
 background:white;
 position:absolute;
 right:10mm;
-top:50mm;
+top:55mm;
 object-fit:cover;
 }
 
@@ -184,7 +184,7 @@ Established: 1985
 
 <p><b>This is a System Generated Receipt. No signature required.</b></p>
 
-<p>© GHSS Singhpur</p>
+<p>@ GHSS Singhpur</p>
 
 </div>
 
@@ -224,7 +224,8 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-// photo fix
+
+// PHOTO FIX
 const photo = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
 
@@ -235,13 +236,14 @@ let match = photo.match(/[-\w]{25,}/);
 if(match){
 
 let fileId = match[0];
-let finalUrl = "https://drive.google.com/uc?export=view&id=" + fileId;
 
-img.src = finalUrl;
+// google drive image fix
+img.src = "https://drive.google.com/thumbnail?id="+fileId+"&sz=w500";
+
+}
 
 }
 
-}
 
 // PDF
 function downloadPDF(){
