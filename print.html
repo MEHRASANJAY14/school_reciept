@@ -54,7 +54,7 @@ border:2px solid black;
 background:white;
 position:absolute;
 right:10mm;
-top:47mm;
+top:46mm;
 object-fit:cover;
 }
 
@@ -66,7 +66,7 @@ height:80px;
 border:2px solid black;
 position:absolute;
 right:12mm;
-top:175mm;
+top:162mm;
 background:white;
 display:flex;
 align-items:center;
@@ -140,6 +140,7 @@ color:white;
 @media print{
 .footer{
 display:none;
+}
 body{
 padding:0;
 }
@@ -217,7 +218,6 @@ Established: 1985
 
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -255,10 +255,9 @@ let year = d.getFullYear();
 
 document.getElementById("rdate").innerText = day+"-"+month+"-"+year;
 
-/* PHOTO */
+/* PHOTO LOAD */
 
 const photoURL = decodeURIComponent(params.get("photo") || "");
-
 const img = document.getElementById("photo");
 
 if(photoURL){
@@ -282,9 +281,7 @@ let verifyURL = window.location.href;
 new QRCode(document.getElementById("qrcode"), {
 
 text: verifyURL,
-
 width:70,
-
 height:70
 
 });
@@ -300,10 +297,7 @@ const element=document.getElementById("receipt");
 html2pdf().set({
 
 margin:0,
-
 filename:'Admission_Receipt.pdf',
-
-pagebreak:{mode:['avoid-all','css','legacy']},
 
 html2canvas:{
 scale:3,
