@@ -2,124 +2,100 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Admission Receipt</title>
+<title>Admission Receipt</title>
 
 <style>
 
 body{
-font-family:Arial, sans-serif;
-background:#f4f6f9;
+font-family: Arial;
+background:#f2f2f2;
 margin:0;
 padding:20px;
 }
 
 .receipt{
 width:800px;
+background:#fff;
 margin:auto;
-background:white;
-padding:25px;
+padding:20px;
 border:2px solid #000;
 position:relative;
 }
 
-.header{
+h2{
 text-align:center;
-}
-
-.header h2{
-margin:0;
-font-size:20px;
-}
-
-.header p{
-margin:4px 0;
-font-size:14px;
-}
-
-.title{
-text-align:center;
-font-weight:bold;
-margin-top:10px;
-font-size:16px;
-}
-
-.photo{
-position:absolute;
-right:25px;
-top:130px;
-width:110px;
-height:140px;
-border:2px solid black;
-border-radius:4px;
-object-fit:cover;
-object-position:center;
-box-shadow:0 0 4px rgba(0,0,0,0.4);
+margin-bottom:10px;
 }
 
 table{
 width:100%;
-margin-top:20px;
 border-collapse:collapse;
-font-size:14px;
 }
 
 td{
-padding:6px 4px;
-vertical-align:top;
+padding:6px;
+font-size:14px;
 }
 
 .label{
-width:180px;
 font-weight:bold;
+width:200px;
+}
+
+/* PHOTO BOX */
+
+.photo-box{
+position:absolute;
+top:110px;
+right:30px;
+width:120px;
+height:140px;
+border:2px solid #000;
+overflow:hidden;
+}
+
+.photo-box img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 .footer{
 margin-top:20px;
 text-align:center;
-font-size:12px;
+font-size:13px;
 }
 
-.button-area{
+.buttons{
 text-align:center;
 margin-top:20px;
 }
 
 button{
-padding:8px 15px;
-background:#002147;
-color:white;
-border:none;
+padding:10px 20px;
+font-size:16px;
 margin:5px;
+background:#0d47a1;
+color:#fff;
+border:none;
 cursor:pointer;
 }
 
-button:hover{
-background:#004080;
-}
+/* PRINT FIX */
 
 @media print{
 
 body{
-background:white;
-padding:0;
+background:#fff;
 }
 
-.button-area{
+.buttons{
 display:none;
 }
 
-.photo{
-width:100px;
-height:130px;
-}
-
-}
-
-@media(max-width:850px){
-
 .receipt{
 width:100%;
+border:2px solid #000;
 }
 
 }
@@ -131,43 +107,35 @@ width:100%;
 
 <div class="receipt">
 
-<div class="header">
-<h2>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h2>
-<p>Block: Jabera | District: Damoh (M.P.)</p>
-<p>Established: 1985</p>
+<h2>ADMISSION RECEIPT</h2>
+
+<div class="photo-box">
+<img id="photo">
 </div>
-
-<hr>
-
-<div class="title">ADMISSION RECEIPT</div>
-
-<img id="photo" class="photo">
 
 <table>
 
-<tr><td class="label">Student ID</td><td>: <span id="studentID"></span></td></tr>
-<tr><td class="label">Student Name</td><td>: <span id="name"></span></td></tr>
-<tr><td class="label">Father Name</td><td>: <span id="father"></span></td></tr>
-<tr><td class="label">Mother Name</td><td>: <span id="mother"></span></td></tr>
-<tr><td class="label">Date of Birth</td><td>: <span id="dob"></span></td></tr>
-<tr><td class="label">Class</td><td>: <span id="class"></span></td></tr>
-<tr><td class="label">Village</td><td>: <span id="village"></span></td></tr>
-<tr><td class="label">Address</td><td>: <span id="address"></span></td></tr>
-<tr><td class="label">Caste</td><td>: <span id="caste"></span></td></tr>
-<tr><td class="label">Category</td><td>: <span id="category"></span></td></tr>
-<tr><td class="label">Subject</td><td>: <span id="subject"></span></td></tr>
-<tr><td class="label">APAAR ID</td><td>: <span id="apar"></span></td></tr>
-<tr><td class="label">Aadhaar ID</td><td>: <span id="aadhar"></span></td></tr>
-<tr><td class="label">Samagra ID</td><td>: <span id="samagra"></span></td></tr>
-<tr><td class="label">Account No</td><td>: <span id="account"></span></td></tr>
-<tr><td class="label">IFSC Code</td><td>: <span id="ifsc"></span></td></tr>
-<tr><td class="label">Bank Name</td><td>: <span id="bank"></span></td></tr>
-<tr><td class="label">Mobile</td><td>: <span id="mobile"></span></td></tr>
-<tr><td class="label">Date Generated</td><td>: <span id="date"></span></td></tr>
+<tr><td class="label">Student ID</td><td id="sid"></td></tr>
+<tr><td class="label">Student Name</td><td id="name"></td></tr>
+<tr><td class="label">Father Name</td><td id="father"></td></tr>
+<tr><td class="label">Mother Name</td><td id="mother"></td></tr>
+<tr><td class="label">Date of Birth</td><td id="dob"></td></tr>
+<tr><td class="label">Class</td><td id="class"></td></tr>
+<tr><td class="label">Village</td><td id="village"></td></tr>
+<tr><td class="label">Address</td><td id="address"></td></tr>
+<tr><td class="label">Caste</td><td id="caste"></td></tr>
+<tr><td class="label">Category</td><td id="category"></td></tr>
+<tr><td class="label">Subject</td><td id="subject"></td></tr>
+<tr><td class="label">APAAR ID</td><td id="apaar"></td></tr>
+<tr><td class="label">Aadhaar ID</td><td id="aadhaar"></td></tr>
+<tr><td class="label">Samagra ID</td><td id="samagra"></td></tr>
+<tr><td class="label">Account No</td><td id="account"></td></tr>
+<tr><td class="label">IFSC Code</td><td id="ifsc"></td></tr>
+<tr><td class="label">Bank Name</td><td id="bank"></td></tr>
+<tr><td class="label">Mobile</td><td id="mobile"></td></tr>
+<tr><td class="label">Date Generated</td><td id="date"></td></tr>
 
 </table>
-
-<hr>
 
 <div class="footer">
 This is a computer generated receipt. No signature required.
@@ -175,68 +143,42 @@ This is a computer generated receipt. No signature required.
 
 </div>
 
-<div class="button-area">
-<button onclick="window.print()">🖨 Print Receipt</button>
-<button onclick="window.print()">⬇ Download as PDF</button>
+<div class="buttons">
+<button onclick="window.print()">Print Receipt</button>
 </div>
 
 <script>
 
-const params=new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
-function setValue(id){
-document.getElementById(id).innerText=params.get(id)||"";
-}
+document.getElementById("sid").innerHTML=": "+params.get("sid");
+document.getElementById("name").innerHTML=": "+params.get("name");
+document.getElementById("father").innerHTML=": "+params.get("father");
+document.getElementById("mother").innerHTML=": "+params.get("mother");
+document.getElementById("dob").innerHTML=": "+params.get("dob");
+document.getElementById("class").innerHTML=": "+params.get("class");
+document.getElementById("village").innerHTML=": "+params.get("village");
+document.getElementById("address").innerHTML=": "+params.get("address");
+document.getElementById("caste").innerHTML=": "+params.get("caste");
+document.getElementById("category").innerHTML=": "+params.get("category");
+document.getElementById("subject").innerHTML=": "+params.get("subject");
+document.getElementById("apaar").innerHTML=": "+params.get("apaar");
+document.getElementById("aadhaar").innerHTML=": "+params.get("aadhaar");
+document.getElementById("samagra").innerHTML=": "+params.get("samagra");
+document.getElementById("account").innerHTML=": "+params.get("account");
+document.getElementById("ifsc").innerHTML=": "+params.get("ifsc");
+document.getElementById("bank").innerHTML=": "+params.get("bank");
+document.getElementById("mobile").innerHTML=": "+params.get("mobile");
+document.getElementById("date").innerHTML=": "+params.get("date");
 
-setValue("studentID");
-setValue("name");
-setValue("father");
-setValue("mother");
-setValue("dob");
-setValue("class");
-setValue("village");
-setValue("address");
-setValue("caste");
-setValue("category");
-setValue("subject");
-setValue("apar");
-setValue("aadhar");
-setValue("samagra");
-setValue("account");
-setValue("ifsc");
-setValue("bank");
-setValue("mobile");
+/* PHOTO LOAD */
 
-document.getElementById("date").innerText=new Date().toLocaleDateString();
+const photo=params.get("photo");
 
-// PHOTO FIX
-const photoURL=params.get("photo");
-
-if(photoURL){
-
-let finalURL=photoURL;
-
-if(photoURL.includes("drive.google.com")){
-
-let fileId="";
-
-if(photoURL.includes("/d/")){
-fileId=photoURL.split("/d/")[1].split("/")[0];
-}
-else if(photoURL.includes("id=")){
-fileId=photoURL.split("id=")[1];
-}
-
-finalURL="https://drive.google.com/uc?export=view&id="+fileId;
-
-}
-
-document.getElementById("photo").src=finalURL;
-
+if(photo){
+document.getElementById("photo").src=photo;
 }else{
-
-document.getElementById("photo").style.display="none";
-
+document.getElementById("photo").src="no-photo.png";
 }
 
 </script>
