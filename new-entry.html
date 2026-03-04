@@ -235,6 +235,7 @@ input, select, textarea{
 const scriptURL="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
 
 let studentId="";
+let photoUrl="";
 
 const form=document.getElementById("studentForm");
 const msg=document.getElementById("msg");
@@ -325,6 +326,7 @@ function handleResponse(data){
 
   if(data.status==="SUCCESS"){
     studentId=data.id;
+    photoUrl=data.photo;
     form.style.display="none";
     successBox.style.display="block";
     successText.innerText="Data Submitted Successfully! Student ID: "+studentId;
@@ -337,10 +339,9 @@ function handleResponse(data){
 
 function printReceipt(){
 
-const params = new URLSearchParams();
+const params=new URLSearchParams();
 
 params.append("studentID",studentId);
-
 params.append("name",form.name.value);
 params.append("father",form.father.value);
 params.append("mother",form.mother.value);
@@ -359,10 +360,8 @@ params.append("ifsc",form.ifsc.value);
 params.append("bank",form.bank.value);
 params.append("mobile",form.mobile.value);
 
-const photo=document.querySelector("#preview img");
-
-if(photo){
-params.append("photo",photo.src);
+if(photoUrl){
+params.append("photo",photoUrl);
 }
 
 window.open("print.html?"+params.toString(),"_blank");
