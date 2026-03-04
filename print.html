@@ -217,8 +217,7 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-
-// PHOTO FIX
+// PHOTO LOAD FIX
 const photo = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
 
@@ -230,13 +229,12 @@ if(match){
 
 let fileId = match[0];
 
-// direct google drive image
-img.src = "https://drive.google.com/uc?export=view&id=" + fileId;
+// reliable google drive image url
+img.src = "https://lh3.googleusercontent.com/d/" + fileId;
 
 }
 
 }
-
 
 // PDF
 function downloadPDF(){
