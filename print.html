@@ -12,8 +12,6 @@ font-family:Arial;
 background:#f2f2f2;
 margin:0;
 padding:0;
-display:flex;
-justify-content:center;
 }
 
 .receipt{
@@ -24,7 +22,7 @@ padding:10mm;
 border:4px double black;
 position:relative;
 box-sizing:border-box;
-margin-top:20px;
+margin:20px auto;
 }
 
 .header{
@@ -90,8 +88,10 @@ font-size:12px;
 }
 
 .footer{
+width:190mm;
+margin:auto;
 text-align:center;
-margin-top:15px;
+margin-top:10px;
 }
 
 .footer button{
@@ -121,7 +121,6 @@ background:white;
 
 .receipt{
 width:100%;
-border:4px double black;
 margin:0;
 }
 
@@ -227,7 +226,16 @@ document.getElementById("mobile").innerText=params.get("mobile");
 const photo=params.get("photo");
 
 if(photo){
-document.getElementById("photo").src=photo;
+
+let img = photo;
+
+if(photo.includes("drive.google.com")){
+let fileId = photo.split("/d/")[1].split("/")[0];
+img = "https://drive.google.com/uc?export=view&id=" + fileId;
+}
+
+document.getElementById("photo").src = img;
+
 }
 
 function downloadPDF(){
