@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
 <title>Search Student Record</title>
@@ -8,20 +7,21 @@
 <style>
 
 body{
-font-family:Arial;
-background:linear-gradient(135deg,#1976d2,#0d47a1);
-margin:0;
-padding:40px;
+font-family: Arial;
+background: linear-gradient(135deg,#1e73be,#3fa9f5);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .container{
-max-width:750px;
-margin:auto;
-background:white;
+background:#fff;
 padding:30px;
 border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+width:800px;
 text-align:center;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 h2{
@@ -29,55 +29,59 @@ margin-bottom:20px;
 }
 
 input{
-width:80%;
-padding:12px;
+width:70%;
+padding:10px;
 font-size:16px;
 border:1px solid #ccc;
 border-radius:5px;
-margin-bottom:15px;
 }
 
 button{
 padding:10px 20px;
+background:#1e73be;
+color:white;
 border:none;
 border-radius:5px;
-font-size:16px;
 cursor:pointer;
 }
 
-.search-btn{
-background:#1976d2;
-color:white;
-}
-
-.back-btn{
-background:#6c757d;
-color:white;
-margin-top:20px;
+button:hover{
+background:#155a96;
 }
 
 table{
 width:100%;
-border-collapse:collapse;
 margin-top:20px;
-}
-
-th,td{
-border:1px solid #ccc;
-padding:10px;
+border-collapse:collapse;
 }
 
 th{
-background:#1976d2;
+background:#1e73be;
 color:white;
+padding:10px;
 }
 
-.print-btn{
-background:#28a745;
+td{
+padding:8px;
+border:1px solid #ddd;
+}
+
+.printBtn{
+background:green;
 color:white;
-padding:6px 12px;
+padding:5px 12px;
+border:none;
 border-radius:4px;
-text-decoration:none;
+cursor:pointer;
+}
+
+.printBtn:hover{
+background:#0b7a0b;
+}
+
+.back{
+margin-top:20px;
+background:#888;
 }
 
 </style>
@@ -90,16 +94,11 @@ text-decoration:none;
 
 <h2>Search Student Record</h2>
 
-<input 
-type="text" 
-id="searchText"
-placeholder="Enter Name / Aadhaar / Student ID"
-onkeypress="if(event.key==='Enter'){searchStudent()}"
->
+<input type="text" id="searchInput" placeholder="Search by Name / Aadhaar / Student ID">
 
-<br>
+<br><br>
 
-<button class="search-btn" onclick="searchStudent()">Search</button>
+<button onclick="searchStudent()">Search</button>
 
 <table id="resultTable">
 
@@ -119,9 +118,7 @@ onkeypress="if(event.key==='Enter'){searchStudent()}"
 
 <br>
 
-<button class="back-btn" onclick="window.location.href='index.html'">
-← Back to Dashboard
-</button>
+<button class="back" onclick="location.href='index.html'">← Back to Dashboard</button>
 
 </div>
 
@@ -129,74 +126,86 @@ onkeypress="if(event.key==='Enter'){searchStudent()}"
 
 const API_URL="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
 
-async function searchStudent(){
+function searchStudent(){
 
-let text=document.getElementById("searchText").value.trim();
+let query=document.getElementById("searchInput").value;
 
-if(text==""){
+if(query===""){
 alert("Enter Name / Aadhaar / Student ID");
 return;
 }
 
-let url=API_URL+"?search="+encodeURIComponent(text);
+fetch(API_URL+"?search="+encodeURIComponent(query))
 
-try{
+.then(res=>res.json())
 
-let response=await fetch(url);
-let raw=await response.text();
-
-if(raw=="OK"){
-alert("Apps Script still returning OK. Redeploy script.");
-return;
-}
-
-let data=JSON.parse(raw);
+.then(data=>{
 
 let tbody=document.querySelector("#resultTable tbody");
 
 tbody.innerHTML="";
 
-if(data.length==0){
+data.forEach(r=>{
 
-tbody.innerHTML="<tr><td colspan='5'>No Record Found</td></tr>";
-return;
-
-}
-
-data.forEach(row=>{
-
-let tr=document.createElement("tr");
-
-tr.innerHTML=`
-
-<td>${row.studentID}</td>
-<td>${row.name}</td>
-<td>${row.aadhar}</td>
-<td>${row.class}</td>
+let row=`
+<tr>
+<td>${r.studentID}</td>
+<td>${r.name}</td>
+<td>${r.aadhar}</td>
+<td>${r.class}</td>
 
 <td>
-<a class="print-btn" target="_blank"
-href="print.html?studentID=${row.studentID}&name=${encodeURIComponent(row.name)}&aadhar=${row.aadhar}&class=${row.class}&photo=${encodeURIComponent(row.photo)}">
-Print
-</a>
-</td>
 
+<button class="printBtn" onclick="printReceipt('${encodeURIComponent(r.studentID)}','${encodeURIComponent(r.name)}','${encodeURIComponent(r.father)}','${encodeURIComponent(r.mother)}','${encodeURIComponent(r.dob)}','${encodeURIComponent(r.class)}','${encodeURIComponent(r.village)}','${encodeURIComponent(r.address)}','${encodeURIComponent(r.caste)}','${encodeURIComponent(r.category)}','${encodeURIComponent(r.subject)}','${encodeURIComponent(r.apar)}','${encodeURIComponent(r.aadhar)}','${encodeURIComponent(r.samagra)}','${encodeURIComponent(r.account)}','${encodeURIComponent(r.ifsc)}','${encodeURIComponent(r.bank)}','${encodeURIComponent(r.mobile)}','${encodeURIComponent(r.photo)}')">Print</button>
+
+</td>
+</tr>
 `;
 
-tbody.appendChild(tr);
+tbody.innerHTML+=row;
 
 });
 
-}catch(err){
+})
 
-alert("Search Error: "+err);
+.catch(err=>{
+
+alert("Search Error");
+
+console.log(err);
+
+});
 
 }
+
+function printReceipt(studentID,name,father,mother,dob,cls,village,address,caste,category,subject,apar,aadhar,samagra,account,ifsc,bank,mobile,photo){
+
+let url="print.html?"
++"studentID="+studentID
++"&name="+name
++"&father="+father
++"&mother="+mother
++"&dob="+dob
++"&class="+cls
++"&village="+village
++"&address="+address
++"&caste="+caste
++"&category="+category
++"&subject="+subject
++"&apar="+apar
++"&aadhar="+aadhar
++"&samagra="+samagra
++"&account="+account
++"&ifsc="+ifsc
++"&bank="+bank
++"&mobile="+mobile
++"&photo="+photo;
+
+window.open(url,"_blank");
 
 }
 
 </script>
 
 </body>
-
 </html>
