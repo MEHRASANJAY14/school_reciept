@@ -7,9 +7,14 @@
 
 <style>
 
+@page{
+size:A4;
+margin:10mm;
+}
+
 body{
 font-family:Arial;
-background:#f2f2f2;
+background:white;
 margin:0;
 padding:0;
 }
@@ -20,9 +25,9 @@ min-height:270mm;
 background:white;
 padding:10mm;
 border:4px double black;
-position:relative;
 box-sizing:border-box;
-margin:20px auto;
+position:relative;
+margin:auto;
 }
 
 .header{
@@ -59,7 +64,7 @@ border-collapse:collapse;
 }
 
 td{
-padding:5px;
+padding:6px;
 font-size:13px;
 border-bottom:1px solid #ddd;
 }
@@ -115,17 +120,12 @@ color:white;
 
 @media print{
 
-body{
-background:white;
-}
-
-.receipt{
-width:100%;
-margin:0;
-}
-
 .footer{
 display:none;
+}
+
+body{
+background:white;
 }
 
 }
@@ -244,7 +244,7 @@ const element=document.getElementById("receipt");
 
 html2pdf().set({
 
-margin:5,
+margin:0,
 filename:'Admission_Receipt.pdf',
 html2canvas:{scale:2},
 jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
