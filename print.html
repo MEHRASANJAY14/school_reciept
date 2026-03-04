@@ -217,7 +217,8 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-// PHOTO LOAD
+
+// PHOTO FIX
 const photo = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
 
@@ -229,10 +230,8 @@ if(match){
 
 let fileId = match[0];
 
-let url = "https://drive.google.com/thumbnail?id="+fileId+"&sz=w800";
-
-img.crossOrigin="anonymous";
-img.src = url;
+// direct google drive image
+img.src = "https://drive.google.com/uc?export=view&id=" + fileId;
 
 }
 
@@ -242,8 +241,6 @@ img.src = url;
 // PDF
 function downloadPDF(){
 
-setTimeout(function(){
-
 const element=document.getElementById("receipt");
 
 html2pdf().set({
@@ -252,7 +249,7 @@ margin:0,
 filename:'Admission_Receipt.pdf',
 
 html2canvas:{
-scale:3,
+scale:2,
 useCORS:true
 },
 
@@ -263,8 +260,6 @@ orientation:'portrait'
 }
 
 }).from(element).save();
-
-},1200);
 
 }
 
