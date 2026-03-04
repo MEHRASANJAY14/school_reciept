@@ -53,6 +53,12 @@ background:#1a73e8;
 color:white;
 }
 
+.back-btn{
+background:#6c757d;
+color:white;
+margin-top:20px;
+}
+
 table{
 width:100%;
 margin-top:20px;
@@ -72,7 +78,7 @@ color:white;
 .print-btn{
 background:#198754;
 color:white;
-padding:6px 10px;
+padding:6px 12px;
 border-radius:4px;
 text-decoration:none;
 }
@@ -101,13 +107,19 @@ text-decoration:none;
 <th>Name</th>
 <th>Aadhaar</th>
 <th>Class</th>
-<th>Action</th>
+<th>Print</th>
 </tr>
 </thead>
 
 <tbody></tbody>
 
 </table>
+
+<br>
+
+<button class="back-btn" onclick="window.location.href='index.html'">
+⬅ Back to Dashboard
+</button>
 
 </div>
 
@@ -119,6 +131,11 @@ async function searchStudent(){
 
 let q=document.getElementById("searchText").value;
 
+if(!q){
+alert("Enter search text");
+return;
+}
+
 let url=API+"?search="+encodeURIComponent(q);
 
 let res=await fetch(url);
@@ -128,6 +145,11 @@ let data=await res.json();
 let tbody=document.querySelector("#resultTable tbody");
 
 tbody.innerHTML="";
+
+if(data.length==0){
+tbody.innerHTML="<tr><td colspan='5'>No Record Found</td></tr>";
+return;
+}
 
 data.forEach(row=>{
 
@@ -141,6 +163,7 @@ tr.innerHTML=`
 <td>${row.class}</td>
 
 <td>
+
 <a class="print-btn" target="_blank"
 href="print.html?studentID=${row.studentID}
 &name=${row.name}
@@ -166,6 +189,7 @@ href="print.html?studentID=${row.studentID}
 Print Receipt
 
 </a>
+
 </td>
 
 `;
