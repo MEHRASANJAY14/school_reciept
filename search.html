@@ -18,7 +18,7 @@ text-align:center;
 }
 
 .container{
-max-width:700px;
+max-width:750px;
 margin:auto;
 background:white;
 color:black;
@@ -67,7 +67,7 @@ border-collapse:collapse;
 
 th,td{
 border:1px solid #ccc;
-padding:8px;
+padding:10px;
 }
 
 th{
@@ -83,6 +83,11 @@ border-radius:4px;
 text-decoration:none;
 }
 
+.no-data{
+padding:15px;
+color:red;
+}
+
 </style>
 
 </head>
@@ -93,7 +98,12 @@ text-decoration:none;
 
 <h2>Search Student Record</h2>
 
-<input type="text" id="searchText" placeholder="Enter Name / Aadhaar / Student ID">
+<input 
+type="text" 
+id="searchText" 
+placeholder="Enter Name / Aadhaar / Student ID"
+onkeypress="if(event.key==='Enter'){searchStudent()}"
+>
 
 <br>
 
@@ -129,7 +139,7 @@ const API="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzD
 
 async function searchStudent(){
 
-let q=document.getElementById("searchText").value;
+let q=document.getElementById("searchText").value.trim();
 
 if(!q){
 alert("Enter search text");
@@ -147,8 +157,10 @@ let tbody=document.querySelector("#resultTable tbody");
 tbody.innerHTML="";
 
 if(data.length==0){
-tbody.innerHTML="<tr><td colspan='5'>No Record Found</td></tr>";
+
+tbody.innerHTML="<tr><td colspan='5' class='no-data'>No Record Found</td></tr>";
 return;
+
 }
 
 data.forEach(row=>{
@@ -166,25 +178,10 @@ tr.innerHTML=`
 
 <a class="print-btn" target="_blank"
 href="print.html?studentID=${row.studentID}
-&name=${row.name}
-&father=${row.father}
-&mother=${row.mother}
-&dob=${row.dob}
-&class=${row.class}
-&village=${row.village}
-&address=${row.address}
-&caste=${row.caste}
-&category=${row.category}
-&subject=${row.subject}
-&apar=${row.apar}
+&name=${encodeURIComponent(row.name)}
 &aadhar=${row.aadhar}
-&samagra=${row.samagra}
-&account=${row.account}
-&ifsc=${row.ifsc}
-&bank=${row.bank}
-&mobile=${row.mobile}
-&photo=${encodeURIComponent(row.photo)}
-">
+&class=${row.class}
+&photo=${encodeURIComponent(row.photo)}">
 
 Print Receipt
 
