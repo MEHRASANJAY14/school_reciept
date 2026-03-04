@@ -195,12 +195,26 @@ document.getElementById("date").innerText = new Date().toLocaleDateString();
 
 // Photo handling
 const photoURL = params.get("photo");
+
 if(photoURL){
-  document.getElementById("photo").src = photoURL;
-}else{
-  document.getElementById("photo").style.display="none";
+
+let finalURL = photoURL;
+
+if(photoURL.includes("drive.google.com")){
+const id = photoURL.split("/d/")[1].split("/")[0];
+finalURL = "https://drive.google.com/uc?export=view&id=" + id;
 }
 
+document.getElementById("photo").src = finalURL;
+
+}else{
+document.getElementById("photo").style.display="none";
+}
+window.onload=function(){
+  setTimeout(()=>{
+    window.print();
+  },500);
+}
 </script>
 
 </body>
