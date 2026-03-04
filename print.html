@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <meta charset="UTF-8">
 <title>Admission Receipt</title>
 
 <style>
 
 body{
-font-family: Arial, sans-serif;
+font-family:Arial;
 background:#f2f2f2;
-padding:20px;
 }
 
 .receipt{
 width:800px;
 margin:auto;
-background:#fff;
-border:2px solid #000;
+background:white;
 padding:20px;
+border:2px solid black;
 position:relative;
 }
 
 .header{
 text-align:center;
-font-size:14px;
-margin-bottom:10px;
+margin-bottom:20px;
 }
 
-h2{
-text-align:center;
-margin:10px 0;
+h1{
+margin:0;
+font-size:24px;
+}
+
+.photo{
+width:120px;
+height:150px;
+border:1px solid black;
+position:absolute;
+right:50px;
+top:130px;
+object-fit:cover;
 }
 
 table{
@@ -47,59 +57,28 @@ font-weight:bold;
 width:200px;
 }
 
-.photo-box{
-position:absolute;
-top:120px;
-right:40px;
-width:110px;
-height:130px;
-border:2px solid #000;
-overflow:hidden;
-}
-
-.photo-box img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
 .footer{
 text-align:center;
 margin-top:20px;
-font-size:13px;
 }
 
-.buttons{
-text-align:center;
-margin-top:20px;
-}
-
-button{
-background:#0d47a1;
-color:#fff;
-border:none;
+.footer button{
 padding:10px 20px;
-font-size:16px;
+margin:5px;
+border:none;
+border-radius:5px;
 cursor:pointer;
+font-size:14px;
 }
 
-/* PRINT */
-
-@media print{
-
-body{
-background:#fff;
-padding:0;
+.print-btn{
+background:#0f2c59;
+color:white;
 }
 
-.buttons{
-display:none;
-}
-
-.receipt{
-width:100%;
-}
-
+.pdf-btn{
+background:#198754;
+color:white;
 }
 
 </style>
@@ -108,182 +87,106 @@ width:100%;
 
 <body>
 
-<div class="receipt">
+<div id="receipt" class="receipt">
 
 <div class="header">
-<b>Block: Jabera | District: Damoh (M.P.)</b><br>
+
+<h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
+
+<div>
+Block: Jabera | District: Damoh (M.P.)<br>
 Established: 1985
 </div>
 
 <h2>ADMISSION RECEIPT</h2>
 
-<div class="photo-box">
-<img id="photo">
 </div>
+
+<img id="photo" class="photo">
 
 <table>
 
-<tr>
-<td class="label">Student ID</td>
-<td id="sid"></td>
-</tr>
-
-<tr>
-<td class="label">Student Name</td>
-<td id="name"></td>
-</tr>
-
-<tr>
-<td class="label">Father Name</td>
-<td id="father"></td>
-</tr>
-
-<tr>
-<td class="label">Mother Name</td>
-<td id="mother"></td>
-</tr>
-
-<tr>
-<td class="label">Date of Birth</td>
-<td id="dob"></td>
-</tr>
-
-<tr>
-<td class="label">Class</td>
-<td id="class"></td>
-</tr>
-
-<tr>
-<td class="label">Village</td>
-<td id="village"></td>
-</tr>
-
-<tr>
-<td class="label">Address</td>
-<td id="address"></td>
-</tr>
-
-<tr>
-<td class="label">Caste</td>
-<td id="caste"></td>
-</tr>
-
-<tr>
-<td class="label">Category</td>
-<td id="category"></td>
-</tr>
-
-<tr>
-<td class="label">Subject</td>
-<td id="subject"></td>
-</tr>
-
-<tr>
-<td class="label">APAAR ID</td>
-<td id="apaar"></td>
-</tr>
-
-<tr>
-<td class="label">Aadhaar ID</td>
-<td id="aadhaar"></td>
-</tr>
-
-<tr>
-<td class="label">Samagra ID</td>
-<td id="samagra"></td>
-</tr>
-
-<tr>
-<td class="label">Account No</td>
-<td id="account"></td>
-</tr>
-
-<tr>
-<td class="label">IFSC Code</td>
-<td id="ifsc"></td>
-</tr>
-
-<tr>
-<td class="label">Bank Name</td>
-<td id="bank"></td>
-</tr>
-
-<tr>
-<td class="label">Mobile</td>
-<td id="mobile"></td>
-</tr>
-
-<tr>
-<td class="label">Date Generated</td>
-<td id="date"></td>
-</tr>
+<tr><td class="label">Student ID</td><td id="studentID"></td></tr>
+<tr><td class="label">Student Name</td><td id="name"></td></tr>
+<tr><td class="label">Father Name</td><td id="father"></td></tr>
+<tr><td class="label">Mother Name</td><td id="mother"></td></tr>
+<tr><td class="label">Date of Birth</td><td id="dob"></td></tr>
+<tr><td class="label">Class</td><td id="class"></td></tr>
+<tr><td class="label">Village</td><td id="village"></td></tr>
+<tr><td class="label">Address</td><td id="address"></td></tr>
+<tr><td class="label">Caste</td><td id="caste"></td></tr>
+<tr><td class="label">Category</td><td id="category"></td></tr>
+<tr><td class="label">Subject</td><td id="subject"></td></tr>
+<tr><td class="label">APAAR ID</td><td id="apar"></td></tr>
+<tr><td class="label">Aadhaar ID</td><td id="aadhar"></td></tr>
+<tr><td class="label">Samagra ID</td><td id="samagra"></td></tr>
+<tr><td class="label">Account No</td><td id="account"></td></tr>
+<tr><td class="label">IFSC Code</td><td id="ifsc"></td></tr>
+<tr><td class="label">Bank Name</td><td id="bank"></td></tr>
+<tr><td class="label">Mobile</td><td id="mobile"></td></tr>
 
 </table>
 
+</div>
+
 <div class="footer">
-This is a computer generated receipt. No signature required.
-</div>
+
+<button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+
+<button class="print-btn" onclick="window.print()">Print</button>
 
 </div>
 
-<div class="buttons">
-<button onclick="window.print()">Print Receipt</button>
-</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
 
 const params = new URLSearchParams(window.location.search);
 
-function setValue(id,value){
-
-if(value && value!=="null"){
-document.getElementById(id).innerHTML=": "+value;
-}else{
-document.getElementById(id).innerHTML=": ";
-}
-
-}
-
-setValue("sid",params.get("sid"));
-setValue("name",params.get("name"));
-setValue("father",params.get("father"));
-setValue("mother",params.get("mother"));
-setValue("dob",params.get("dob"));
-setValue("class",params.get("class"));
-setValue("village",params.get("village"));
-setValue("address",params.get("address"));
-setValue("caste",params.get("caste"));
-setValue("category",params.get("category"));
-setValue("subject",params.get("subject"));
-setValue("apaar",params.get("apaar"));
-setValue("aadhaar",params.get("aadhaar"));
-setValue("samagra",params.get("samagra"));
-setValue("account",params.get("account"));
-setValue("ifsc",params.get("ifsc"));
-setValue("bank",params.get("bank"));
-setValue("mobile",params.get("mobile"));
-
-/* DATE DD-MM-YYYY */
-
-let d=new Date();
-
-let day=String(d.getDate()).padStart(2,'0');
-let month=String(d.getMonth()+1).padStart(2,'0');
-let year=d.getFullYear();
-
-document.getElementById("date").innerHTML=": "+day+"-"+month+"-"+year;
-
-/* PHOTO */
+document.getElementById("studentID").innerText=params.get("studentID");
+document.getElementById("name").innerText=params.get("name");
+document.getElementById("father").innerText=params.get("father");
+document.getElementById("mother").innerText=params.get("mother");
+document.getElementById("dob").innerText=params.get("dob");
+document.getElementById("class").innerText=params.get("class");
+document.getElementById("village").innerText=params.get("village");
+document.getElementById("address").innerText=params.get("address");
+document.getElementById("caste").innerText=params.get("caste");
+document.getElementById("category").innerText=params.get("category");
+document.getElementById("subject").innerText=params.get("subject");
+document.getElementById("apar").innerText=params.get("apar");
+document.getElementById("aadhar").innerText=params.get("aadhar");
+document.getElementById("samagra").innerText=params.get("samagra");
+document.getElementById("account").innerText=params.get("account");
+document.getElementById("ifsc").innerText=params.get("ifsc");
+document.getElementById("bank").innerText=params.get("bank");
+document.getElementById("mobile").innerText=params.get("mobile");
 
 const photo=params.get("photo");
 
 if(photo){
 document.getElementById("photo").src=photo;
-}else{
-document.getElementById("photo").src="";
+}
+
+function downloadPDF(){
+
+const element=document.getElementById("receipt");
+
+html2pdf().set({
+
+margin:5,
+filename:'Admission_Receipt.pdf',
+image:{type:'jpeg',quality:0.98},
+html2canvas:{scale:2},
+jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+
+}).from(element).save();
+
 }
 
 </script>
 
 </body>
+
 </html>
