@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="UTF-8">
@@ -11,6 +10,7 @@
 body{
 font-family:Arial;
 background:#f2f2f2;
+margin:0;
 }
 
 .receipt{
@@ -18,26 +18,34 @@ width:800px;
 margin:auto;
 background:white;
 padding:20px;
-border:2px solid black;
+border:4px double black;
 position:relative;
 }
 
 .header{
 text-align:center;
-margin-bottom:20px;
+border-bottom:2px solid black;
+padding-bottom:10px;
+margin-bottom:15px;
 }
 
-h1{
+.header h1{
 margin:0;
 font-size:24px;
+}
+
+.header h2{
+margin-top:5px;
 }
 
 .photo{
 width:120px;
 height:150px;
-border:1px solid black;
+border:2px solid black;
+padding:3px;
+background:white;
 position:absolute;
-right:50px;
+right:40px;
 top:130px;
 object-fit:cover;
 }
@@ -50,6 +58,11 @@ border-collapse:collapse;
 td{
 padding:6px;
 font-size:14px;
+border-bottom:1px solid #ddd;
+}
+
+table tr:nth-child(even){
+background:#f5f5f5;
 }
 
 .label{
@@ -57,9 +70,23 @@ font-weight:bold;
 width:200px;
 }
 
+.student-id{
+font-weight:bold;
+font-size:16px;
+color:#0f2c59;
+}
+
+.receipt-footer{
+border-top:2px solid black;
+margin-top:20px;
+padding-top:8px;
+text-align:center;
+font-size:12px;
+}
+
 .footer{
 text-align:center;
-margin-top:20px;
+margin-top:15px;
 }
 
 .footer button{
@@ -79,6 +106,15 @@ color:white;
 .pdf-btn{
 background:#198754;
 color:white;
+}
+
+@media print{
+.footer{
+display:none;
+}
+body{
+background:white;
+}
 }
 
 </style>
@@ -106,7 +142,11 @@ Established: 1985
 
 <table>
 
-<tr><td class="label">Student ID</td><td id="studentID"></td></tr>
+<tr>
+<td class="label">Student ID</td>
+<td class="student-id" id="studentID"></td>
+</tr>
+
 <tr><td class="label">Student Name</td><td id="name"></td></tr>
 <tr><td class="label">Father Name</td><td id="father"></td></tr>
 <tr><td class="label">Mother Name</td><td id="mother"></td></tr>
@@ -127,6 +167,14 @@ Established: 1985
 
 </table>
 
+<div class="receipt-footer">
+
+<p><b>This is a System Generated Receipt. No signature required.</b></p>
+
+<p>© GHSS Singhpur</p>
+
+</div>
+
 </div>
 
 <div class="footer">
@@ -136,7 +184,6 @@ Established: 1985
 <button class="print-btn" onclick="window.print()">Print</button>
 
 </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -177,8 +224,8 @@ html2pdf().set({
 
 margin:5,
 filename:'Admission_Receipt.pdf',
-image:{type:'jpeg',quality:0.98},
-html2canvas:{scale:2},
+image:{type:'jpeg',quality:1},
+html2canvas:{scale:3},
 jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
 
 }).from(element).save();
@@ -188,5 +235,4 @@ jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
 </script>
 
 </body>
-
 </html>
