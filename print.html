@@ -8,7 +8,7 @@
 <style>
 
 body{
-font-family:Arial;
+font-family:Arial, sans-serif;
 background:#f4f6f9;
 margin:0;
 padding:20px;
@@ -20,6 +20,7 @@ margin:auto;
 background:white;
 padding:25px;
 border:2px solid #000;
+position:relative;
 }
 
 .header{
@@ -44,11 +45,16 @@ font-size:16px;
 }
 
 .photo{
-float:right;
-width:120px;
-height:150px;
-border:1px solid black;
+position:absolute;
+right:25px;
+top:120px;
+width:110px;
+height:140px;
+border:2px solid black;
+border-radius:4px;
 object-fit:cover;
+object-position:center;
+box-shadow:0 0 4px rgba(0,0,0,0.4);
 }
 
 table{
@@ -60,6 +66,7 @@ font-size:14px;
 
 td{
 padding:6px 4px;
+vertical-align:top;
 }
 
 .label{
@@ -87,14 +94,34 @@ margin:5px;
 cursor:pointer;
 }
 
+button:hover{
+background:#004080;
+}
+
 @media print{
+
 body{
 background:white;
 padding:0;
 }
+
 .button-area{
 display:none;
 }
+
+.photo{
+width:100px;
+height:130px;
+}
+
+}
+
+@media(max-width:850px){
+
+.receipt{
+width:100%;
+}
+
 }
 
 </style>
@@ -150,6 +177,7 @@ This is a computer generated receipt. No signature required.
 
 <div class="button-area">
 <button onclick="window.print()">🖨 Print Receipt</button>
+<button onclick="window.print()">⬇ Download as PDF</button>
 </div>
 
 <script>
@@ -164,6 +192,7 @@ setValue("studentID");
 setValue("name");
 setValue("father");
 setValue("mother");
+setValue("dob");
 setValue("class");
 setValue("village");
 setValue("address");
@@ -178,28 +207,9 @@ setValue("ifsc");
 setValue("bank");
 setValue("mobile");
 
+document.getElementById("date").innerText=new Date().toLocaleDateString();
 
-// DOB format DD-MM-YYYY
-let dob=params.get("dob");
-if(dob){
-let d=new Date(dob);
-let day=String(d.getDate()).padStart(2,'0');
-let mon=String(d.getMonth()+1).padStart(2,'0');
-let yr=d.getFullYear();
-document.getElementById("dob").innerText=day+"-"+mon+"-"+yr;
-}
-
-
-// generated date
-let today=new Date();
-let d=String(today.getDate()).padStart(2,'0');
-let m=String(today.getMonth()+1).padStart(2,'0');
-let y=today.getFullYear();
-
-document.getElementById("date").innerText=d+"-"+m+"-"+y;
-
-
-// PHOTO FIX
+// Photo handling
 const photoURL=params.get("photo");
 
 if(photoURL){
@@ -207,10 +217,16 @@ if(photoURL){
 let finalURL=photoURL;
 
 // convert drive link to direct image
-let match=photoURL.match(/[-\w]{25,}/);
+if(photoURL.includes("drive.google.com")){
+let fileId="";
 
-if(match){
-finalURL="https://drive.google.com/uc?export=view&id="+match[0];
+if(photoURL.includes("/d/")){
+fileId=photoURL.split("/d/")[1].split("/")[0];
+}else if(photoURL.includes("id=")){
+fileId=photoURL.split("id=")[1];
+}
+
+finalURL="https://drive.google.com/uc?export=view&id="+fileId;
 }
 
 document.getElementById("photo").src=finalURL;
