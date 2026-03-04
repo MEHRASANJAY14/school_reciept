@@ -204,6 +204,7 @@ Established: 1985
 
 const params = new URLSearchParams(window.location.search);
 
+// student data
 document.getElementById("studentID").innerText=params.get("studentID");
 document.getElementById("name").innerText=params.get("name");
 document.getElementById("father").innerText=params.get("father");
@@ -223,21 +224,26 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-const photo=params.get("photo");
+// photo fix
+const photo = decodeURIComponent(params.get("photo") || "");
+const img = document.getElementById("photo");
 
 if(photo){
 
-let img = photo;
+let match = photo.match(/[-\w]{25,}/);
 
-if(photo.includes("drive.google.com")){
-let fileId = photo.split("/d/")[1].split("/")[0];
-img = "https://drive.google.com/uc?export=view&id=" + fileId;
+if(match){
+
+let fileId = match[0];
+let finalUrl = "https://drive.google.com/uc?export=view&id=" + fileId;
+
+img.src = finalUrl;
+
 }
 
-document.getElementById("photo").src = img;
-
 }
 
+// PDF
 function downloadPDF(){
 
 const element=document.getElementById("receipt");
