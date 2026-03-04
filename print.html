@@ -28,6 +28,7 @@ border:4px double black;
 box-sizing:border-box;
 position:relative;
 margin:auto;
+overflow:hidden;
 }
 
 .header{
@@ -46,15 +47,16 @@ font-size:22px;
 margin:5px 0;
 }
 
+/* PHOTO */
+
 .photo{
-width:100px;
-height:130px;
+width:95px;
+height:120px;
 border:2px solid black;
-padding:2px;
 background:white;
 position:absolute;
-right:10mm;
-top:55mm;
+right:15mm;
+top:75mm;
 object-fit:cover;
 }
 
@@ -96,7 +98,7 @@ font-size:12px;
 width:190mm;
 margin:auto;
 text-align:center;
-margin-top:10px;
+margin-top:15px;
 }
 
 .footer button{
@@ -186,7 +188,6 @@ Established: 1985
 <div class="footer">
 
 <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
-
 <button class="print-btn" onclick="window.print()">Print</button>
 
 </div>
@@ -197,7 +198,6 @@ Established: 1985
 
 const params = new URLSearchParams(window.location.search);
 
-// student data
 document.getElementById("studentID").innerText=params.get("studentID");
 document.getElementById("name").innerText=params.get("name");
 document.getElementById("father").innerText=params.get("father");
@@ -217,7 +217,9 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-// PHOTO LOAD FIX
+
+// PHOTO FIX
+
 const photo = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
 
@@ -229,25 +231,27 @@ if(match){
 
 let fileId = match[0];
 
-// reliable google drive image url
-img.src = "https://lh3.googleusercontent.com/d/" + fileId;
+img.src="https://drive.google.com/uc?export=view&id="+fileId;
 
 }
 
 }
+
 
 // PDF
+
 function downloadPDF(){
 
 const element=document.getElementById("receipt");
 
 html2pdf().set({
 
-margin:0,
+margin:[5,5,5,5],
+
 filename:'Admission_Receipt.pdf',
 
 html2canvas:{
-scale:2,
+scale:3,
 useCORS:true
 },
 
