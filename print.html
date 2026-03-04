@@ -47,7 +47,7 @@ font-size:16px;
 .photo{
 position:absolute;
 right:25px;
-top:120px;
+top:130px;
 width:110px;
 height:140px;
 border:2px solid black;
@@ -209,24 +209,26 @@ setValue("mobile");
 
 document.getElementById("date").innerText=new Date().toLocaleDateString();
 
-// Photo handling
+// PHOTO FIX
 const photoURL=params.get("photo");
 
 if(photoURL){
 
 let finalURL=photoURL;
 
-// convert drive link to direct image
 if(photoURL.includes("drive.google.com")){
+
 let fileId="";
 
 if(photoURL.includes("/d/")){
 fileId=photoURL.split("/d/")[1].split("/")[0];
-}else if(photoURL.includes("id=")){
+}
+else if(photoURL.includes("id=")){
 fileId=photoURL.split("id=")[1];
 }
 
 finalURL="https://drive.google.com/uc?export=view&id="+fileId;
+
 }
 
 document.getElementById("photo").src=finalURL;
