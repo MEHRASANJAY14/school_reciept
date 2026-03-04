@@ -54,11 +54,11 @@ border:2px solid black;
 background:white;
 position:absolute;
 right:10mm;
-top:40mm;
+top:47mm;
 object-fit:cover;
 }
 
-/* QR CODE */
+/* QR */
 
 .qr{
 width:80px;
@@ -66,12 +66,14 @@ height:80px;
 border:2px solid black;
 position:absolute;
 right:12mm;
-top:165mm;
+top:175mm;
 background:white;
 display:flex;
 align-items:center;
 justify-content:center;
 }
+
+/* TABLE */
 
 table{
 width:100%;
@@ -98,6 +100,8 @@ font-weight:bold;
 font-size:15px;
 color:#0f2c59;
 }
+
+/* FOOTER */
 
 .receipt-footer{
 border-top:2px solid black;
@@ -173,11 +177,6 @@ Established: 1985
 <td class="student-id" id="studentID"></td>
 </tr>
 
-<tr>
-<td class="label">Receipt Generated</td>
-<td id="rdate"></td>
-</tr>
-
 <tr><td class="label">Student Name</td><td id="name"></td></tr>
 <tr><td class="label">Father Name</td><td id="father"></td></tr>
 <tr><td class="label">Mother Name</td><td id="mother"></td></tr>
@@ -201,6 +200,9 @@ Established: 1985
 <div class="receipt-footer">
 
 <p><b>This is a System Generated Receipt. No signature required.</b></p>
+
+<p>Receipt Generated : <span id="rdate"></span></p>
+
 <p>@ GHSS Singhpur</p>
 
 </div>
@@ -210,12 +212,14 @@ Established: 1985
 <div class="footer">
 
 <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+
 <button class="print-btn" onclick="window.print()">Print</button>
 
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
@@ -241,9 +245,10 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-/* DATE FORMAT DD-MM-YYYY */
+/* DATE FORMAT */
 
 let d = new Date();
+
 let day = String(d.getDate()).padStart(2,'0');
 let month = String(d.getMonth()+1).padStart(2,'0');
 let year = d.getFullYear();
@@ -253,6 +258,7 @@ document.getElementById("rdate").innerText = day+"-"+month+"-"+year;
 /* PHOTO */
 
 const photoURL = decodeURIComponent(params.get("photo") || "");
+
 const img = document.getElementById("photo");
 
 if(photoURL){
@@ -262,7 +268,8 @@ let match = photoURL.match(/[-\w]{25,}/);
 if(match){
 
 let fileId = match[0];
-img.src = "https://lh3.googleusercontent.com/d/"+fileId;
+
+img.src="https://lh3.googleusercontent.com/d/"+fileId;
 
 }
 
@@ -273,9 +280,13 @@ img.src = "https://lh3.googleusercontent.com/d/"+fileId;
 let verifyURL = window.location.href;
 
 new QRCode(document.getElementById("qrcode"), {
+
 text: verifyURL,
+
 width:70,
+
 height:70
+
 });
 
 /* PDF */
@@ -289,6 +300,7 @@ const element=document.getElementById("receipt");
 html2pdf().set({
 
 margin:0,
+
 filename:'Admission_Receipt.pdf',
 
 pagebreak:{mode:['avoid-all','css','legacy']},
