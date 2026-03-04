@@ -119,15 +119,9 @@ color:white;
 }
 
 @media print{
-
 .footer{
 display:none;
 }
-
-body{
-background:white;
-}
-
 }
 
 </style>
@@ -183,7 +177,6 @@ Established: 1985
 <div class="receipt-footer">
 
 <p><b>This is a System Generated Receipt. No signature required.</b></p>
-
 <p>@ GHSS Singhpur</p>
 
 </div>
@@ -224,8 +217,7 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
-
-// PHOTO FIX
+// PHOTO LOAD
 const photo = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
 
@@ -237,31 +229,20 @@ if(match){
 
 let fileId = match[0];
 
-img.src = "https://drive.google.com/thumbnail?id="+fileId+"&sz=w500";
+let url = "https://drive.google.com/thumbnail?id="+fileId+"&sz=w800";
+
+img.crossOrigin="anonymous";
+img.src = url;
 
 }
 
 }
 
 
-// PDF GENERATION FIX (wait for image load)
+// PDF
 function downloadPDF(){
 
-const image = document.getElementById("photo");
-
-if(!image.complete){
-
-image.onload = generatePDF;
-
-}else{
-
-generatePDF();
-
-}
-
-}
-
-function generatePDF(){
+setTimeout(function(){
 
 const element=document.getElementById("receipt");
 
@@ -271,7 +252,7 @@ margin:0,
 filename:'Admission_Receipt.pdf',
 
 html2canvas:{
-scale:2,
+scale:3,
 useCORS:true
 },
 
@@ -282,6 +263,8 @@ orientation:'portrait'
 }
 
 }).from(element).save();
+
+},1200);
 
 }
 
