@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="UTF-8">
-<title>Search Student</title>
+<title>Search Student Record</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:linear-gradient(135deg,#1a73e8,#0d47a1);
+background:linear-gradient(135deg,#1e88e5,#0d47a1);
 margin:0;
-padding:30px;
-color:white;
-text-align:center;
+padding:40px;
 }
 
 .container{
 max-width:750px;
 margin:auto;
 background:white;
-color:black;
 padding:30px;
 border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+text-align:center;
 }
 
 h2{
@@ -42,14 +39,14 @@ margin-bottom:15px;
 
 button{
 padding:10px 20px;
-font-size:16px;
 border:none;
 border-radius:5px;
+font-size:16px;
 cursor:pointer;
 }
 
 .search-btn{
-background:#1a73e8;
+background:#1976d2;
 color:white;
 }
 
@@ -61,8 +58,8 @@ margin-top:20px;
 
 table{
 width:100%;
-margin-top:20px;
 border-collapse:collapse;
+margin-top:20px;
 }
 
 th,td{
@@ -71,21 +68,16 @@ padding:10px;
 }
 
 th{
-background:#1a73e8;
+background:#1976d2;
 color:white;
 }
 
 .print-btn{
-background:#198754;
+background:#28a745;
 color:white;
 padding:6px 12px;
 border-radius:4px;
 text-decoration:none;
-}
-
-.no-data{
-padding:15px;
-color:red;
 }
 
 </style>
@@ -98,9 +90,9 @@ color:red;
 
 <h2>Search Student Record</h2>
 
-<input 
-type="text" 
-id="searchText" 
+<input
+type="text"
+id="searchText"
 placeholder="Enter Name / Aadhaar / Student ID"
 onkeypress="if(event.key==='Enter'){searchStudent()}"
 >
@@ -128,37 +120,38 @@ onkeypress="if(event.key==='Enter'){searchStudent()}"
 <br>
 
 <button class="back-btn" onclick="window.location.href='index.html'">
-⬅ Back to Dashboard
+← Back to Dashboard
 </button>
 
 </div>
 
 <script>
 
-const API="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
 
 async function searchStudent(){
 
-let q=document.getElementById("searchText").value.trim();
+let text=document.getElementById("searchText").value.trim();
 
-if(!q){
-alert("Enter search text");
+if(text==""){
+alert("Enter Name / Aadhaar / Student ID");
 return;
 }
 
-let url=API+"?search="+encodeURIComponent(q);
+let url=API_URL+"?search="+encodeURIComponent(text);
 
-let res=await fetch(url);
+try{
 
-let data=await res.json();
+let response=await fetch(url);
+let data=await response.json();
 
 let tbody=document.querySelector("#resultTable tbody");
 
 tbody.innerHTML="";
 
-if(data.length==0){
+if(data.length===0){
 
-tbody.innerHTML="<tr><td colspan='5' class='no-data'>No Record Found</td></tr>";
+tbody.innerHTML="<tr><td colspan='5'>No Record Found</td></tr>";
 return;
 
 }
@@ -168,37 +161,32 @@ data.forEach(row=>{
 let tr=document.createElement("tr");
 
 tr.innerHTML=`
-
 <td>${row.studentID}</td>
 <td>${row.name}</td>
 <td>${row.aadhar}</td>
 <td>${row.class}</td>
 
 <td>
-
 <a class="print-btn" target="_blank"
-href="print.html?studentID=${row.studentID}
-&name=${encodeURIComponent(row.name)}
-&aadhar=${row.aadhar}
-&class=${row.class}
-&photo=${encodeURIComponent(row.photo)}">
-
-Print Receipt
-
+href="print.html?studentID=${row.studentID}&name=${encodeURIComponent(row.name)}&aadhar=${row.aadhar}&class=${row.class}&photo=${encodeURIComponent(row.photo)}">
+Print
 </a>
-
 </td>
-
 `;
 
 tbody.appendChild(tr);
 
 });
 
+}catch(err){
+
+alert("Search Error: "+err);
+
+}
+
 }
 
 </script>
 
 </body>
-
 </html>
