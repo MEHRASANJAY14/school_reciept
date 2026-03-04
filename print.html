@@ -58,21 +58,6 @@ top:46mm;
 object-fit:cover;
 }
 
-/* QR */
-
-.qr{
-width:80px;
-height:80px;
-border:2px solid black;
-position:absolute;
-right:12mm;
-top:162mm;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
 /* TABLE */
 
 table{
@@ -106,10 +91,31 @@ color:#0f2c59;
 .receipt-footer{
 border-top:2px solid black;
 margin-top:20px;
-padding-top:8px;
-text-align:center;
+padding-top:10px;
 font-size:12px;
+position:relative;
 }
+
+.footer-text{
+text-align:center;
+}
+
+/* QR RIGHT FOOTER */
+
+.qr{
+position:absolute;
+right:0;
+top:-10px;
+width:80px;
+height:80px;
+border:2px solid black;
+display:flex;
+align-items:center;
+justify-content:center;
+background:white;
+}
+
+/* BUTTON AREA */
 
 .footer{
 width:180mm;
@@ -141,6 +147,7 @@ color:white;
 .footer{
 display:none;
 }
+
 body{
 padding:0;
 }
@@ -168,8 +175,6 @@ Established: 1985
 </div>
 
 <img id="photo" class="photo">
-
-<div id="qrcode" class="qr"></div>
 
 <table>
 
@@ -200,11 +205,17 @@ Established: 1985
 
 <div class="receipt-footer">
 
+<div class="qr" id="qrcode"></div>
+
+<div class="footer-text">
+
 <p><b>This is a System Generated Receipt. No signature required.</b></p>
 
 <p>Receipt Generated : <span id="rdate"></span></p>
 
 <p>@ GHSS Singhpur</p>
+
+</div>
 
 </div>
 
@@ -217,6 +228,7 @@ Established: 1985
 <button class="print-btn" onclick="window.print()">Print</button>
 
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
