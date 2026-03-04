@@ -336,7 +336,37 @@ function handleResponse(data){
 }
 
 function printReceipt(){
-  window.open("print.html?studentId="+studentId,"_blank");
+
+const params = new URLSearchParams();
+
+params.append("studentID",studentId);
+
+params.append("name",form.name.value);
+params.append("father",form.father.value);
+params.append("mother",form.mother.value);
+params.append("dob",form.dob.value);
+params.append("class",form.class.value);
+params.append("village",form.village.value);
+params.append("address",form.address.value);
+params.append("caste",form.caste.value);
+params.append("category",form.category.value);
+params.append("subject",form.subject.value);
+params.append("apar",form.apar.value);
+params.append("aadhar",form.aadhar.value);
+params.append("samagra",form.samagra.value);
+params.append("account",form.account.value);
+params.append("ifsc",form.ifsc.value);
+params.append("bank",form.bank.value);
+params.append("mobile",form.mobile.value);
+
+const photo=document.querySelector("#preview img");
+
+if(photo){
+params.append("photo",photo.src);
+}
+
+window.open("print.html?"+params.toString(),"_blank");
+
 }
 
 </script>
