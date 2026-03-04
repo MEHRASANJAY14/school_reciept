@@ -279,34 +279,61 @@ form.addEventListener("submit",e=>{
   });
 
   const formData=new FormData(form);
+  const file=document.getElementById("photo").files[0];
 
-  fetch(scriptURL,{method:"POST",body:formData})
-  .then(res=>res.json())
-  .then(data=>{
+  if(file){
 
-    if(data.status==="DUPLICATE"){
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+
+      formData.append("photo",e.target.result);
+
+      fetch(scriptURL,{method:"POST",body:formData})
+      .then(res=>res.json())
+      .then(data=>handleResponse(data))
+      .catch(err=>{
+        msg.style.color="red";
+        msg.innerText="Submission Failed: "+err;
+      });
+
+    };
+
+    reader.readAsDataURL(file);
+
+  }else{
+
+    fetch(scriptURL,{method:"POST",body:formData})
+    .then(res=>res.json())
+    .then(data=>handleResponse(data))
+    .catch(err=>{
       msg.style.color="red";
-      msg.innerText="Duplicate Aadhaar Found!";
-      return;
-    }
+      msg.innerText="Submission Failed: "+err;
+    });
 
-    if(data.status==="SUCCESS"){
-      studentId=data.id;
-      form.style.display="none";
-      successBox.style.display="block";
-      successText.innerText="Data Submitted Successfully! Student ID: "+studentId;
-    }else{
-      msg.style.color="red";
-      msg.innerText="Unexpected Server Error";
-    }
-
-  })
-  .catch(err=>{
-    msg.style.color="red";
-    msg.innerText="Submission Failed: "+err;
-  });
+  }
 
 });
+
+function handleResponse(data){
+
+  if(data.status==="DUPLICATE_AADHAAR"){
+    msg.style.color="red";
+    msg.innerText="Duplicate Aadhaar Found!";
+    return;
+  }
+
+  if(data.status==="SUCCESS"){
+    studentId=data.id;
+    form.style.display="none";
+    successBox.style.display="block";
+    successText.innerText="Data Submitted Successfully! Student ID: "+studentId;
+  }else{
+    msg.style.color="red";
+    msg.innerText="Unexpected Server Error";
+  }
+
+}
 
 function printReceipt(){
   window.open("print.html?studentId="+studentId,"_blank");
