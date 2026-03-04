@@ -28,7 +28,6 @@ border:4px double black;
 box-sizing:border-box;
 position:relative;
 margin:auto;
-overflow:hidden;
 }
 
 .header{
@@ -46,8 +45,6 @@ font-size:22px;
 .header h2{
 margin:5px 0;
 }
-
-/* PHOTO */
 
 .photo{
 width:95px;
@@ -218,36 +215,37 @@ document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
 
-// PHOTO FIX
+// PHOTO LOAD FIX
 
-const photo = decodeURIComponent(params.get("photo") || "");
+const photoURL = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
 
-if(photo){
+if(photoURL){
 
-let match = photo.match(/[-\w]{25,}/);
+let match = photoURL.match(/[-\w]{25,}/);
 
 if(match){
 
 let fileId = match[0];
 
-img.src="https://drive.google.com/uc?export=view&id="+fileId;
+img.src = "https://lh3.googleusercontent.com/d/"+fileId;
 
 }
 
 }
 
 
-// PDF
+// WAIT IMAGE LOAD BEFORE PDF
 
 function downloadPDF(){
 
 const element=document.getElementById("receipt");
 
+setTimeout(function(){
+
 html2pdf().set({
 
 margin:[5,5,5,5],
-
 filename:'Admission_Receipt.pdf',
 
 html2canvas:{
@@ -262,6 +260,8 @@ orientation:'portrait'
 }
 
 }).from(element).save();
+
+},800);
 
 }
 
