@@ -237,7 +237,6 @@ if(match){
 
 let fileId = match[0];
 
-// google drive image fix
 img.src = "https://drive.google.com/thumbnail?id="+fileId+"&sz=w500";
 
 }
@@ -245,8 +244,24 @@ img.src = "https://drive.google.com/thumbnail?id="+fileId+"&sz=w500";
 }
 
 
-// PDF
+// PDF GENERATION FIX (wait for image load)
 function downloadPDF(){
+
+const image = document.getElementById("photo");
+
+if(!image.complete){
+
+image.onload = generatePDF;
+
+}else{
+
+generatePDF();
+
+}
+
+}
+
+function generatePDF(){
 
 const element=document.getElementById("receipt");
 
@@ -254,8 +269,17 @@ html2pdf().set({
 
 margin:0,
 filename:'Admission_Receipt.pdf',
-html2canvas:{scale:2},
-jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+
+html2canvas:{
+scale:2,
+useCORS:true
+},
+
+jsPDF:{
+unit:'mm',
+format:'a4',
+orientation:'portrait'
+}
 
 }).from(element).save();
 
