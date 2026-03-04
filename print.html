@@ -7,24 +7,29 @@
 <style>
 
 body{
-font-family: Arial;
+font-family: Arial, sans-serif;
 background:#f2f2f2;
-margin:0;
 padding:20px;
 }
 
 .receipt{
 width:800px;
-background:#fff;
 margin:auto;
-padding:20px;
+background:#fff;
 border:2px solid #000;
+padding:20px;
 position:relative;
+}
+
+.header{
+text-align:center;
+font-size:14px;
+margin-bottom:10px;
 }
 
 h2{
 text-align:center;
-margin-bottom:10px;
+margin:10px 0;
 }
 
 table{
@@ -42,14 +47,12 @@ font-weight:bold;
 width:200px;
 }
 
-/* PHOTO BOX */
-
 .photo-box{
 position:absolute;
-top:110px;
-right:30px;
-width:120px;
-height:140px;
+top:120px;
+right:40px;
+width:110px;
+height:130px;
 border:2px solid #000;
 overflow:hidden;
 }
@@ -61,8 +64,8 @@ object-fit:cover;
 }
 
 .footer{
-margin-top:20px;
 text-align:center;
+margin-top:20px;
 font-size:13px;
 }
 
@@ -72,21 +75,21 @@ margin-top:20px;
 }
 
 button{
-padding:10px 20px;
-font-size:16px;
-margin:5px;
 background:#0d47a1;
 color:#fff;
 border:none;
+padding:10px 20px;
+font-size:16px;
 cursor:pointer;
 }
 
-/* PRINT FIX */
+/* PRINT */
 
 @media print{
 
 body{
 background:#fff;
+padding:0;
 }
 
 .buttons{
@@ -95,17 +98,22 @@ display:none;
 
 .receipt{
 width:100%;
-border:2px solid #000;
 }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="receipt">
+
+<div class="header">
+<b>Block: Jabera | District: Damoh (M.P.)</b><br>
+Established: 1985
+</div>
 
 <h2>ADMISSION RECEIPT</h2>
 
@@ -115,25 +123,100 @@ border:2px solid #000;
 
 <table>
 
-<tr><td class="label">Student ID</td><td id="sid"></td></tr>
-<tr><td class="label">Student Name</td><td id="name"></td></tr>
-<tr><td class="label">Father Name</td><td id="father"></td></tr>
-<tr><td class="label">Mother Name</td><td id="mother"></td></tr>
-<tr><td class="label">Date of Birth</td><td id="dob"></td></tr>
-<tr><td class="label">Class</td><td id="class"></td></tr>
-<tr><td class="label">Village</td><td id="village"></td></tr>
-<tr><td class="label">Address</td><td id="address"></td></tr>
-<tr><td class="label">Caste</td><td id="caste"></td></tr>
-<tr><td class="label">Category</td><td id="category"></td></tr>
-<tr><td class="label">Subject</td><td id="subject"></td></tr>
-<tr><td class="label">APAAR ID</td><td id="apaar"></td></tr>
-<tr><td class="label">Aadhaar ID</td><td id="aadhaar"></td></tr>
-<tr><td class="label">Samagra ID</td><td id="samagra"></td></tr>
-<tr><td class="label">Account No</td><td id="account"></td></tr>
-<tr><td class="label">IFSC Code</td><td id="ifsc"></td></tr>
-<tr><td class="label">Bank Name</td><td id="bank"></td></tr>
-<tr><td class="label">Mobile</td><td id="mobile"></td></tr>
-<tr><td class="label">Date Generated</td><td id="date"></td></tr>
+<tr>
+<td class="label">Student ID</td>
+<td id="sid"></td>
+</tr>
+
+<tr>
+<td class="label">Student Name</td>
+<td id="name"></td>
+</tr>
+
+<tr>
+<td class="label">Father Name</td>
+<td id="father"></td>
+</tr>
+
+<tr>
+<td class="label">Mother Name</td>
+<td id="mother"></td>
+</tr>
+
+<tr>
+<td class="label">Date of Birth</td>
+<td id="dob"></td>
+</tr>
+
+<tr>
+<td class="label">Class</td>
+<td id="class"></td>
+</tr>
+
+<tr>
+<td class="label">Village</td>
+<td id="village"></td>
+</tr>
+
+<tr>
+<td class="label">Address</td>
+<td id="address"></td>
+</tr>
+
+<tr>
+<td class="label">Caste</td>
+<td id="caste"></td>
+</tr>
+
+<tr>
+<td class="label">Category</td>
+<td id="category"></td>
+</tr>
+
+<tr>
+<td class="label">Subject</td>
+<td id="subject"></td>
+</tr>
+
+<tr>
+<td class="label">APAAR ID</td>
+<td id="apaar"></td>
+</tr>
+
+<tr>
+<td class="label">Aadhaar ID</td>
+<td id="aadhaar"></td>
+</tr>
+
+<tr>
+<td class="label">Samagra ID</td>
+<td id="samagra"></td>
+</tr>
+
+<tr>
+<td class="label">Account No</td>
+<td id="account"></td>
+</tr>
+
+<tr>
+<td class="label">IFSC Code</td>
+<td id="ifsc"></td>
+</tr>
+
+<tr>
+<td class="label">Bank Name</td>
+<td id="bank"></td>
+</tr>
+
+<tr>
+<td class="label">Mobile</td>
+<td id="mobile"></td>
+</tr>
+
+<tr>
+<td class="label">Date Generated</td>
+<td id="date"></td>
+</tr>
 
 </table>
 
@@ -151,34 +234,53 @@ This is a computer generated receipt. No signature required.
 
 const params = new URLSearchParams(window.location.search);
 
-document.getElementById("sid").innerHTML=": "+params.get("sid");
-document.getElementById("name").innerHTML=": "+params.get("name");
-document.getElementById("father").innerHTML=": "+params.get("father");
-document.getElementById("mother").innerHTML=": "+params.get("mother");
-document.getElementById("dob").innerHTML=": "+params.get("dob");
-document.getElementById("class").innerHTML=": "+params.get("class");
-document.getElementById("village").innerHTML=": "+params.get("village");
-document.getElementById("address").innerHTML=": "+params.get("address");
-document.getElementById("caste").innerHTML=": "+params.get("caste");
-document.getElementById("category").innerHTML=": "+params.get("category");
-document.getElementById("subject").innerHTML=": "+params.get("subject");
-document.getElementById("apaar").innerHTML=": "+params.get("apaar");
-document.getElementById("aadhaar").innerHTML=": "+params.get("aadhaar");
-document.getElementById("samagra").innerHTML=": "+params.get("samagra");
-document.getElementById("account").innerHTML=": "+params.get("account");
-document.getElementById("ifsc").innerHTML=": "+params.get("ifsc");
-document.getElementById("bank").innerHTML=": "+params.get("bank");
-document.getElementById("mobile").innerHTML=": "+params.get("mobile");
-document.getElementById("date").innerHTML=": "+params.get("date");
+function setValue(id,value){
 
-/* PHOTO LOAD */
+if(value && value!=="null"){
+document.getElementById(id).innerHTML=": "+value;
+}else{
+document.getElementById(id).innerHTML=": ";
+}
+
+}
+
+setValue("sid",params.get("sid"));
+setValue("name",params.get("name"));
+setValue("father",params.get("father"));
+setValue("mother",params.get("mother"));
+setValue("dob",params.get("dob"));
+setValue("class",params.get("class"));
+setValue("village",params.get("village"));
+setValue("address",params.get("address"));
+setValue("caste",params.get("caste"));
+setValue("category",params.get("category"));
+setValue("subject",params.get("subject"));
+setValue("apaar",params.get("apaar"));
+setValue("aadhaar",params.get("aadhaar"));
+setValue("samagra",params.get("samagra"));
+setValue("account",params.get("account"));
+setValue("ifsc",params.get("ifsc"));
+setValue("bank",params.get("bank"));
+setValue("mobile",params.get("mobile"));
+
+/* DATE DD-MM-YYYY */
+
+let d=new Date();
+
+let day=String(d.getDate()).padStart(2,'0');
+let month=String(d.getMonth()+1).padStart(2,'0');
+let year=d.getFullYear();
+
+document.getElementById("date").innerHTML=": "+day+"-"+month+"-"+year;
+
+/* PHOTO */
 
 const photo=params.get("photo");
 
 if(photo){
 document.getElementById("photo").src=photo;
 }else{
-document.getElementById("photo").src="no-photo.png";
+document.getElementById("photo").src="";
 }
 
 </script>
