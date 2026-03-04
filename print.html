@@ -166,10 +166,10 @@ This is a computer generated receipt. No signature required.
 
 <script>
 
-const params=new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
 function setValue(id){
-document.getElementById(id).innerText=params.get(id)||"";
+document.getElementById(id).innerText = params.get(id) || "";
 }
 
 setValue("studentID");
@@ -191,30 +191,30 @@ setValue("ifsc");
 setValue("bank");
 setValue("mobile");
 
-document.getElementById("date").innerText=new Date().toLocaleDateString();
+document.getElementById("date").innerText = new Date().toLocaleDateString();
 
-const photoURL=params.get("photo");
+// Photo handling
+const photoURL = params.get("photo");
 
 if(photoURL){
 
-let finalURL=photoURL;
+let finalURL = photoURL;
 
-// convert drive link to direct image
+// convert google drive link to direct image
 if(photoURL.includes("drive.google.com")){
-const id=photoURL.split("/d/")[1].split("/")[0];
-finalURL="https://drive.google.com/uc?export=view&id="+id;
+let fileId = photoURL.match(/[-\w]{25,}/);
+if(fileId){
+finalURL = "https://drive.google.com/uc?export=view&id=" + fileId[0];
+}
 }
 
-document.getElementById("photo").src=finalURL;
+document.getElementById("photo").src = finalURL;
 
 }else{
 
 document.getElementById("photo").style.display="none";
 
 }
-
-// optional auto print
-// window.onload=function(){setTimeout(()=>window.print(),600)}
 
 </script>
 
