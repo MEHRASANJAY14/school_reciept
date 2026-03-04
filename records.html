@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>All Student Records</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#1e73be,#3fa9f5);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+width:95%;
+max-width:1100px;
+text-align:center;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:14px;
+}
+
+th{
+background:#1e73be;
+color:white;
+padding:10px;
+}
+
+td{
+border:1px solid #ddd;
+padding:8px;
+}
+
+img{
+width:50px;
+height:60px;
+object-fit:cover;
+border:1px solid #ccc;
+}
+
+.printBtn{
+background:green;
+color:white;
+padding:5px 10px;
+border:none;
+border-radius:4px;
+cursor:pointer;
+}
+
+.printBtn:hover{
+background:#0b7a0b;
+}
+
+.back{
+margin-top:20px;
+background:#777;
+color:white;
+padding:10px 20px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.loading{
+font-weight:bold;
+color:#1e73be;
+margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>All Student Records</h2>
+
+<div id="loading" class="loading">Loading Records...</div>
+
+<table id="recordTable">
+
+<thead>
+
+<tr>
+<th>Photo</th>
+<th>Student ID</th>
+<th>Name</th>
+<th>Father</th>
+<th>Class</th>
+<th>Aadhaar</th>
+<th>Mobile</th>
+<th>Print</th>
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<br>
+
+<button class="back" onclick="location.href='index.html'">
+← Back to Dashboard
+</button>
+
+</div>
+
+<script>
+
+const API_URL="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
+
+loadStudents();
+
+function loadStudents(){
+
+fetch(API_URL+"?search=")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+document.getElementById("loading").style.display="none";
+
+let tbody=document.querySelector("#recordTable tbody");
+
+tbody.innerHTML="";
+
+data.forEach(r=>{
+
+let row=`
+<tr>
+
+<td>
+<img src="${r.photo}" onerror="this.src='https://via.placeholder.com/50x60'">
+</td>
+
+<td>${r.studentID}</td>
+<td>${r.name}</td>
+<td>${r.father}</td>
+<td>${r.class}</td>
+<td>${r.aadhar}</td>
+<td>${r.mobile}</td>
+
+<td>
+
+<button class="printBtn"
+onclick="printReceipt('${encodeURIComponent(r.studentID)}','${encodeURIComponent(r.name)}','${encodeURIComponent(r.father)}','${encodeURIComponent(r.mother)}','${encodeURIComponent(r.dob)}','${encodeURIComponent(r.class)}','${encodeURIComponent(r.village)}','${encodeURIComponent(r.address)}','${encodeURIComponent(r.caste)}','${encodeURIComponent(r.category)}','${encodeURIComponent(r.subject)}','${encodeURIComponent(r.apar)}','${encodeURIComponent(r.aadhar)}','${encodeURIComponent(r.samagra)}','${encodeURIComponent(r.account)}','${encodeURIComponent(r.ifsc)}','${encodeURIComponent(r.bank)}','${encodeURIComponent(r.mobile)}','${encodeURIComponent(r.photo)}')">
+
+Print
+
+</button>
+
+</td>
+
+</tr>
+`;
+
+tbody.innerHTML+=row;
+
+});
+
+})
+
+.catch(err=>{
+
+document.getElementById("loading").innerHTML="Error loading records";
+
+console.log(err);
+
+});
+
+}
+
+function printReceipt(studentID,name,father,mother,dob,cls,village,address,caste,category,subject,apar,aadhar,samagra,account,ifsc,bank,mobile,photo){
+
+let url="print.html?"
++"studentID="+studentID
++"&name="+name
++"&father="+father
++"&mother="+mother
++"&dob="+dob
++"&class="+cls
++"&village="+village
++"&address="+address
++"&caste="+caste
++"&category="+category
++"&subject="+subject
++"&apar="+apar
++"&aadhar="+aadhar
++"&samagra="+samagra
++"&account="+account
++"&ifsc="+ifsc
++"&bank="+bank
++"&mobile="+mobile
++"&photo="+photo;
+
+window.open(url,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
