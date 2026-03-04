@@ -84,6 +84,13 @@ margin-top:20px;
 background:#888;
 }
 
+#loading{
+display:none;
+margin-top:10px;
+color:#1e73be;
+font-weight:bold;
+}
+
 </style>
 
 </head>
@@ -98,7 +105,9 @@ background:#888;
 
 <br><br>
 
-<button onclick="searchStudent()">Search</button>
+<button id="searchBtn" onclick="searchStudent()">Search</button>
+
+<div id="loading">Searching...</div>
 
 <table id="resultTable">
 
@@ -135,6 +144,9 @@ alert("Enter Name / Aadhaar / Student ID");
 return;
 }
 
+document.getElementById("loading").style.display="block";
+document.getElementById("searchBtn").disabled=true;
+
 fetch(API_URL+"?search="+encodeURIComponent(query))
 
 .then(res=>res.json())
@@ -166,9 +178,15 @@ tbody.innerHTML+=row;
 
 });
 
+document.getElementById("loading").style.display="none";
+document.getElementById("searchBtn").disabled=false;
+
 })
 
 .catch(err=>{
+
+document.getElementById("loading").style.display="none";
+document.getElementById("searchBtn").disabled=false;
 
 alert("Search Error");
 
