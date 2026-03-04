@@ -9,19 +9,18 @@
 
 @page{
 size:A4;
-margin:10mm;
+margin:0;
 }
 
 body{
 font-family:Arial;
 background:white;
 margin:0;
-padding:0;
+padding:20px;
 }
 
 .receipt{
-width:190mm;
-min-height:270mm;
+width:180mm;
 background:white;
 padding:10mm;
 border:4px double black;
@@ -52,8 +51,8 @@ height:120px;
 border:2px solid black;
 background:white;
 position:absolute;
-right:15mm;
-top:75mm;
+right:10mm;
+top:80mm;
 object-fit:cover;
 }
 
@@ -92,10 +91,10 @@ font-size:12px;
 }
 
 .footer{
-width:190mm;
+width:180mm;
 margin:auto;
 text-align:center;
-margin-top:15px;
+margin-top:20px;
 }
 
 .footer button{
@@ -120,6 +119,8 @@ color:white;
 @media print{
 .footer{
 display:none;
+body{
+padding:0;
 }
 }
 
@@ -215,7 +216,7 @@ document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
 
-// PHOTO LOAD FIX
+// PHOTO FIX
 
 const photoURL = decodeURIComponent(params.get("photo") || "");
 const img = document.getElementById("photo");
@@ -227,7 +228,6 @@ let match = photoURL.match(/[-\w]{25,}/);
 if(match){
 
 let fileId = match[0];
-
 img.src = "https://lh3.googleusercontent.com/d/"+fileId;
 
 }
@@ -235,18 +235,19 @@ img.src = "https://lh3.googleusercontent.com/d/"+fileId;
 }
 
 
-// WAIT IMAGE LOAD BEFORE PDF
+// PERFECT PDF
 
 function downloadPDF(){
 
 const element=document.getElementById("receipt");
 
-setTimeout(function(){
-
 html2pdf().set({
 
-margin:[5,5,5,5],
+margin:0,
+
 filename:'Admission_Receipt.pdf',
+
+pagebreak:{mode:['avoid-all','css','legacy']},
 
 html2canvas:{
 scale:3,
@@ -260,8 +261,6 @@ orientation:'portrait'
 }
 
 }).from(element).save();
-
-},800);
 
 }
 
