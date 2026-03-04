@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>Search Student</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#1a73e8,#0d47a1);
+margin:0;
+padding:30px;
+color:white;
+text-align:center;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:white;
+color:black;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h2{
+margin-bottom:20px;
+}
+
+input{
+width:80%;
+padding:12px;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:5px;
+margin-bottom:15px;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.search-btn{
+background:#1a73e8;
+color:white;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px;
+}
+
+th{
+background:#1a73e8;
+color:white;
+}
+
+.print-btn{
+background:#198754;
+color:white;
+padding:6px 10px;
+border-radius:4px;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Search Student Record</h2>
+
+<input type="text" id="searchText" placeholder="Enter Name / Aadhaar / Student ID">
+
+<br>
+
+<button class="search-btn" onclick="searchStudent()">Search</button>
+
+<table id="resultTable">
+
+<thead>
+<tr>
+<th>Student ID</th>
+<th>Name</th>
+<th>Aadhaar</th>
+<th>Class</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+const API="https://script.google.com/macros/s/AKfycbw4IzobidmRMtuW2t71IgekL9bnzDPSC5ISb5E7RcQgqaqfDRjJXRzc3cfDuLQfIlZA/exec";
+
+async function searchStudent(){
+
+let q=document.getElementById("searchText").value;
+
+let url=API+"?search="+encodeURIComponent(q);
+
+let res=await fetch(url);
+
+let data=await res.json();
+
+let tbody=document.querySelector("#resultTable tbody");
+
+tbody.innerHTML="";
+
+data.forEach(row=>{
+
+let tr=document.createElement("tr");
+
+tr.innerHTML=`
+
+<td>${row.studentID}</td>
+<td>${row.name}</td>
+<td>${row.aadhar}</td>
+<td>${row.class}</td>
+
+<td>
+<a class="print-btn" target="_blank"
+href="print.html?studentID=${row.studentID}
+&name=${row.name}
+&father=${row.father}
+&mother=${row.mother}
+&dob=${row.dob}
+&class=${row.class}
+&village=${row.village}
+&address=${row.address}
+&caste=${row.caste}
+&category=${row.category}
+&subject=${row.subject}
+&apar=${row.apar}
+&aadhar=${row.aadhar}
+&samagra=${row.samagra}
+&account=${row.account}
+&ifsc=${row.ifsc}
+&bank=${row.bank}
+&mobile=${row.mobile}
+&photo=${encodeURIComponent(row.photo)}
+">
+
+Print Receipt
+
+</a>
+</td>
+
+`;
+
+tbody.appendChild(tr);
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
