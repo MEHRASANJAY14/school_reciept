@@ -279,6 +279,10 @@ Established: 1985
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
+  let selectedRaw = decodeURIComponent(params.get("subject") || "");
+
+// extract only numbers (codes)
+let selectedCodes = selectedRaw.match(/\d+/g) || [];
   function clean(s){
   return s
     .toString()
@@ -358,8 +362,9 @@ let html = "";
 
 subjects.forEach(sub=>{
 
-let checked = selected.includes(clean(sub));
+let code = sub.match(/\d+/)[0];  // extract code from subject
 
+let checked = selectedCodes.includes(code);
 html += `
 <div class="subject-item">
   <span class="check">${checked ? "✔" : ""}</span>
