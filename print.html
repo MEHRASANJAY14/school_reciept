@@ -57,7 +57,40 @@ right:10mm;
 top:46mm;
 object-fit:cover;
 }
+/* SUBJECT BOX (PHOTO KE NICHE) */
 
+.subject-box{
+  position:absolute;
+  right:10mm;
+  top:175px;   /* adjust if needed */
+  width:95px;
+  border:1px solid black;
+  padding:5px;
+  font-size:10px;
+  background:white;
+}
+
+.subject-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:2px;
+}
+
+.subject-item{
+  display:flex;
+  align-items:center;
+  gap:3px;
+}
+
+.check{
+  width:10px;
+  height:10px;
+  border:1px solid black;
+  font-size:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 /* TABLE */
 
 table{
@@ -175,7 +208,7 @@ Established: 1985
 </div>
 
 <img id="photo" class="photo">
-
+<div id="subjectBox" class="subject-box"></div>
 <table>
 
 <tr>
@@ -257,6 +290,53 @@ document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
+/* SUBJECT CHECK BOX PRINT */
+
+let selected = (params.get("subject") || "").split(",").map(s=>s.trim());
+
+let allSubjects = [
+
+"Hindi - 401",
+"English - 411",
+"Sanskrit - 512",
+"Math Standard - 100",
+"Math Basic - 101",
+"Science - 200",
+"Social Science - 300",
+"IT - 863",
+"BFSI - 876",
+
+"Hindi - 051",
+"English - 052",
+"Political Science - 130",
+"History - 110",
+"Economics - 140",
+"Physics - 210",
+"Chemistry - 220",
+"Biology - 230",
+"BFSI - 982",
+"IT/ITES - 975",
+"Sanskrit - 053"
+
+];
+
+let html="";
+
+allSubjects.forEach(sub=>{
+
+let checked = selected.includes(sub);
+
+html += `
+<div class="subject-item">
+<span class="check">${checked ? "✔" : ""}</span>
+<span>${sub}</span>
+</div>
+`;
+
+});
+
+document.getElementById("subjectBox").innerHTML =
+`<div class="subject-grid">${html}</div>`;
 /* DATE FORMAT */
 
 let d = new Date();
