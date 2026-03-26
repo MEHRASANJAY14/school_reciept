@@ -204,8 +204,7 @@ Established: 1985
 <tr>
 <td colspan="2"></td>
 
-<td rowspan="20" style="vertical-align:top; width:160px; text-align:center;">
-
+<td rowspan="20" style="vertical-align:top; width:180px; text-align:center; padding-left:15px;">
 <img id="photo" class="photo"><br><br>
 
 <div id="subjectBox"></div>
@@ -352,7 +351,15 @@ html += `
 });
 
 document.getElementById("subjectBox").innerHTML =
-`<div class="subject-grid">${html}</div>`;
+`
+<div style="text-align:center; font-weight:bold; font-size:12px; border-bottom:1px solid black; margin-bottom:6px; padding-bottom:3px;">
+SUBJECT
+</div>
+
+<div class="subject-grid">
+${html}
+</div>
+`;
 /* DATE FORMAT */
 
 let d = new Date();
