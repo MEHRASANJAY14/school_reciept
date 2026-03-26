@@ -269,7 +269,12 @@ Established: 1985
 
 <script>
   function clean(s){
-  return s.toString().toLowerCase().trim();
+  return s
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g,'')   // remove spaces
+    .replace(/-/g,'')     // remove dash
+    .trim();
 }
 
 const params = new URLSearchParams(window.location.search);
@@ -342,7 +347,7 @@ let html = "";
 
 subjects.forEach(sub=>{
 
-let checked = selected.some(s => s === clean(sub));
+let checked = selected.includes(clean(sub));
 
 html += `
 <div class="subject-item">
