@@ -44,7 +44,6 @@ font-size:22px;
 .header h2{
 margin:5px 0;
 }
-
 /* PHOTO */
 .photo{
   width:95px;
@@ -53,12 +52,7 @@ margin:5px 0;
   object-fit:cover;
 }
 
-/* REMOVE OLD absolute subject-box */
-.subject-box{
-  display:none;
-}
-
-/* NEW SUBJECT BOX */
+/* SUBJECT BOX */
 #subjectBox{
   margin-top:8px;
   border:1px solid black;
@@ -67,11 +61,11 @@ margin:5px 0;
   background:white;
 }
 
-/* GRID */
+/* GRID (AUTO ADJUST 2-3 COLUMN) */
 .subject-grid{
   display:grid;
-  grid-template-columns: repeat(2,1fr);
-  gap:3px;
+  grid-template-columns: repeat(auto-fit, minmax(90px,1fr));
+  gap:4px;
 }
 
 /* ITEM */
@@ -209,7 +203,8 @@ Established: 1985
 
 <tr>
 <td colspan="2"></td>
-<td style="text-align:center; vertical-align:top;">
+
+<td rowspan="20" style="vertical-align:top; text-align:center; width:140px;">
 
 <img id="photo" class="photo"><br><br>
 
