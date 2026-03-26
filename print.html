@@ -279,7 +279,6 @@ Established: 1985
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
-  let selectedRaw = decodeURIComponent(params.get("subject") || "");
 
 // extract only numbers (codes)
 let selectedCodes = selectedRaw.match(/\d+/g) || [];
@@ -293,6 +292,12 @@ let selectedCodes = selectedRaw.match(/\d+/g) || [];
 }
 
 const params = new URLSearchParams(window.location.search);
+
+// ✅ अब use करो
+let selectedRaw = decodeURIComponent(params.get("subject") || "");
+
+// extract codes safely
+let selectedCodes = selectedRaw.match(/\d+/g) || [];
 
 document.getElementById("studentID").innerText=params.get("studentID");
 document.getElementById("name").innerText=params.get("name");
@@ -311,11 +316,6 @@ document.getElementById("account").innerText=params.get("account");
 document.getElementById("ifsc").innerText=params.get("ifsc");
 document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
-
-/* SUBJECT CHECK BOX PRINT */
-let selected = (params.get("subject") || "")
-.split(",")
-.map(s => clean(decodeURIComponent(s)));
 
 // CLASS GET
 let studentClass = params.get("class") || "";
