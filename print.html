@@ -280,17 +280,6 @@ Established: 1985
 
 <script>
 
-// extract only numbers (codes)
-let selectedCodes = selectedRaw.match(/\d+/g) || [];
-  function clean(s){
-  return s
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g,'')   // remove spaces
-    .replace(/-/g,'')     // remove dash
-    .trim();
-}
-
 const params = new URLSearchParams(window.location.search);
 
 // ✅ अब use करो
