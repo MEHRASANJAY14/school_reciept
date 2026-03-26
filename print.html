@@ -59,6 +59,7 @@ margin:5px 0;
   padding:6px;
   font-size:11px;
   text-align:left;
+  margin-left:auto;
 }
 
 /* GRID (2-3 column auto) */
@@ -204,7 +205,7 @@ Established: 1985
 <tr>
 <td colspan="2"></td>
 
-<td rowspan="20" style="vertical-align:top; width:180px; text-align:center; padding-left:15px;">
+<td rowspan="20" style="vertical-align:top; width:180px; text-align:center; padding-left:25px;">
 <img id="photo" class="photo"><br><br>
 
 <div id="subjectBox"></div>
@@ -267,6 +268,9 @@ Established: 1985
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
+  function clean(s){
+  return s.toString().toLowerCase().replace(/\s+/g,'').trim();
+  }
 
 const params = new URLSearchParams(window.location.search);
 
@@ -289,10 +293,9 @@ document.getElementById("bank").innerText=params.get("bank");
 document.getElementById("mobile").innerText=params.get("mobile");
 
 /* SUBJECT CHECK BOX PRINT */
-
 let selected = (params.get("subject") || "")
 .split(",")
-.map(s=>s.trim());
+.map(s => clean(s));
 
 // CLASS GET
 let studentClass = params.get("class") || "";
@@ -339,7 +342,7 @@ let html = "";
 
 subjects.forEach(sub=>{
 
-let checked = selected.includes(sub);
+let checked = selected.includes(clean(sub));
 
 html += `
 <div class="subject-item">
