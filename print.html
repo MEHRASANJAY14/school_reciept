@@ -269,8 +269,8 @@ Established: 1985
 
 <script>
   function clean(s){
-  return s.toString().toLowerCase().replace(/\s+/g,'').trim();
-  }
+  return s.toString().toLowerCase().trim();
+}
 
 const params = new URLSearchParams(window.location.search);
 
@@ -295,7 +295,7 @@ document.getElementById("mobile").innerText=params.get("mobile");
 /* SUBJECT CHECK BOX PRINT */
 let selected = (params.get("subject") || "")
 .split(",")
-.map(s => clean(s));
+.map(s => clean(decodeURIComponent(s)));
 
 // CLASS GET
 let studentClass = params.get("class") || "";
@@ -342,7 +342,7 @@ let html = "";
 
 subjects.forEach(sub=>{
 
-let checked = selected.includes(clean(sub));
+let checked = selected.some(s => s === clean(sub));
 
 html += `
 <div class="subject-item">
