@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html>
 <head>
 
@@ -53,38 +53,58 @@ margin:5px 0;
 }
 
 /* SUBJECT BOX */
+/* ===== SUBJECT BOX FINAL ===== */
+
 #subjectBox{
   margin-top:10px;
   border:1px solid black;
   padding:6px;
-  font-size:11px;
-  text-align:left;
-  margin-left:auto;
+
+  width:150px;        /* 🔥 box size fix */
+  margin-left:auto;   /* 🔥 right align */
+
+  font-size:10px;
+  background:white;
 }
 
-/* GRID (2-3 column auto) */
+/* SUBJECT TITLE */
+#subjectBox .title{
+  text-align:center;
+  font-weight:bold;
+  font-size:11px;
+  border-bottom:1px solid black;
+  padding-bottom:3px;
+  margin-bottom:5px;
+}
+
+/* GRID LAYOUT */
 .subject-grid{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px,1fr));
+  grid-template-columns: repeat(2, 1fr);  /* 2 column */
   gap:4px;
 }
 
-/* ITEM */
+/* EACH SUBJECT */
 .subject-item{
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
 }
 
-/* CHECK */
+/* CHECKBOX STYLE */
 .check{
-  width:12px;
-  height:12px;
+  width:10px;
+  height:10px;
   border:1px solid black;
-  font-size:9px;
+  font-size:8px;
   display:flex;
   align-items:center;
   justify-content:center;
+}
+
+/* TEXT */
+.subject-item span:last-child{
+  font-size:10px;
 }
 /* TABLE */
 
