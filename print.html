@@ -46,47 +46,47 @@ margin:5px 0;
 }
 
 /* PHOTO */
-
 .photo{
-width:95px;
-height:120px;
-border:2px solid black;
-background:white;
-position:absolute;
-right:10mm;
-top:46mm;
-object-fit:cover;
-}
-/* SUBJECT BOX (PHOTO KE NICHE) */
-
-.subject-box{
-  position:absolute;
-  right:10mm;
-  top:175px;   /* adjust if needed */
   width:95px;
+  height:120px;
+  border:2px solid black;
+  object-fit:cover;
+}
+
+/* REMOVE OLD absolute subject-box */
+.subject-box{
+  display:none;
+}
+
+/* NEW SUBJECT BOX */
+#subjectBox{
+  margin-top:8px;
   border:1px solid black;
-  padding:5px;
-  font-size:10px;
+  padding:6px;
+  font-size:11px;
   background:white;
 }
 
+/* GRID */
 .subject-grid{
   display:grid;
-  grid-template-columns: 1fr;
-  gap:2px;
-}
-
-.subject-item{
-  display:flex;
-  align-items:center;
+  grid-template-columns: repeat(2,1fr);
   gap:3px;
 }
 
+/* ITEM */
+.subject-item{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+/* CHECK */
 .check{
-  width:10px;
-  height:10px;
+  width:12px;
+  height:12px;
   border:1px solid black;
-  font-size:8px;
+  font-size:9px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -207,8 +207,16 @@ Established: 1985
 
 </div>
 
-<img id="photo" class="photo">
-<div id="subjectBox" class="subject-box"></div>
+<tr>
+<td colspan="2"></td>
+<td style="text-align:center; vertical-align:top;">
+
+<img id="photo" class="photo"><br><br>
+
+<div id="subjectBox"></div>
+
+</td>
+</tr>
 <table>
 
 <tr>
@@ -280,7 +288,6 @@ document.getElementById("village").innerText=params.get("village");
 document.getElementById("address").innerText=params.get("address");
 document.getElementById("caste").innerText=params.get("caste");
 document.getElementById("category").innerText=params.get("category");
-document.getElementById("subject").innerText=params.get("subject");
 document.getElementById("apar").innerText=params.get("apar");
 document.getElementById("aadhar").innerText=params.get("aadhar");
 document.getElementById("samagra").innerText=params.get("samagra");
