@@ -11,6 +11,9 @@ body{
   font-family:'Segoe UI',sans-serif;
   background:linear-gradient(160deg,#0f2c59,#3f66c4);
 }
+```css
+/* ===== SUBJECT BOX DESIGN ===== */
+
 .subject-container{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -24,10 +27,10 @@ body{
 
 .subject-container label{
   background:white;
-  padding:6px 8px;
+  padding:5px 6px;
   border-radius:6px;
   border:1px solid #ddd;
-  font-size:13px;
+  font-size:12px;
   cursor:pointer;
   display:flex;
   align-items:center;
@@ -35,14 +38,18 @@ body{
   transition:0.2s;
 }
 
+/* hover effect */
 .subject-container label:hover{
   background:#e9f2ff;
 }
 
+/* checkbox size small */
 .subject-container input{
-  transform:scale(1.1);
+  transform:scale(0.8);
+  margin-right:4px;
 }
 
+/* selected highlight */
 .subject-container input:checked + span{
   color:green;
   font-weight:bold;
