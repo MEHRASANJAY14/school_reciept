@@ -51,19 +51,17 @@ margin:5px 0;
   border:2px solid black;
   object-fit:cover;
 }
-
-/* SUBJECT BOX */
-/* ===== SUBJECT BOX FINAL ===== */
+/* ===== SUBJECT BOX (OLD PATTERN - CLEAN) ===== */
 
 #subjectBox{
   margin-top:10px;
   border:1px solid black;
   padding:6px;
 
-  width:150px;        /* 🔥 box size fix */
-  margin-left:auto;   /* 🔥 right align */
+  width:160px;        /* थोड़ा compact */
+  margin-left:auto;   /* right align */
 
-  font-size:10px;
+  font-size:11px;
   background:white;
 }
 
@@ -71,42 +69,35 @@ margin:5px 0;
 #subjectBox .title{
   text-align:center;
   font-weight:bold;
-  font-size:11px;
   border-bottom:1px solid black;
+  margin-bottom:6px;
   padding-bottom:3px;
-  margin-bottom:5px;
 }
 
-/* GRID LAYOUT */
+/* GRID (AUTO 2-3 COLUMN LIKE BEFORE) */
 .subject-grid{
   display:grid;
-  grid-template-columns: repeat(2, 1fr);  /* 2 column */
-  gap:4px;
+  grid-template-columns: repeat(auto-fit, minmax(80px,1fr));
+  gap:5px;
 }
 
-/* EACH SUBJECT */
+/* ITEM */
 .subject-item{
   display:flex;
   align-items:center;
   gap:5px;
 }
 
-/* CHECKBOX STYLE */
+/* CHECK BOX */
 .check{
-  width:10px;
-  height:10px;
+  width:11px;
+  height:11px;
   border:1px solid black;
-  font-size:8px;
+  font-size:9px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-
-/* TEXT */
-.subject-item span:last-child{
-  font-size:10px;
-}
-/* TABLE */
 
 table{
 width:100%;
