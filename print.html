@@ -362,7 +362,9 @@ let html = "";
 
 subjects.forEach(sub=>{
 
-let code = sub.match(/\d+/)[0];  // extract code from subject
+let match = sub.match(/\d+/);
+
+let code = match ? match[0] : "";
 
 let checked = selectedCodes.includes(code);
 html += `
