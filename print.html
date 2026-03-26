@@ -291,10 +291,20 @@ document.getElementById("mobile").innerText=params.get("mobile");
 
 /* SUBJECT CHECK BOX PRINT */
 
-let selected = (params.get("subject") || "").split(",").map(s=>s.trim());
+let selected = (params.get("subject") || "")
+.split(",")
+.map(s=>s.trim());
 
-let allSubjects = [
+// CLASS GET
+let studentClass = params.get("class") || "";
 
+// ===== CLASS WISE SUBJECT LIST =====
+
+let subjects = [];
+
+// 9th & 10th
+if(studentClass == "9" || studentClass == "10"){
+subjects = [
 "Hindi - 401",
 "English - 411",
 "Sanskrit - 512",
@@ -303,8 +313,13 @@ let allSubjects = [
 "Science - 200",
 "Social Science - 300",
 "IT - 863",
-"BFSI - 876",
+"BFSI - 876"
+];
+}
 
+// 11th & 12th
+else{
+subjects = [
 "Hindi - 051",
 "English - 052",
 "Political Science - 130",
@@ -316,19 +331,21 @@ let allSubjects = [
 "BFSI - 982",
 "IT/ITES - 975",
 "Sanskrit - 053"
-
 ];
+}
 
-let html="";
+// ===== GENERATE HTML =====
 
-allSubjects.forEach(sub=>{
+let html = "";
+
+subjects.forEach(sub=>{
 
 let checked = selected.includes(sub);
 
 html += `
 <div class="subject-item">
-<span class="check">${checked ? "✔" : ""}</span>
-<span>${sub}</span>
+  <span class="check">${checked ? "✔" : ""}</span>
+  <span>${sub}</span>
 </div>
 `;
 
