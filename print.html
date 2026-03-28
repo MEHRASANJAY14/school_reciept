@@ -184,6 +184,7 @@ Established: 1985
 <tr><td class="label">IFSC Code</td><td id="ifsc"></td></tr>
 <tr><td class="label">Bank Name</td><td id="bank"></td></tr>
 <tr><td class="label">Mobile</td><td id="mobile"></td></tr>
+
 </table>
 
 <div class="receipt-footer">
@@ -202,7 +203,6 @@ Established: 1985
 <button class="print-btn" onclick="window.print()">Print</button>
 </div>
 
-<!-- JS LIB -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -216,21 +216,29 @@ function set(id){
 document.getElementById(id).innerText = params.get(id) || "";
 }
 
-["studentID","name","father","mother","dob","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
+["studentID","name","father","mother","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
 
-// ===== SUBJECT FIX =====
+// ===== DOB FORMAT FIX =====
+let dobRaw = params.get("dob") || "";
+
+if(dobRaw.includes("-")){
+let p = dobRaw.split("-");
+document.getElementById("dob").innerText = p[2]+"-"+p[1]+"-"+p[0];
+}else{
+document.getElementById("dob").innerText = dobRaw;
+}
+
+// ===== SUBJECT =====
 let raw = params.get("subject") || "";
 raw = decodeURIComponent(raw.replace(/\+/g," ")).trim();
 
 let selectedCodes = [];
 
 if(raw !== ""){
-  raw.split(",").forEach(item=>{
-    let match = item.match(/\d+/);
-    if(match){
-      selectedCodes.push(match[0]);
-    }
-  });
+raw.split(",").forEach(item=>{
+let m = item.match(/\d+/);
+if(m){ selectedCodes.push(m[0]); }
+});
 }
 
 // ===== CLASS SUBJECT =====
@@ -257,11 +265,10 @@ subjects = [
 let html = `<div class="subject-title">SUBJECT</div><div class="subject-grid">`;
 
 subjects.forEach(sub=>{
-let code = (sub.match(/\d+/) || [""])[0];
+let code = (sub.match(/\d+/)||[""])[0];
 let checked = selectedCodes.includes(code);
 
-html += `
-<div class="subject-item">
+html += `<div class="subject-item">
 <span class="check">${checked ? "✔" : ""}</span>
 <span>${sub}</span>
 </div>`;
@@ -272,13 +279,13 @@ html += "</div>";
 document.getElementById("subjectBox").innerHTML = html;
 
 // ===== DATE =====
-let d = new Date();
+let d=new Date();
 let day = String(d.getDate()).padStart(2,'0');
 let month = String(d.getMonth()+1).padStart(2,'0');
 let year = d.getFullYear();
 
 document.getElementById("rdate").innerText =
-day + "-" + month + "-" + year;
+day+"-"+month+"-"+year;
 
 // ===== QR =====
 new QRCode(document.getElementById("qrcode"), {
@@ -298,31 +305,17 @@ document.getElementById("photo").src="https://lh3.googleusercontent.com/d/"+id[0
 
 // ===== PDF =====
 function downloadPDF(){
-
 window.scrollTo(0,0);
-
-const element = document.getElementById("receipt");
 
 html2pdf().set({
 margin:0,
 filename:'Admission_Receipt.pdf',
-
-html2canvas:{
-scale:3,
-useCORS:true
-},
-
-jsPDF:{
-unit:'mm',
-format:'a4',
-orientation:'portrait'
-}
-
-}).from(element).save();
-
+html2canvas:{scale:3,useCORS:true},
+jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+}).from(document.getElementById("receipt")).save();
 }
 
 </script>
 
 </body>
-</html
+</html>
