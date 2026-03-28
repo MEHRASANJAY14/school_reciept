@@ -212,11 +212,21 @@ document.getElementById(id).innerText = params.get(id) || "";
 
 ["studentID","name","father","mother","dob","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
 
-// ===== SUBJECT FIX =====
+// ===== SUBJECT MATCH (FINAL FIX) =====
 let raw = params.get("subject") || "";
-raw = decodeURIComponent(raw.replace(/\+/g," ")).toLowerCase();
+raw = decodeURIComponent(raw.replace(/\+/g," "));
 
-// ===== CLASS WISE SUBJECT =====
+let selectedCodes = [];
+
+// extract codes safely
+raw.split(",").forEach(item=>{
+let match = item.match(/\d+/);
+if(match){
+selectedCodes.push(match[0]);
+}
+});
+
+// ===== CLASS SUBJECT =====
 let cls = params.get("class");
 let subjects = [];
 
@@ -241,9 +251,10 @@ let html = `<div class="subject-title">SUBJECT</div><div class="subject-grid">`;
 
 subjects.forEach(sub=>{
 let code = (sub.match(/\d+/) || [""])[0];
-let checked = raw.includes(code);
+let checked = selectedCodes.includes(code);
 
-html += `<div class="subject-item">
+html += `
+<div class="subject-item">
 <span class="check">${checked ? "✔" : ""}</span>
 <span>${sub}</span>
 </div>`;
