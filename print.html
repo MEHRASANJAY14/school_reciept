@@ -204,20 +204,19 @@ Established: 1985
 // ===== PARAMS =====
 const params = new URLSearchParams(window.location.search);
 
-// ===== DATA =====
+// ===== DATA SET =====
 function set(id){
 document.getElementById(id).innerText = params.get(id) || "";
 }
 
 ["studentID","name","father","mother","dob","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
 
-// ===== SUBJECT FINAL FIX =====
+// ===== SUBJECT FIX =====
 let raw = params.get("subject") || "";
 
-// decode properly
+// decode + fix +
 raw = decodeURIComponent(raw.replace(/\+/g," ")).trim();
 
-// 👉 codes निकालो
 let selectedCodes = [];
 
 if(raw !== ""){
@@ -249,7 +248,7 @@ subjects = [
 ];
 }
 
-// ===== PRINT SUBJECT =====
+// ===== SUBJECT PRINT =====
 let html = `<div class="subject-title">SUBJECT</div><div class="subject-grid">`;
 
 subjects.forEach(sub=>{
@@ -267,10 +266,15 @@ html += "</div>";
 
 document.getElementById("subjectBox").innerHTML = html;
 
-// ===== DATE =====
-let d=new Date();
+// ===== DATE FORMAT DD-MM-YYYY =====
+let d = new Date();
+
+let day = String(d.getDate()).padStart(2,'0');
+let month = String(d.getMonth()+1).padStart(2,'0');
+let year = d.getFullYear();
+
 document.getElementById("rdate").innerText =
-d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear();
+day + "-" + month + "-" + year;
 
 // ===== QR =====
 new QRCode(document.getElementById("qrcode"), {
