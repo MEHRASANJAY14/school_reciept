@@ -283,7 +283,22 @@ Established: 1985
 const params = new URLSearchParams(window.location.search);
 
 // ✅ अब use करो
-let selectedRaw = decodeURIComponent(params.get("subject") || "");
+let selectedRaw = params.get("subject") || "";
+
+// decode + clean
+selectedRaw = decodeURIComponent(selectedRaw.replace(/\+/g, " "));
+
+// हर subject को अलग करो
+let selectedCodes = [];
+
+selectedRaw.split(",").forEach(item => {
+  let match = item.match(/\d+/);
+  if(match){
+    selectedCodes.push(match[0].trim());
+  }
+});
+
+console.log("FINAL CODES:", selectedCodes);
 
 // extract codes safely
 let selectedCodes = [];
