@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Admission Receipt</title>
 
 <style>
-@page{ size:A4; margin:0; }
+
+@page{
+size:A4;
+margin:0;
+}
 
 body{
 font-family:Arial;
@@ -16,18 +21,31 @@ padding:20px;
 
 .receipt{
 width:180mm;
+background:white;
 padding:10mm;
 border:4px double black;
+box-sizing:border-box;
+position:relative;
 margin:auto;
 }
 
 .header{
 text-align:center;
 border-bottom:2px solid black;
-margin-bottom:15px;
 padding-bottom:8px;
+margin-bottom:15px;
 }
 
+.header h1{
+margin:0;
+font-size:22px;
+}
+
+.header h2{
+margin:5px 0;
+}
+
+/* PHOTO */
 .photo{
 width:100px;
 height:120px;
@@ -40,40 +58,45 @@ object-fit:cover;
 margin-top:10px;
 border:1px solid black;
 padding:6px;
-width:160px;
+width:150px;
 margin-left:auto;
 font-size:11px;
 }
 
-.title{
+/* TITLE */
+.subject-title{
 text-align:center;
 font-weight:bold;
 border-bottom:1px solid black;
 margin-bottom:5px;
 }
 
+/* GRID */
 .subject-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:5px;
+gap:4px;
 }
 
+/* ITEM */
 .subject-item{
 display:flex;
-gap:5px;
 align-items:center;
+gap:4px;
 }
 
+/* CHECK */
 .check{
 width:11px;
 height:11px;
 border:1px solid black;
-font-size:9px;
 display:flex;
 align-items:center;
 justify-content:center;
+font-size:9px;
 }
 
+/* TABLE */
 table{
 width:100%;
 border-collapse:collapse;
@@ -81,6 +104,7 @@ border-collapse:collapse;
 
 td{
 padding:6px;
+font-size:13px;
 border-bottom:1px solid #ddd;
 }
 
@@ -89,61 +113,87 @@ font-weight:bold;
 width:180px;
 }
 
+.student-id{
+font-weight:bold;
+font-size:15px;
+color:#0f2c59;
+}
+
+/* FOOTER */
 .receipt-footer{
 border-top:2px solid black;
 margin-top:20px;
 padding-top:10px;
+font-size:12px;
 position:relative;
+}
+
+.footer-text{
+text-align:center;
 }
 
 .qr{
 position:absolute;
 right:0;
+top:5mm;
 width:80px;
 height:80px;
 border:2px solid black;
 }
 
+/* BUTTON */
 .footer{
 text-align:center;
 margin-top:20px;
 }
 
-button{
-padding:10px 15px;
+.footer button{
+padding:10px 18px;
 margin:5px;
 border:none;
 border-radius:5px;
 cursor:pointer;
 }
 
-.print-btn{ background:#0f2c59; color:white; }
-.pdf-btn{ background:#198754; color:white; }
+.print-btn{
+background:#0f2c59;
+color:white;
+}
+
+.pdf-btn{
+background:#198754;
+color:white;
+}
 
 @media print{
-.footer{ display:none; }
-body{ padding:0; }
+.footer{display:none;}
+body{padding:0;}
 }
+
 </style>
+
 </head>
 
 <body>
 
-<div id="receipt" class="receipt">
+<div class="receipt">
 
 <div class="header">
-<h2>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h2>
-Block: Jabera | District: Damoh (M.P.)<br>
-Established: 1985
-<h3>ADMISSION RECEIPT</h3>
+<h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
+<div>Block: Jabera | District: Damoh (M.P.)<br>Established: 1985</div>
+<h2>ADMISSION RECEIPT</h2>
 </div>
 
 <table>
 <tr>
 <td colspan="2"></td>
-<td rowspan="20" style="text-align:center; width:180px;">
+
+<td rowspan="20" style="width:170px; text-align:center;">
+
 <img id="photo" class="photo"><br><br>
+
 <div id="subjectBox"></div>
+
 </td>
 </tr>
 
@@ -169,90 +219,87 @@ Established: 1985
 
 <div class="receipt-footer">
 <div class="qr" id="qrcode"></div>
-<p style="text-align:center;">This is a System Generated Receipt</p>
+<div class="footer-text">
+<p><b>This is a System Generated Receipt. No signature required.</b></p>
+<p>Receipt Generated : <span id="rdate"></span></p>
+<p>@ GHSS Singhpur</p>
+</div>
 </div>
 
 </div>
 
 <div class="footer">
-<button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+<button class="pdf-btn" onclick="window.print()">Download PDF</button>
 <button class="print-btn" onclick="window.print()">Print</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
 
-// ===== PARAMS =====
 const params = new URLSearchParams(window.location.search);
 
-// ===== DATA =====
-function set(id){
-document.getElementById(id).innerText = params.get(id) || "";
-}
+// DATA
+document.getElementById("studentID").innerText=params.get("studentID");
+document.getElementById("name").innerText=params.get("name");
+document.getElementById("father").innerText=params.get("father");
+document.getElementById("mother").innerText=params.get("mother");
+document.getElementById("dob").innerText=params.get("dob");
+document.getElementById("class").innerText=params.get("class");
+document.getElementById("village").innerText=params.get("village");
+document.getElementById("address").innerText=params.get("address");
+document.getElementById("caste").innerText=params.get("caste");
+document.getElementById("category").innerText=params.get("category");
+document.getElementById("apar").innerText=params.get("apar");
+document.getElementById("aadhar").innerText=params.get("aadhar");
+document.getElementById("samagra").innerText=params.get("samagra");
+document.getElementById("account").innerText=params.get("account");
+document.getElementById("ifsc").innerText=params.get("ifsc");
+document.getElementById("bank").innerText=params.get("bank");
+document.getElementById("mobile").innerText=params.get("mobile");
 
-["studentID","name","father","mother","dob","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
+// SUBJECT FIX (NUMERIC MATCH)
+let raw = decodeURIComponent(params.get("subject") || "");
+let selectedCodes = raw.match(/\d+/g) || [];
 
-// ===== SUBJECT FIX =====
-let selectedRaw = params.get("subject") || "";
-selectedRaw = decodeURIComponent(selectedRaw.replace(/\+/g," "));
-
-let selectedCodes = [];
-
-selectedRaw.split(",").forEach(item=>{
-let m = item.match(/\d+/);
-if(m) selectedCodes.push(m[0]);
-});
-
-// ===== SUBJECT LIST =====
-let cls = params.get("class");
-let subjects = (cls=="9"||cls=="10") ?
-[
+let subjects = [
 "Hindi - 401","English - 411","Sanskrit - 512",
 "Math Standard - 100","Math Basic - 101",
 "Science - 200","Social Science - 300",
-"IT - 863","BFSI - 876"
-]
-:
-[
-"Hindi - 051","English - 052","Political Science - 130",
-"History - 110","Economics - 140",
-"Physics - 210","Chemistry - 220","Biology - 230",
+"IT - 863","BFSI - 876",
+"Hindi - 051","English - 052",
+"Political Science - 130","History - 110",
+"Economics - 140","Physics - 210",
+"Chemistry - 220","Biology - 230",
 "BFSI - 982","IT/ITES - 975","Sanskrit - 053"
 ];
 
-// ===== PRINT SUBJECT =====
-let html="";
+let html = `<div class="subject-title">SUBJECT</div><div class="subject-grid">`;
+
 subjects.forEach(sub=>{
-let code=(sub.match(/\d+/)||[""])[0];
-let tick = selectedCodes.includes(code) ? "✔" : "";
-html+=`<div class="subject-item"><span class="check">${tick}</span>${sub}</div>`;
+let code = (sub.match(/\d+/) || [""])[0];
+let checked = selectedCodes.includes(code);
+html += `<div class="subject-item">
+<span class="check">${checked ? "✔" : ""}</span>
+<span>${sub}</span>
+</div>`;
 });
 
-document.getElementById("subjectBox").innerHTML=
-`<div class="title">SUBJECT</div><div class="subject-grid">${html}</div>`;
+html += "</div>";
 
-// ===== PHOTO =====
-let photo = params.get("photo");
-if(photo){
-let id = photo.match(/[-\w]{25,}/);
-if(id){
-document.getElementById("photo").src="https://lh3.googleusercontent.com/d/"+id[0];
-}
-}
+document.getElementById("subjectBox").innerHTML = html;
 
-// ===== QR =====
-new QRCode(document.getElementById("qrcode"),{
-text:window.location.href,
+// DATE
+let d=new Date();
+document.getElementById("rdate").innerText =
+d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear();
+
+// QR
+new QRCode(document.getElementById("qrcode"), {
+text: window.location.href,
 width:70,
 height:70
 });
-
-// ===== PDF =====
-function downloadPDF(){
-html2pdf().from(document.getElementById("receipt")).save();
-}
 
 </script>
 
