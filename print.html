@@ -1,16 +1,11 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
 <title>Admission Receipt</title>
 
 <style>
-
-@page{
-size:A4;
-margin:0;
-}
+@page{ size:A4; margin:0; }
 
 body{
 font-family:Arial;
@@ -21,82 +16,62 @@ padding:20px;
 
 .receipt{
 width:180mm;
-background:white;
 padding:10mm;
 border:4px double black;
-box-sizing:border-box;
-position:relative;
 margin:auto;
 }
 
 .header{
 text-align:center;
 border-bottom:2px solid black;
-padding-bottom:8px;
 margin-bottom:15px;
+padding-bottom:8px;
 }
 
-.header h1{
-margin:0;
-font-size:22px;
-}
-
-.header h2{
-margin:5px 0;
-}
-/* PHOTO */
 .photo{
-  width:100px;
-  height:120px;
-  border:2px solid black;
-  object-fit:cover;
+width:100px;
+height:120px;
+border:2px solid black;
+object-fit:cover;
 }
-/* ===== SUBJECT BOX (OLD PATTERN - CLEAN) ===== */
 
+/* SUBJECT BOX */
 #subjectBox{
-  margin-top:10px;
-  border:1px solid black;
-  padding:6px;
-
-  width:160px;        /* थोड़ा compact */
-  margin-left:auto;   /* right align */
-
-  font-size:11px;
-  background:white;
+margin-top:10px;
+border:1px solid black;
+padding:6px;
+width:160px;
+margin-left:auto;
+font-size:11px;
 }
 
-/* SUBJECT TITLE */
-#subjectBox .title{
-  text-align:center;
-  font-weight:bold;
-  border-bottom:1px solid black;
-  margin-bottom:6px;
-  padding-bottom:3px;
+.title{
+text-align:center;
+font-weight:bold;
+border-bottom:1px solid black;
+margin-bottom:5px;
 }
 
-/* GRID (AUTO 2-3 COLUMN LIKE BEFORE) */
 .subject-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px,1fr));
-  gap:5px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:5px;
 }
 
-/* ITEM */
 .subject-item{
-  display:flex;
-  align-items:center;
-  gap:5px;
+display:flex;
+gap:5px;
+align-items:center;
 }
 
-/* CHECK BOX */
 .check{
-  width:11px;
-  height:11px;
-  border:1px solid black;
-  font-size:9px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+width:11px;
+height:11px;
+border:1px solid black;
+font-size:9px;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 table{
@@ -106,12 +81,7 @@ border-collapse:collapse;
 
 td{
 padding:6px;
-font-size:13px;
 border-bottom:1px solid #ddd;
-}
-
-table tr:nth-child(even){
-background:#f7f7f7;
 }
 
 .label{
@@ -119,81 +89,42 @@ font-weight:bold;
 width:180px;
 }
 
-.student-id{
-font-weight:bold;
-font-size:15px;
-color:#0f2c59;
-}
-
-/* FOOTER */
-
 .receipt-footer{
 border-top:2px solid black;
 margin-top:20px;
 padding-top:10px;
-font-size:12px;
 position:relative;
 }
-
-.footer-text{
-text-align:center;
-}
-
-/* QR RIGHT FOOTER */
 
 .qr{
 position:absolute;
 right:0;
-top:5mm;
 width:80px;
 height:80px;
 border:2px solid black;
-display:flex;
-align-items:center;
-justify-content:center;
-background:white;
 }
 
-/* BUTTON AREA */
-
 .footer{
-width:180mm;
-margin:auto;
 text-align:center;
 margin-top:20px;
 }
 
-.footer button{
-padding:10px 18px;
+button{
+padding:10px 15px;
 margin:5px;
 border:none;
 border-radius:5px;
 cursor:pointer;
-font-size:14px;
 }
 
-.print-btn{
-background:#0f2c59;
-color:white;
-}
-
-.pdf-btn{
-background:#198754;
-color:white;
-}
+.print-btn{ background:#0f2c59; color:white; }
+.pdf-btn{ background:#198754; color:white; }
 
 @media print{
-.footer{
-display:none;
+.footer{ display:none; }
+body{ padding:0; }
 }
-
-body{
-padding:0;
-}
-}
-
 </style>
-
 </head>
 
 <body>
@@ -201,33 +132,22 @@ padding:0;
 <div id="receipt" class="receipt">
 
 <div class="header">
-
-<h1>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h1>
-
-<div>
+<h2>GOVT HIGHER SECONDARY SCHOOL SINGHPUR</h2>
 Block: Jabera | District: Damoh (M.P.)<br>
 Established: 1985
+<h3>ADMISSION RECEIPT</h3>
 </div>
 
-<h2>ADMISSION RECEIPT</h2>
-
-</div>
 <table>
 <tr>
 <td colspan="2"></td>
-
-<td rowspan="20" style="vertical-align:top; width:180px; text-align:center; padding-left:25px;">
+<td rowspan="20" style="text-align:center; width:180px;">
 <img id="photo" class="photo"><br><br>
-
 <div id="subjectBox"></div>
-
 </td>
 </tr>
-<tr>
-<td class="label">Student ID</td>
-<td class="student-id" id="studentID"></td>
-</tr>
 
+<tr><td class="label">Student ID</td><td id="studentID"></td></tr>
 <tr><td class="label">Student Name</td><td id="name"></td></tr>
 <tr><td class="label">Father Name</td><td id="father"></td></tr>
 <tr><td class="label">Mother Name</td><td id="mother"></td></tr>
@@ -248,223 +168,90 @@ Established: 1985
 </table>
 
 <div class="receipt-footer">
-
 <div class="qr" id="qrcode"></div>
-
-<div class="footer-text">
-
-<p><b>This is a System Generated Receipt. No signature required.</b></p>
-
-<p>Receipt Generated : <span id="rdate"></span></p>
-
-<p>@ GHSS Singhpur</p>
-
-</div>
-
+<p style="text-align:center;">This is a System Generated Receipt</p>
 </div>
 
 </div>
 
 <div class="footer">
-
 <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
-
 <button class="print-btn" onclick="window.print()">Print</button>
-
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
 
+// ===== PARAMS =====
 const params = new URLSearchParams(window.location.search);
 
-// ✅ अब use करो
+// ===== DATA =====
+function set(id){
+document.getElementById(id).innerText = params.get(id) || "";
+}
+
+["studentID","name","father","mother","dob","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
+
+// ===== SUBJECT FIX =====
 let selectedRaw = params.get("subject") || "";
+selectedRaw = decodeURIComponent(selectedRaw.replace(/\+/g," "));
 
-// decode + clean
-selectedRaw = decodeURIComponent(selectedRaw.replace(/\+/g, " "));
-
-// हर subject को अलग करो
 let selectedCodes = [];
 
-selectedRaw.split(",").forEach(item => {
-  let match = item.match(/\d+/);
-  if(match){
-    selectedCodes.push(match[0].trim());
-  }
+selectedRaw.split(",").forEach(item=>{
+let m = item.match(/\d+/);
+if(m) selectedCodes.push(m[0]);
 });
 
-console.log("FINAL CODES:", selectedCodes);
-
-// extract codes safely
-let selectedCodes = [];
-
-(selectedRaw.split(",") || []).forEach(item => {
-  let match = item.match(/\d+/);
-  if(match){
-    selectedCodes.push(match[0]);
-  }
-});
-
-document.getElementById("studentID").innerText=params.get("studentID");
-document.getElementById("name").innerText=params.get("name");
-document.getElementById("father").innerText=params.get("father");
-document.getElementById("mother").innerText=params.get("mother");
-document.getElementById("dob").innerText=params.get("dob");
-document.getElementById("class").innerText=params.get("class");
-document.getElementById("village").innerText=params.get("village");
-document.getElementById("address").innerText=params.get("address");
-document.getElementById("caste").innerText=params.get("caste");
-document.getElementById("category").innerText=params.get("category");
-document.getElementById("apar").innerText=params.get("apar");
-document.getElementById("aadhar").innerText=params.get("aadhar");
-document.getElementById("samagra").innerText=params.get("samagra");
-document.getElementById("account").innerText=params.get("account");
-document.getElementById("ifsc").innerText=params.get("ifsc");
-document.getElementById("bank").innerText=params.get("bank");
-document.getElementById("mobile").innerText=params.get("mobile");
-
-// CLASS GET
-let studentClass = params.get("class") || "";
-
-// ===== CLASS WISE SUBJECT LIST =====
-
-let subjects = [];
-
-// 9th & 10th
-if(studentClass == "9" || studentClass == "10"){
-subjects = [
-"Hindi - 401",
-"English - 411",
-"Sanskrit - 512",
-"Math Standard - 100",
-"Math Basic - 101",
-"Science - 200",
-"Social Science - 300",
-"IT - 863",
-"BFSI - 876"
+// ===== SUBJECT LIST =====
+let cls = params.get("class");
+let subjects = (cls=="9"||cls=="10") ?
+[
+"Hindi - 401","English - 411","Sanskrit - 512",
+"Math Standard - 100","Math Basic - 101",
+"Science - 200","Social Science - 300",
+"IT - 863","BFSI - 876"
+]
+:
+[
+"Hindi - 051","English - 052","Political Science - 130",
+"History - 110","Economics - 140",
+"Physics - 210","Chemistry - 220","Biology - 230",
+"BFSI - 982","IT/ITES - 975","Sanskrit - 053"
 ];
-}
 
-// 11th & 12th
-else{
-subjects = [
-"Hindi - 051",
-"English - 052",
-"Political Science - 130",
-"History - 110",
-"Economics - 140",
-"Physics - 210",
-"Chemistry - 220",
-"Biology - 230",
-"BFSI - 982",
-"IT/ITES - 975",
-"Sanskrit - 053"
-];
-}
-
-// ===== GENERATE HTML =====
-
-let html = "";
-
+// ===== PRINT SUBJECT =====
+let html="";
 subjects.forEach(sub=>{
-
-  let match = sub.match(/\d+/);
-  let code = match ? match[0] : "";
-
-  let checked = selectedCodes.includes(code);
-
-  html += `
-  <div class="subject-item">
-    <span class="check">${checked ? "✔" : ""}</span>
-    <span>${sub}</span>
-  </div>
-  `;
-
+let code=(sub.match(/\d+/)||[""])[0];
+let tick = selectedCodes.includes(code) ? "✔" : "";
+html+=`<div class="subject-item"><span class="check">${tick}</span>${sub}</div>`;
 });
 
-document.getElementById("subjectBox").innerHTML =
-`
-<div style="text-align:center; font-weight:bold; font-size:12px; border-bottom:1px solid black; margin-bottom:6px; padding-bottom:3px;">
-SUBJECT
-</div>
+document.getElementById("subjectBox").innerHTML=
+`<div class="title">SUBJECT</div><div class="subject-grid">${html}</div>`;
 
-<div class="subject-grid">
-${html}
-</div>
-`;
-/* DATE FORMAT */
-
-let d = new Date();
-
-let day = String(d.getDate()).padStart(2,'0');
-let month = String(d.getMonth()+1).padStart(2,'0');
-let year = d.getFullYear();
-
-document.getElementById("rdate").innerText = day+"-"+month+"-"+year;
-
-/* PHOTO LOAD */
-
-const photoURL = decodeURIComponent(params.get("photo") || "");
-const img = document.getElementById("photo");
-
-if(photoURL){
-
-let match = photoURL.match(/[-\w]{25,}/);
-
-if(match){
-
-let fileId = match[0];
-
-img.src="https://lh3.googleusercontent.com/d/"+fileId;
-
+// ===== PHOTO =====
+let photo = params.get("photo");
+if(photo){
+let id = photo.match(/[-\w]{25,}/);
+if(id){
+document.getElementById("photo").src="https://lh3.googleusercontent.com/d/"+id[0];
+}
 }
 
-}
-
-/* QR CODE */
-
-let verifyURL = window.location.href;
-
-new QRCode(document.getElementById("qrcode"), {
-
-text: verifyURL,
+// ===== QR =====
+new QRCode(document.getElementById("qrcode"),{
+text:window.location.href,
 width:70,
 height:70
-
 });
 
-/* PDF */
-
+// ===== PDF =====
 function downloadPDF(){
-
-window.scrollTo(0,0);
-
-const element=document.getElementById("receipt");
-
-html2pdf().set({
-
-margin:0,
-filename:'Admission_Receipt.pdf',
-
-html2canvas:{
-scale:3,
-scrollY:0,
-useCORS:true
-},
-
-jsPDF:{
-unit:'mm',
-format:'a4',
-orientation:'portrait'
-}
-
-}).from(element).save();
-
+html2pdf().from(document.getElementById("receipt")).save();
 }
 
 </script>
