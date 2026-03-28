@@ -286,7 +286,8 @@ const params = new URLSearchParams(window.location.search);
 let selectedRaw = decodeURIComponent(params.get("subject") || "");
 
 // extract codes safely
-let selectedCodes = selectedRaw.match(/\d+/g) || [];
+let selectedCodes = (selectedRaw.match(/\d+/g) || [])
+.map(c => c.trim());
 
 document.getElementById("studentID").innerText=params.get("studentID");
 document.getElementById("name").innerText=params.get("name");
@@ -355,7 +356,7 @@ let match = sub.match(/\d+/);
 
 let code = match ? match[0] : "";
 
-let checked = selectedCodes.includes(code);
+let checked = selectedCodes.includes(code.toString());
 html += `
 <div class="subject-item">
   <span class="check">${checked ? "✔" : ""}</span>
