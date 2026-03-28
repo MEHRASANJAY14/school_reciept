@@ -286,8 +286,14 @@ const params = new URLSearchParams(window.location.search);
 let selectedRaw = decodeURIComponent(params.get("subject") || "");
 
 // extract codes safely
-let selectedCodes = (selectedRaw.match(/\d+/g) || [])
-.map(c => c.trim());
+let selectedCodes = [];
+
+(selectedRaw.split(",") || []).forEach(item => {
+  let match = item.match(/\d+/);
+  if(match){
+    selectedCodes.push(match[0]);
+  }
+});
 
 document.getElementById("studentID").innerText=params.get("studentID");
 document.getElementById("name").innerText=params.get("name");
@@ -352,17 +358,17 @@ let html = "";
 
 subjects.forEach(sub=>{
 
-let match = sub.match(/\d+/);
+  let match = sub.match(/\d+/);
+  let code = match ? match[0] : "";
 
-let code = match ? match[0] : "";
+  let checked = selectedCodes.includes(code);
 
-let checked = selectedCodes.includes(code.toString());
-html += `
-<div class="subject-item">
-  <span class="check">${checked ? "✔" : ""}</span>
-  <span>${sub}</span>
-</div>
-`;
+  html += `
+  <div class="subject-item">
+    <span class="check">${checked ? "✔" : ""}</span>
+    <span>${sub}</span>
+  </div>
+  `;
 
 });
 
