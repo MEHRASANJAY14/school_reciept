@@ -133,7 +133,6 @@ cursor:pointer;
 }
 
 .print-btn{background:#0f2c59;color:white;}
-.pdf-btn{background:#198754;color:white;}
 
 @media print{
 .footer{display:none;}
@@ -212,19 +211,23 @@ document.getElementById(id).innerText = params.get(id) || "";
 
 ["studentID","name","father","mother","dob","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
 
-// ===== SUBJECT MATCH (FINAL FIX) =====
+// ===== SUBJECT FINAL FIX =====
 let raw = params.get("subject") || "";
-raw = decodeURIComponent(raw.replace(/\+/g," "));
 
+// decode properly
+raw = decodeURIComponent(raw.replace(/\+/g," ")).trim();
+
+// 👉 codes निकालो
 let selectedCodes = [];
 
-// extract codes safely
-raw.split(",").forEach(item=>{
-let match = item.match(/\d+/);
-if(match){
-selectedCodes.push(match[0]);
+if(raw !== ""){
+  raw.split(",").forEach(item=>{
+    let match = item.match(/\d+/);
+    if(match){
+      selectedCodes.push(match[0]);
+    }
+  });
 }
-});
 
 // ===== CLASS SUBJECT =====
 let cls = params.get("class");
