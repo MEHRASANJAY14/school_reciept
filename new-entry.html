@@ -244,6 +244,11 @@ input, select, textarea{
 </div>
 
 <div class="form-group">
+<label>Dakhil Khariz</label>
+<input type="text" name="dakhilkhariz">
+</div>
+
+<div class="form-group">
 <label>Student Photo</label>
 <input type="file" id="photo" accept="image/*">
 <div class="preview" id="preview"></div>
@@ -479,7 +484,7 @@ function printReceipt(){
   params.append("ifsc",form.ifsc.value);
   params.append("bank",form.bank.value);
   params.append("mobile",form.mobile.value);
-
+  params.append("dakhilkhariz",form.dakhilkhariz.value);
   if(photoUrl){
     params.append("photo",photoUrl);
   }
