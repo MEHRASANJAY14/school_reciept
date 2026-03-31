@@ -184,7 +184,10 @@ Established: 1985
 <tr><td class="label">IFSC Code</td><td id="ifsc"></td></tr>
 <tr><td class="label">Bank Name</td><td id="bank"></td></tr>
 <tr><td class="label">Mobile</td><td id="mobile"></td></tr>
-
+<tr>
+<td class="label">Dakhil Khariz</td>
+<td id="dakhilkhariz"></td>
+</tr>
 </table>
 
 <div class="receipt-footer">
@@ -216,7 +219,7 @@ function set(id){
 document.getElementById(id).innerText = params.get(id) || "";
 }
 
-["studentID","name","father","mother","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile"].forEach(set);
+["studentID","name","father","mother","class","village","address","caste","category","apar","aadhar","samagra","account","ifsc","bank","mobile","dakhilkhariz"].forEach(set);
 
 // ===== DOB FORMAT FIX =====
 let dobRaw = params.get("dob") || "";
